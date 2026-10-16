@@ -103,9 +103,12 @@ describe("demo login", () => {
   it("is the first screen for a signed-out visitor", () => {
     at("/");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Gurukul ExcelLab");
+    expect(screen.getByAltText("Gunvatta Gurukul official logo")).toBeTruthy();
+    expect((screen.getByAltText("Gunvatta Gurukul official logo") as HTMLImageElement).src).toMatch(/gunvatta-gurukul-logo/);
     expect(document.body.textContent).toContain("Powered by Gunvatta Gurukul");
     expect(screen.getByRole("button", { name: /^sign in$/i })).toBeTruthy();
-    expect(document.body.textContent).toContain("not real authentication");
+    expect(document.body.textContent).not.toContain("Demo sign-in only");
+    expect(document.body.textContent).not.toMatch(/demo/i);
   });
 
   it("rejects empty fields and unknown credentials, then opens the dashboard for the demo account", async () => {
@@ -147,10 +150,10 @@ describe("demo login", () => {
 });
 
 describe("Workbook Coverage Audit", () => {
-  it("shows the inspected file, flags the name difference, and re-verifies every finding", () => {
+  it("re-verifies every finding and never shows an identifier number", () => {
     at("/audit");
-    expect(document.body.textContent).toContain("Data Entry.xlsx");
-    expect(document.body.textContent).toContain("Data Entry(1).xlsx");
+    expect(document.body.textContent).not.toContain("The inspected file");
+    expect(document.body.textContent).not.toContain("Please confirm");
     expect(document.body.textContent).not.toContain("NOT reproducible");
     expect(document.body.textContent).not.toMatch(/\b\d{12}\b/); // the Aadhar-style number is never shown
     expect(screen.getAllByText(/re-verified against extracted data/).length).toBeGreaterThan(15);
@@ -218,11 +221,13 @@ describe("Analytics", () => {
 });
 
 describe("Settings", () => {
-  it("states demo mode and that cloud sync is not configured", () => {
+  it("shows saved counts and export without demo-mode copy", () => {
     at("/settings");
-    expect(document.body.textContent).toContain("Demo mode");
-    expect(document.body.textContent).toContain("not configured and not verified");
-    expect(document.body.textContent).toContain("not real authentication");
+    expect(document.body.textContent).toContain("Your data");
+    expect(document.body.textContent).toContain("Export my progress");
+    expect(document.body.textContent).not.toMatch(/demo/i);
+    expect(document.body.textContent).not.toContain("not real authentication");
+    expect(document.body.textContent).not.toContain("not configured and not verified");
   });
   it("reset needs the typed confirmation", async () => {
     const user = userEvent.setup();

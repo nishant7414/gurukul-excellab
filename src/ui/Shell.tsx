@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { BarChart3, ClipboardList, Database, BookMarked, ClipboardCheck, FlaskConical, GraduationCap, LayoutDashboard, ListChecks, LogOut, Map, Menu, Notebook, PanelLeftClose, PanelLeftOpen, Search, Settings, Sigma, Trophy, X } from "lucide-react";
-import { APP_NAME, INSTITUTION, initialsFromName, MONOGRAM, TAGLINE } from "../brand";
+import { APP_NAME, INSTITUTION, initialsFromName, TAGLINE } from "../brand";
+import { GunvattaGurukulLogo } from "./GunvattaGurukulLogo";
 import { actions, useStore, usePersistError } from "../state/store";
 import { ALL_LESSONS } from "../content/lessons";
 import { ALL_EXERCISES } from "../content/registry";
@@ -61,7 +62,12 @@ export function Shell() {
     <div className={`app ${collapsed ? "collapsed" : ""}`}>
       <a className="skip" href="#main">Skip to content</a>
       <nav className={`sidebar glass ${open ? "open" : ""}`} aria-label="Main navigation">
-        <div className="brand"><div className="logo" aria-hidden="true">{MONOGRAM}</div><span>{APP_NAME}</span></div>
+        <div className="brand">
+          <div className="brand-mark">
+            <GunvattaGurukulLogo size={collapsed ? "compact" : "header"} variant={collapsed ? "emblem" : "full"} />
+          </div>
+          <span>{APP_NAME}</span>
+        </div>
         {NAV.map((n) => (
           <NavLink key={n.to} to={n.to} end={n.to === "/"} className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} title={n.label}>
             <n.icon size={19} aria-hidden="true" /><span className="nav-label">{n.label}{n.to === "/mistakes" && unresolved > 0 ? ` (${unresolved})` : ""}</span>
@@ -112,7 +118,8 @@ export function Shell() {
         {persistErr && <div className="callout bad" role="alert" style={{ marginBottom: 12 }}>{persistErr} Your progress will be lost when you close this tab. Use Settings → Export to keep a copy.</div>}
         <main id="main" tabIndex={-1}><Outlet /></main>
         <footer className="app-footer small faint">
-          {APP_NAME} · {TAGLINE} · Powered by {INSTITUTION}. Demo sign-in is a browser check only, not secure authentication.
+          <div className="footer-mark"><GunvattaGurukulLogo size="footer" /></div>
+          <p>{APP_NAME} · {TAGLINE} · Powered by {INSTITUTION}.</p>
         </footer>
       </div>
       <style>{`.mobile-only{display:none}@media (max-width:960px){.mobile-only{display:inline-flex}}`}</style>

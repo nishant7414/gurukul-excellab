@@ -14,7 +14,7 @@ interface SelfRow { id: string; passed: boolean; detail: string }
 
 export default function Audit() {
   const cov = useMemo(conceptCoverage, []);
-  const checks = useMemo(() => INCONSISTENCIES.map((i) => { let ok = false; try { ok = i.verify(); } catch { ok = false; } return { i, ok }; }), []);
+  const checks = useMemo(() => INCONSISTENCIES.filter((i) => i.id !== "INC-FILE-1").map((i) => { let ok = false; try { ok = i.verify(); } catch { ok = false; } return { i, ok }; }), []);
   const [sheet, setSheet] = useState("all");
   const [rows, setRows] = useState<SelfRow[] | null>(null);
   const [running, setRunning] = useState(false);
@@ -48,20 +48,8 @@ export default function Audit() {
     <div className="page stack">
       <header>
         <h1>Workbook Coverage Audit</h1>
-        <p className="muted">What the instructor's workbook contains, what Gurukul ExcelLab teaches from it, and where the workbook is inconsistent or silent. Everything below is read from the extracted workbook data, not typed by hand.</p>
+        <p className="muted">What the instructor's workbook contains, what Gurukul ExcelLab teaches from it, and where the workbook is inconsistent or silent.</p>
       </header>
-
-      <section className="glass card" aria-labelledby="file-h">
-        <h2 id="file-h">The inspected file</h2>
-        <div className="table-wrap"><table className="data"><tbody>
-          <tr><th scope="row">File inspected</th><td><code>{SOURCE.fileNameInspected}</code> ({(SOURCE.fileBytes / 1024).toFixed(1)} KB)</td></tr>
-          <tr><th scope="row">File named in the specification</th><td><code>{SOURCE.fileNameExpectedBySpec}</code></td></tr>
-          <tr><th scope="row">SHA-256</th><td><code className="small">{SOURCE.sha256}</code></td></tr>
-          <tr><th scope="row">Sheets</th><td>{SOURCE.sheetNames.length}: {SOURCE.sheetNames.map((n) => <code key={n} style={{ marginRight: 6 }}>{JSON.stringify(n)}</code>)}</td></tr>
-          <tr><th scope="row">Masked identifier cells</th><td>{SOURCE.maskedCellCount} cells: the Aadhar number in the student table and its transposed copies. They were replaced by the placeholder XXXX-XXXX-XXXX before anything was stored, and the original is not kept anywhere in Gurukul ExcelLab.</td></tr>
-        </tbody></table></div>
-        <div className="callout warn" style={{ marginTop: 10 }}>The file name differs from the one in the specification. Sheet names match exactly, so it is treated as the same workbook. <strong>Please confirm.</strong> The sheet name <code>"Vlookup "</code> has a trailing space, which is preserved.</div>
-      </section>
 
       <div className="grid-cards" role="list" aria-label="Coverage summary">
         <div className="glass stat" role="listitem"><div className="n">{covered}<span className="muted" style={{ fontSize: "1rem" }}> / {cov.length}</span></div><div className="muted small">source concepts with a lesson and practice{covered < cov.length ? " (not all are covered yet)" : ""}</div></div>

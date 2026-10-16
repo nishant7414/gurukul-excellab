@@ -1,7 +1,8 @@
 import { useId, useState, type FormEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { verifyDemoLogin } from "../auth/accounts";
-import { APP_DESCRIPTION, APP_NAME, INSTITUTION, MONOGRAM, TAGLINE } from "../brand";
+import { APP_NAME, INSTITUTION, TAGLINE } from "../brand";
+import { GunvattaGurukulLogo } from "../ui/GunvattaGurukulLogo";
 import { actions } from "../state/store";
 
 const CHECK_MS = 280;
@@ -48,9 +49,13 @@ export default function Login() {
   return (
     <div className="login-page">
       <a className="skip" href="#login-form">Skip to sign-in form</a>
-      <div className="login-card glass card">
+      <div className="login-stack">
+        <div className="login-letterhead">
+          <GunvattaGurukulLogo size="login" />
+        </div>
+        <div className="login-card glass">
+          <div className="login-body">
         <div className="login-brand">
-          <div className="logo login-mono" aria-hidden="true">{MONOGRAM}</div>
           <h1>{APP_NAME}</h1>
           <p className="muted">Powered by {INSTITUTION}</p>
           <p className="small faint">{TAGLINE}</p>
@@ -110,11 +115,8 @@ export default function Login() {
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </form>
-        <p className="small faint login-note">
-          Demo sign-in only. Credentials are checked in this browser and are not real authentication.
-          Anyone can skip this screen. Learning progress stays in this browser and is not tied to a secure account.
-        </p>
-        <p className="small faint">{APP_DESCRIPTION}</p>
+        </div>
+        </div>
       </div>
     </div>
   );

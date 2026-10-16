@@ -82,7 +82,7 @@ export default function Dashboard() {
       <section className="glass card" aria-labelledby="cov-h">
         <h2 id="cov-h"><ListChecks size={18} aria-hidden="true" /> Source workbook coverage</h2>
         <p>{covered} of {cov.length} concepts found in the instructor's workbook have a lesson with practice. {covered < cov.length ? "The rest are listed as planned." : ""} <Link to="/audit">See the Workbook Coverage Audit</Link>.</p>
-        <p className="small faint">Progress is saved only in this browser. Demo sign-in is not a secure account. Challenges passed: {o.challengesPassed}/{o.challengesTotal} · Quizzes attempted: {o.quizzesAttempted}/{o.quizzesTotal}.</p>
+        <p className="small faint">Challenges passed: {o.challengesPassed}/{o.challengesTotal} · Quizzes attempted: {o.quizzesAttempted}/{o.quizzesTotal}.</p>
       </section>
     </div>
   );
