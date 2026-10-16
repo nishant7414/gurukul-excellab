@@ -10,6 +10,8 @@ import { importWorkbook, IMPORT_LIMITS, type ImportReport } from "../engine/impo
 import { downloadWorkbook, exportWorkbook, type ExportReport } from "../engine/export";
 import { actions } from "../state/store";
 import { grid } from "../data/source";
+import { GoogleSheetsEmbed } from "../ui/GoogleSheetsEmbed";
+import { GOOGLE_SAMPLE_SHEET } from "../sheets/catalog";
 
 function sample(): WorkbookData {
   const wb = emptyWorkbook(["Orders", "Scratch"]);
@@ -65,6 +67,14 @@ export default function Playground() {
         <h1>Formula Playground</h1>
         <p className="muted">A free spreadsheet to experiment in. Nothing here is graded and the sheet is <strong>not saved</strong> when you leave the page. The engine evaluates {fnList} functions; anything else returns a clear error.</p>
       </header>
+
+      <GoogleSheetsEmbed
+        title={GOOGLE_SAMPLE_SHEET.title}
+        description="A genuine Google Sheets document. The playground grid below is Gurukul ExcelLab's own practice sheet and is not Google."
+        spreadsheetUrl={GOOGLE_SAMPLE_SHEET.spreadsheetUrl}
+        embedUrl={GOOGLE_SAMPLE_SHEET.embedUrl}
+        height={520}
+      />
 
       <section className="glass card" aria-labelledby="eval-h">
         <h2 id="eval-h">Quick evaluate</h2>

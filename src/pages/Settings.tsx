@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import { actions, useStore } from "../state/store";
+import { ALL_EXERCISES } from "../content/registry";
+import { inspectSheetsUrl } from "../sheets/urls";
+import { GOOGLE_SHEET_DEFAULTS, GOOGLE_SAMPLE_SHEET } from "../sheets/catalog";
 
 export default function Settings() {
   const s = useStore((x) => x);
   const [name, setName] = useState(s.displayName);
   const [saved, setSaved] = useState(false);
   const [confirm, setConfirm] = useState("");
+  const sheetExercises = useMemo(() => ALL_EXERCISES.filter((e) => !e.questions), []);
+  const googleSheets = useStore((x) => x.settings.googleSheets);
+  const [sheetId, setSheetId] = useState(sheetExercises[0]?.id ?? "");
+  const currentAssign = googleSheets[sheetId] ?? GOOGLE_SHEET_DEFAULTS[sheetId];
+  const [sheetUrl, setSheetUrl] = useState(currentAssign?.spreadsheetUrl ?? "");
+  const [embedUrl, setEmbedUrl] = useState(currentAssign?.embedUrl ?? "");
+  const [fallbackUrl, setFallbackUrl] = useState(currentAssign?.fallbackUrl ?? "");
+  const [sheetTitle, setSheetTitle] = useState(currentAssign?.title ?? "");
+  const [sheetSaved, setSheetSaved] = useState(false);
+  const pickSheet = (id: string) => {
+    setSheetId(id);
+    const a = googleSheets[id] ?? GOOGLE_SHEET_DEFAULTS[id];
+    setSheetUrl(a?.spreadsheetUrl ?? "");
+    setEmbedUrl(a?.embedUrl ?? "");
+    setFallbackUrl(a?.fallbackUrl ?? "");
+    setSheetTitle(a?.title ?? "");
+  };
+  const saveSheet = () => {
+    const check = inspectSheetsUrl(sheetUrl);
+    if (!check.ok) { window.alert(check.error); return; }
+    if (embedUrl.trim()) {
+      const emb = inspectSheetsUrl(embedUrl);
+      if (!emb.ok) { window.alert(emb.error); return; }
+    }
+    actions.setGoogleSheet(sheetId, { title: sheetTitle.trim() || undefined, spreadsheetUrl: sheetUrl.trim(), embedUrl: embedUrl.trim() || undefined, fallbackUrl: fallbackUrl.trim() || undefined, mode: "embedded-view" });
+    setSheetSaved(true);
+    setTimeout(() => setSheetSaved(false), 1500);
+  };
 
   const download = () => {
     const blob = new Blob([actions.exportJson()], { type: "application/json" });
@@ -42,6 +73,33 @@ export default function Settings() {
           </div>
         </fieldset>
         <p className="small faint">Animations are turned off automatically when your device asks for reduced motion.</p>
+      </section>
+
+      <section className="glass card" aria-labelledby="gs-h">
+        <h2 id="gs-h">Google Sheets workbooks</h2>
+        <p className="muted small">Assign a real Google Sheets document to a lesson or challenge. URLs are stored in this browser only. No Google API key or password is used.</p>
+        <ol className="steps small">
+          <li>In Google Sheets, open the workbook. Use <strong>File → Share → Publish to web</strong> and choose the sheet, or <strong>Share</strong> with “Anyone with the link can view”.</li>
+          <li>Paste the share link or the Publish-to-web link below. A published preview is read-only.</li>
+          <li>For student editing, share a separate copy-template and tell students to use <strong>File → Make a copy</strong>. Do not give every student edit access to the original.</li>
+        </ol>
+        <p className="small faint">Until you assign a workbook, exercises show Google&apos;s public sample: {GOOGLE_SAMPLE_SHEET.spreadsheetUrl}</p>
+        <div className="stack" style={{ gap: 10 }}>
+          <label className="row">Exercise
+            <select value={sheetId} onChange={(e) => pickSheet(e.target.value)} aria-label="Exercise for Google Sheets URL">
+              {sheetExercises.map((e) => <option key={e.id} value={e.id}>{e.title} ({e.id})</option>)}
+            </select>
+          </label>
+          <label>Display title <input type="text" value={sheetTitle} onChange={(e) => setSheetTitle(e.target.value)} placeholder="Optional" /></label>
+          <label>Spreadsheet URL <input type="url" value={sheetUrl} onChange={(e) => setSheetUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/edit?usp=sharing" /></label>
+          <label>Embed URL (optional) <input type="url" value={embedUrl} onChange={(e) => setEmbedUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/preview" /></label>
+          <label>Editable / copy-template URL (optional) <input type="url" value={fallbackUrl} onChange={(e) => setFallbackUrl(e.target.value)} placeholder="Open-in-Sheets destination if different" /></label>
+          <div className="row">
+            <button className="btn primary" type="button" onClick={saveSheet}>Save workbook URL</button>
+            <button className="btn ghost" type="button" onClick={() => { actions.setGoogleSheet(sheetId, null); setSheetUrl(""); setEmbedUrl(""); setFallbackUrl(""); setSheetTitle(""); }}>Clear this exercise</button>
+            {sheetSaved && <span role="status" className="pill ok">Saved</span>}
+          </div>
+        </div>
       </section>
 
       <section className="glass card" aria-labelledby="data-h">

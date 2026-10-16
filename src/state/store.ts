@@ -3,6 +3,7 @@ import type { WorkbookData } from "../engine/types";
 import type { WorkbookDelta } from "./delta";
 import type { CheckResult, Exercise, MistakeTag } from "../learning/types";
 import { TAG_LABEL } from "../learning/types";
+import type { GoogleSheetAssignment } from "../sheets/catalog";
 
 const KEY = "excelgym.state.v1";
 
@@ -83,7 +84,13 @@ export interface AppState {
   quizzes: QuizResult[];
   activity: Record<string, { attempts: number; passes: number }>;
   imports: ImportRecord[];
-  settings: { theme: "light" | "dark" | "system"; sidebarCollapsed: boolean; onboarded: boolean };
+  settings: {
+    theme: "light" | "dark" | "system";
+    sidebarCollapsed: boolean;
+    onboarded: boolean;
+    /** Per-exercise Google Sheets URLs saved in this browser. Not a server admin console. */
+    googleSheets: Record<string, GoogleSheetAssignment>;
+  };
 }
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36));
@@ -94,7 +101,7 @@ function fresh(): AppState {
     version: 1, userId: "local-" + uid(), displayName: "Learner", createdAt: new Date().toISOString(),
     auth: { signedIn: false, email: null },
     exercises: {}, attempts: [], mistakes: [], quizzes: [], activity: {}, imports: [],
-    settings: { theme: "system", sidebarCollapsed: false, onboarded: false },
+    settings: { theme: "system", sidebarCollapsed: false, onboarded: false, googleSheets: {} },
   };
 }
 
@@ -225,6 +232,14 @@ export const actions = {
   },
   setTheme(theme: AppState["settings"]["theme"]) {
     update((s) => ({ ...s, settings: { ...s.settings, theme } }));
+  },
+  setGoogleSheet(exerciseId: string, assignment: GoogleSheetAssignment | null) {
+    update((s) => {
+      const next = { ...s.settings.googleSheets };
+      if (!assignment || !assignment.spreadsheetUrl.trim()) delete next[exerciseId];
+      else next[exerciseId] = assignment;
+      return { ...s, settings: { ...s.settings, googleSheets: next } };
+    });
   },
   setSidebar(collapsed: boolean) {
     update((s) => ({ ...s, settings: { ...s.settings, sidebarCollapsed: collapsed } }));

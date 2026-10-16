@@ -8,6 +8,8 @@ import type { WorkbookData } from "../engine/types";
 import { applyDelta, cellCount, DELTA_FROM_CELLS, diffWorkbook, type WorkbookDelta } from "../state/delta";
 import { Lightbulb, RotateCcw, Eye, CheckCircle2, Download } from "lucide-react";
 import { downloadWorkbook } from "../engine/export";
+import { GoogleSheetsEmbed } from "./GoogleSheetsEmbed";
+import { resolveGoogleSheet } from "../sheets/catalog";
 
 const KIND_LABEL = { guided: "Guided practice", independent: "Independent practice", mastery: "Mastery challenge" } as const;
 
@@ -50,6 +52,9 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
   const isQuiz = !!ex.questions;
   const passed = progress?.passed ?? false;
   const feedback = result?.feedback ?? [];
+  const sheetOverrides = useStore((s) => s.settings.googleSheets);
+  const google = useMemo(() => (isQuiz ? null : resolveGoogleSheet(ex.id, sheetOverrides)), [ex.id, isQuiz, sheetOverrides]);
+  const [practiceOpen, setPracticeOpen] = useState(() => import.meta.env.MODE === "test" || Boolean(import.meta.env.VITEST));
 
   const check = () => {
     const res = isQuiz ? mcqResult(ex, answers) : checkExercise(ex, wb);
@@ -86,7 +91,7 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
           {ex.criteria && ex.criteria.length > 0 && (
             <details className="small"><summary>How this is checked</summary><ul style={{ paddingLeft: 18 }}>{ex.criteria.map((c, i) => <li key={i}>{c}</li>)}</ul></details>
           )}
-          <p className="small faint">{ex.datasetNote}</p>
+          <p className="small faint">{ex.datasetNote}{google ? ` · Google Sheets: ${google.assignment.title ?? "configured workbook"}` : ""}</p>
           {ex.simulationNote && <div className="callout warn small">{ex.simulationNote}</div>}
         </div>
 
@@ -162,10 +167,31 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
             })}
           </div>
         ) : (
-          <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} editable={ex.editable} editableSheet={ex.activeSheet}
-            feedback={feedback} emphasise={ex.tools} allowSheetOps={false} height={560} />
+          <div className="stack">
+            {google && (
+              <GoogleSheetsEmbed
+                title={google.assignment.title ?? `${ex.title} — Google Sheets`}
+                description={google.assignment.description ?? "Genuine Google Sheets document for this exercise."}
+                spreadsheetUrl={google.assignment.spreadsheetUrl}
+                embedUrl={google.assignment.embedUrl}
+                fallbackUrl={google.assignment.fallbackUrl}
+                mode={google.assignment.mode ?? "embedded-view"}
+                height={640}
+                sourceNote={
+                  google.source === "sample"
+                    ? "Showing Google's public sample until an administrator assigns a workbook in Settings. Check Answer still uses the Gurukul practice sheet below — not this iframe."
+                    : "Check Answer grades the Gurukul practice sheet, not the Google iframe. To edit in Google, use Open in Google Sheets and work on your own copy."
+                }
+              />
+            )}
+            <details className="glass card" open={practiceOpen} onToggle={(e) => setPracticeOpen((e.target as HTMLDetailsElement).open)}>
+              <summary><strong>Check Answer workspace</strong> — Gurukul ExcelLab sheet used for scoring</summary>
+              <p className="small faint" style={{ margin: "8px 0" }}>Yellow cells are yours to edit; grey cells are provided data. Your work saves automatically in this browser. Google Sheets cannot be marked from this page.</p>
+              <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} editable={ex.editable} editableSheet={ex.activeSheet}
+                feedback={feedback} emphasise={ex.tools} allowSheetOps={false} height={560} />
+            </details>
+          </div>
         )}
-        {!isQuiz && <p className="small faint" style={{ marginTop: 8 }}>Yellow cells are yours to edit; grey cells are provided data. Your work saves automatically in this browser.</p>}
       </section>
     </div>
   );
