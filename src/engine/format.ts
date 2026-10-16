@@ -57,7 +57,7 @@ export function formatWithCode(n: number, code: string): string {
       return tok;
     });
   }
-  const m = /([#0,]*0?[#0,]*)(\.[0#]+)?/.exec(code.replace(/"[^"]*"/g, (s) => "\u0001".repeat(s.length)));
+  const m = /([#0,]*[0#][#0,]*)(\.[0#]+)?/.exec(code.replace(/"[^"]*"/g, (s) => "\u0001".repeat(s.length)));
   if (!m || !/[0#]/.test(m[0])) return code.replace(/"/g, "");
   const start = m.index;
   const end = start + m[0].length;

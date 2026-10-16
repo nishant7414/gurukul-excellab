@@ -229,3 +229,65 @@ reg({ name: "SQRT", min: 1, max: 1, category: cat, lift: "all", impl: ([n]) => {
   return Math.sqrt(v);
 } });
 reg({ name: "POWER", min: 2, max: 2, category: cat, lift: "all", impl: ([b, e]) => Math.pow(toNum(b), toNum(e)) });
+
+function stdev(nums: number[], sample: boolean): number {
+  if (nums.length < (sample ? 2 : 1)) throw new XlError("#DIV/0!", sample ? "STDEV needs at least two numbers." : "STDEV.P needs at least one number.");
+  const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+  const ss = nums.reduce((a, b) => a + (b - mean) ** 2, 0);
+  return Math.sqrt(ss / (sample ? nums.length - 1 : nums.length));
+}
+function variance(nums: number[], sample: boolean): number {
+  if (nums.length < (sample ? 2 : 1)) throw new XlError("#DIV/0!", "VAR needs enough numbers.");
+  const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+  return nums.reduce((a, b) => a + (b - mean) ** 2, 0) / (sample ? nums.length - 1 : nums.length);
+}
+reg({ name: "STDEV", min: 1, max: Infinity, category: cat, impl: (a) => stdev(collectNums(a), true) });
+reg({ name: "STDEVP", min: 1, max: Infinity, category: cat, impl: (a) => stdev(collectNums(a), false) });
+reg({ name: "VAR", min: 1, max: Infinity, category: cat, impl: (a) => variance(collectNums(a), true) });
+reg({ name: "VARP", min: 1, max: Infinity, category: cat, impl: (a) => variance(collectNums(a), false) });
+reg({ name: "RANK", min: 2, max: 3, category: cat, lift: [0], impl: ([n, ref, order]) => {
+  const target = toNum(n);
+  const nums = collectNums([ref]);
+  const desc = order === undefined || order === null || toNum(order) === 0;
+  const sorted = [...nums].sort((x, y) => (desc ? y - x : x - y));
+  const i = sorted.findIndex((v) => v === target);
+  if (i < 0) throw new XlError("#N/A", "RANK did not find that number in the list.");
+  return i + 1;
+} });
+reg({ name: "MODE", min: 1, max: Infinity, category: cat, impl: (a) => {
+  const nums = collectNums(a);
+  if (!nums.length) throw new XlError("#N/A", "MODE needs numbers.");
+  const freq = new Map<number, number>();
+  let best = nums[0], bestN = 0;
+  for (const n of nums) {
+    const c = (freq.get(n) ?? 0) + 1;
+    freq.set(n, c);
+    if (c > bestN) { best = n; bestN = c; }
+  }
+  if (bestN < 2) throw new XlError("#N/A", "MODE needs a value that appears more than once.");
+  return best;
+} });
+reg({ name: "PERCENTILE", min: 2, max: 2, category: cat, impl: ([arr, k]) => {
+  const nums = collectNums([arr]).sort((a, b) => a - b);
+  const p = toNum(k);
+  if (!nums.length || p < 0 || p > 1) throw new XlError("#NUM!", "PERCENTILE needs a k between 0 and 1.");
+  const idx = (nums.length - 1) * p;
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  return lo === hi ? nums[lo] : nums[lo] + (nums[hi] - nums[lo]) * (idx - lo);
+} });
+
+function annuity(rate: number, nper: number, pmt: number, pv: number, fv: number, type: number, want: "pmt" | "fv" | "pv"): number {
+  const typ = type ? 1 : 0;
+  if (rate === 0) {
+    if (want === "pmt") return -(pv + fv) / nper;
+    if (want === "fv") return -(pv + pmt * nper);
+    return -(fv + pmt * nper);
+  }
+  const grow = Math.pow(1 + rate, nper);
+  if (want === "pmt") return -(rate * (pv * grow + fv)) / ((1 + rate * typ) * (grow - 1));
+  if (want === "fv") return -pv * grow - pmt * (1 + rate * typ) * (grow - 1) / rate;
+  return -(fv + pmt * (1 + rate * typ) * (grow - 1) / rate) / grow;
+}
+reg({ name: "PMT", min: 3, max: 5, category: cat, lift: "all", impl: ([r, n, pv, fv, typ]) => annuity(toNum(r), toNum(n), 0, toNum(pv), fv === undefined ? 0 : toNum(fv), typ === undefined ? 0 : toNum(typ), "pmt") });
+reg({ name: "FV", min: 3, max: 5, category: cat, lift: "all", impl: ([r, n, pmt, pv, typ]) => annuity(toNum(r), toNum(n), toNum(pmt), pv === undefined ? 0 : toNum(pv), 0, typ === undefined ? 0 : toNum(typ), "fv") });
+reg({ name: "PV", min: 3, max: 5, category: cat, lift: "all", impl: ([r, n, pmt, fv, typ]) => annuity(toNum(r), toNum(n), toNum(pmt), 0, fv === undefined ? 0 : toNum(fv), typ === undefined ? 0 : toNum(typ), "pv") });

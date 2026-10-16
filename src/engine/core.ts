@@ -105,6 +105,11 @@ export const UNSUPPORTED: Record<string, string> = {
   WEBSERVICE: "External data calls are intentionally not available.",
   STOCKHISTORY: "External data calls are intentionally not available.",
   GOALSEEK: "Goal Seek is a command, not a function; it is taught as a guided step-by-step task.",
+  IRR: "Iterative cash-flow solvers are not implemented yet.",
+  NPV: "Net present value of irregular cash-flow series is not implemented yet; use PV for a regular annuity.",
+  GETPIVOTDATA: "PivotTables are not available in this browser workbook.",
+  INDIRECT: "Volatile text-to-reference conversion is not implemented yet.",
+  OFFSET: "Volatile constructed ranges are not implemented yet.",
 };
 export function reg(def: FnDef) {
   FUNCS.set(def.name, def);

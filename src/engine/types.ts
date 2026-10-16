@@ -54,4 +54,6 @@ export interface SheetData {
 
 export interface WorkbookData {
   sheets: SheetData[];
+  /** Univer-only extras (conditional format, validation, notes, filters). Not used by Check Answer. */
+  extras?: unknown;
 }

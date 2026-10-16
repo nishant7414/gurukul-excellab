@@ -27,7 +27,7 @@ export const PRACTICE_CONCEPTS: PracticeConcept[] = [
   c("DT", "Dates", "Intermediate", "M07", ["A-05"], "Tenure, due dates, durations, month ends, working days."),
   c("SF", "Sorting and filtering", "Intermediate", "M09", ["A-06"], "Sort whole tables and filter rows with the toolbar tools (simulated dialogs).", { limitation: "Sorting and filtering are simulated with dialogs, not Excel's drop-down arrows." }),
   c("TX", "Text functions", "Intermediate", "M06", ["L-HT-1", "L-HT-2", "L-HT-3", "L-HT-4", "L-HT-5", "L-HT-6", "L-HT-7"], "LEFT, MID, RIGHT, FIND, SUBSTITUTE, TEXTJOIN, TEXT and friends."),
-  c("FIN", "Finance calculations", "Advanced", "M21", [], "Variances, margins, schedules, payroll and forecasts built from formulas.", { limitation: "No PMT/IPMT/NPV functions in the engine; schedules are built from arithmetic." }),
+  c("FIN", "Finance calculations", "Advanced", "M21", [], "Variances, margins, schedules, payroll and forecasts built from formulas.", { limitation: "PMT, FV and PV are available. IPMT, NPV and IRR are not; some schedules still use arithmetic." }),
   c("CS", "Multi-table case studies", "Advanced", "M22", ["L-VL-5"], "Business problems that need two or more related tables and several skills."),
   c("LK", "Lookups: VLOOKUP, XLOOKUP, INDEX/MATCH", "Major topic", "M08", ["L-VL-1", "L-VL-2", "L-VL-3", "L-VL-4", "L-VL-5"], "Find values across tables, handle missing keys and messy keys."),
   c("CA", "Conditional aggregation", "Major topic", "M05", ["A-04"], "COUNTIF(S), SUMIF(S), AVERAGEIF(S), SUMPRODUCT."),

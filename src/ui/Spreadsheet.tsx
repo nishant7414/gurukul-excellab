@@ -1,4 +1,6 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+const UniverHost = lazy(() => import("./spreadsheet/UniverHost").then((m) => ({ default: m.UniverHost })));
 import { compute, parseInput } from "../engine/workbook";
 import { displayValue } from "../engine/format";
 import { parseISODate } from "../engine/dates";
@@ -80,7 +82,22 @@ function currentRegion(sh: SheetData, comp: ReturnType<typeof compute>, name: st
   return { c1, r1, c2, r2 };
 }
 
-export function Spreadsheet({ workbook, onChange, activeSheet, onActiveSheet, editable, editableSheet, feedback, allowSheetOps, minRows = 24, minCols = 10, emphasise = [], focusCell, height = 460 }: Props) {
+export function canUseUniver(): boolean {
+  if (typeof window === "undefined") return false;
+  if (import.meta.env.MODE === "test" || import.meta.env.VITEST) return false;
+  return typeof HTMLCanvasElement !== "undefined";
+}
+
+export function Spreadsheet(props: Props) {
+  if (!canUseUniver()) return <ClassicSpreadsheet {...props} />;
+  return (
+    <Suspense fallback={<div className="sheet glass-flat" style={{ height: props.height ?? 520 }} aria-busy="true">Loading spreadsheet…</div>}>
+      <UniverHost {...props} />
+    </Suspense>
+  );
+}
+
+function ClassicSpreadsheet({ workbook, onChange, activeSheet, onActiveSheet, editable, editableSheet, feedback, allowSheetOps, minRows = 24, minCols = 10, emphasise = [], focusCell, height = 460 }: Props) {
   const sheet = getSheet(workbook, activeSheet) ?? workbook.sheets[0];
   const comp = useMemo(() => compute(workbook), [workbook]);
   const [anchor, setAnchor] = useState<string>("A1");

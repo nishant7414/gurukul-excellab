@@ -31,6 +31,6 @@ export const MODULES: Module[] = [
   { id: "M18", title: "PivotTables (guided steps)", level: "Level 4: Job-ready", summary: "Summarise data by dragging fields. Will be taught as guided steps, not simulated.", lessonIds: [], fromSource: false },
   { id: "M19", title: "Power Query (guided steps)", level: "Level 4: Job-ready", summary: "Import and reshape data. Will be taught as guided steps, not simulated.", lessonIds: [], fromSource: false },
   { id: "M20", title: "Named ranges, tables and what-if", level: "Level 4: Job-ready", summary: "Tables, named ranges, scenarios.", lessonIds: [], fromSource: false },
-  { id: "M21", title: "Finance calculations", level: "Level 4: Job-ready", summary: "Variances, margins, growth, schedules and payroll built from formulas.", lessonIds: [], fromSource: false, note: "Practice only (no lessons yet). The engine has no PMT/IPMT/NPV, so schedules are built from arithmetic." },
+  { id: "M21", title: "Finance calculations", level: "Level 4: Job-ready", summary: "Variances, margins, growth, schedules and payroll built from formulas.", lessonIds: [], fromSource: false, note: "Practice only (no lessons yet). PMT, FV and PV are evaluated; IPMT, NPV and IRR are not, so some schedules still use arithmetic." },
   { id: "M22", title: "Multi-table case studies", level: "Level 4: Job-ready", summary: "Business problems that join two or more related tables.", lessonIds: [], fromSource: false, note: "Practice only (no lessons yet). Builds on the lookup lessons." },
 ];

@@ -120,6 +120,15 @@ table.data th { font-size: 0.82rem; color: var(--text-dim); position: sticky; to
 .modal footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 
 /* spreadsheet */
+.xl-workspace { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.xl-learn-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--surface-strong); }
+.xl-learn-bar .sheet-status { flex: 1; min-width: 160px; }
+.univer-host { position: relative; min-height: 420px; background: #fff; }
+.univer-host .univer-app,
+.univer-host [data-u-comp="app"],
+.univer-host > div { height: 100% !important; }
+:root[data-theme="dark"] .univer-host { background: #1b1f24; }
+
 .sheet { overflow: hidden; }
 .sheet-toolbar { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 8px; border-bottom: 1px solid var(--border); }
 .tb-group { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }

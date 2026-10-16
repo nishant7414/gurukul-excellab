@@ -1,4 +1,4 @@
-import { flat, reg, toNum } from "./core";
+import { flat, reg, toNum, toStr } from "./core";
 import { DAYS as _unused, dateToSerial, parseISODate, serialToDate, todaySerial, ymd } from "./dates";
 import { XlError, isErr, type Value } from "./types";
 
@@ -80,6 +80,29 @@ reg({ name: "NETWORKDAYS", min: 2, max: 3, category: cat, impl: ([s, e, h]) => {
   let n = 0;
   for (let d = a; d <= b; d++) if (isWorkday(d, hol)) n++;
   return n * sign;
+} });
+reg({ name: "DATEDIF", min: 3, max: 3, category: cat, lift: "all", impl: ([s, e, u]) => {
+  const a = Math.floor(toSerial(s)), b = Math.floor(toSerial(e));
+  if (b < a) throw new XlError("#NUM!", "DATEDIF start date must be on or before the end date.");
+  const A = serialToDate(a), B = serialToDate(b);
+  const unit = toStr(u).toUpperCase();
+  const years = B.getUTCFullYear() - A.getUTCFullYear() - (B.getUTCMonth() < A.getUTCMonth() || (B.getUTCMonth() === A.getUTCMonth() && B.getUTCDate() < A.getUTCDate()) ? 1 : 0);
+  const months = (B.getUTCFullYear() - A.getUTCFullYear()) * 12 + B.getUTCMonth() - A.getUTCMonth() - (B.getUTCDate() < A.getUTCDate() ? 1 : 0);
+  if (unit === "Y") return years;
+  if (unit === "M") return months;
+  if (unit === "D") return b - a;
+  if (unit === "YM") return ((months % 12) + 12) % 12;
+  if (unit === "YD") {
+    const mid = dateToSerial(B.getUTCFullYear(), A.getUTCMonth() + 1, A.getUTCDate());
+    return b - (mid <= b ? mid : dateToSerial(B.getUTCFullYear() - 1, A.getUTCMonth() + 1, A.getUTCDate()));
+  }
+  if (unit === "MD") {
+    const day = B.getUTCDate() - A.getUTCDate();
+    if (day >= 0) return day;
+    const prev = new Date(Date.UTC(B.getUTCFullYear(), B.getUTCMonth(), 0)).getUTCDate();
+    return prev + day;
+  }
+  throw new XlError("#NUM!", 'DATEDIF unit must be "Y", "M", "D", "YM", "YD" or "MD".');
 } });
 reg({ name: "WORKDAY", min: 2, max: 3, category: cat, impl: ([s, n, h]) => {
   let d = Math.floor(toSerial(s));

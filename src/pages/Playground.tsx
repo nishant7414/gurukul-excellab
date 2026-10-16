@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Upload } from "lucide-react";
+import { Download, Upload } from "lucide-react";
 import { Spreadsheet } from "../ui/Spreadsheet";
 import { emptyWorkbook, evaluateFormula } from "../engine/workbook";
 import { displayValue } from "../engine/format";
@@ -7,6 +7,7 @@ import { functionsUsed } from "../engine/parser";
 import { FUNCS, UNSUPPORTED } from "../engine/core";
 import { isErr, isMatrix, type WorkbookData } from "../engine/types";
 import { importWorkbook, IMPORT_LIMITS, type ImportReport } from "../engine/import";
+import { downloadWorkbook, exportWorkbook, type ExportReport } from "../engine/export";
 import { actions } from "../state/store";
 import { grid } from "../data/source";
 
@@ -29,6 +30,7 @@ export default function Playground() {
   const [report, setReport] = useState<ImportReport | null>(null);
   const [pending, setPending] = useState<WorkbookData | null>(null);
   const [importErr, setImportErr] = useState<string | null>(null);
+  const [exportNote, setExportNote] = useState<ExportReport | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const evaluate = () => {
@@ -82,7 +84,17 @@ export default function Playground() {
 
       <section aria-label="Spreadsheet">
         <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} allowSheetOps height={420} />
-        <div className="row" style={{ marginTop: 8 }}><button className="btn" onClick={() => { if (window.confirm("Replace the sheet with the sample data? Your changes in the playground will be lost.")) { setWb(sample()); setSheet("Orders"); setOut(null); } }}>Reset to sample data</button></div>
+        <div className="row" style={{ marginTop: 8 }}>
+          <button className="btn" onClick={() => { if (window.confirm("Replace the sheet with the sample data? Your changes in the playground will be lost.")) { setWb(sample()); setSheet("Orders"); setOut(null); setExportNote(null); } }}>Reset to sample data</button>
+          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, "xlsx"); downloadWorkbook(wb, "xlsx"); setExportNote(report); }}><Download size={15} /> Download .xlsx</button>
+          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, "csv"); downloadWorkbook(wb, "csv"); setExportNote(report); }}><Download size={15} /> Download CSV</button>
+        </div>
+        {exportNote && (
+          <div className="callout warn small" role="status" style={{ marginTop: 8 }}>
+            Downloaded {exportNote.kind.toUpperCase()} with {exportNote.sheets} sheet(s) and {exportNote.formulas} formula(s). {exportNote.warnings[0]}
+            {exportNote.functionsUnsupported.length > 0 && <> Unsupported functions in this file: {exportNote.functionsUnsupported.map((u) => u.name).join(", ")}.</>}
+          </div>
+        )}
       </section>
 
       <section className="glass card" aria-labelledby="imp-h">

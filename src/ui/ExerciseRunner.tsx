@@ -6,7 +6,8 @@ import { actions, useStore } from "../state/store";
 import { Spreadsheet } from "./Spreadsheet";
 import type { WorkbookData } from "../engine/types";
 import { applyDelta, cellCount, DELTA_FROM_CELLS, diffWorkbook, type WorkbookDelta } from "../state/delta";
-import { Lightbulb, RotateCcw, Eye, CheckCircle2 } from "lucide-react";
+import { Lightbulb, RotateCcw, Eye, CheckCircle2, Download } from "lucide-react";
+import { downloadWorkbook } from "../engine/export";
 
 const KIND_LABEL = { guided: "Guided practice", independent: "Independent practice", mastery: "Mastery challenge" } as const;
 
@@ -95,6 +96,7 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
             <button className="btn" onClick={() => { const n = Math.min(ex.hints.length, hints + 1); setHints(n); actions.useHint(ex.id, n); }} disabled={hints >= ex.hints.length}><Lightbulb size={15} /> Hint ({hints}/{ex.hints.length})</button>
             <button className="btn" onClick={revealSolution}><Eye size={15} /> {showSol ? "Hide solution" : "Show solution"}</button>
             <button className="btn ghost" onClick={reset}><RotateCcw size={15} /> Reset</button>
+            {!isQuiz && <button className="btn ghost" onClick={() => downloadWorkbook(wb, "xlsx")}><Download size={15} /> Download .xlsx</button>}
           </div>
           {hints > 0 && <ol className="steps" aria-label="Hints">{ex.hints.slice(0, hints).map((h, i) => <li key={i}>{h}</li>)}</ol>}
           {showSol && (
@@ -161,7 +163,7 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
           </div>
         ) : (
           <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} editable={ex.editable} editableSheet={ex.activeSheet}
-            feedback={feedback} emphasise={ex.tools} allowSheetOps={false} />
+            feedback={feedback} emphasise={ex.tools} allowSheetOps={false} height={560} />
         )}
         {!isQuiz && <p className="small faint" style={{ marginTop: 8 }}>Yellow cells are yours to edit; grey cells are provided data. Your work saves automatically in this browser.</p>}
       </section>

@@ -11,10 +11,19 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@univerjs/preset-sheets-conditional-formatting": "^1.0.4",
+    "@univerjs/preset-sheets-core": "^1.0.4",
+    "@univerjs/preset-sheets-data-validation": "^1.0.4",
+    "@univerjs/preset-sheets-filter": "^1.0.4",
+    "@univerjs/preset-sheets-find-replace": "^1.0.4",
+    "@univerjs/preset-sheets-hyper-link": "^1.0.4",
+    "@univerjs/preset-sheets-note": "^1.0.4",
+    "@univerjs/presets": "^1.0.4",
     "lucide-react": "^1.58.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4",
+    "rxjs": "^7.8.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

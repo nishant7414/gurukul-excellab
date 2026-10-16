@@ -108,6 +108,9 @@ export function importWorkbook(data: ArrayBuffer | string, fileName: string, siz
   if (!sheets.length || total === 0) return { ok: false, error: "The file contains no data." };
   if (errorCells) warnings.push(`${errorCells} cell(s) held an Excel error value and were skipped.`);
   if (ext === "csv") warnings.push("A CSV file has no formulas, formatting or multiple sheets. Dates in a CSV may arrive as text.");
+  if (ext === "xlsx") warnings.push("Charts, PivotTables, macros, Power Query, Power Pivot, comments, data validation and conditional formatting are not imported. Cell values, formulas and sheet names are.");
+  const named = book.Workbook?.Names?.length ?? 0;
+  if (named) warnings.push(`${named} named range(s) were found and were not imported.`);
 
   const names = [...used].sort();
   return {
