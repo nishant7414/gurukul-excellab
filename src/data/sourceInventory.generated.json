@@ -1,0 +1,4453 @@
+{
+ "workbookId": "WB-DATA-ENTRY",
+ "fileNameInspected": "Data Entry.xlsx",
+ "fileNameExpectedBySpec": "Data Entry(1).xlsx",
+ "fileBytes": 24204,
+ "sha256": "53c68346b5310ea372e3d5954c34196c00847a44ab95dfc5d545e5cb98d37992",
+ "sheetNames": [
+  "Transpose",
+  "Sheet1",
+  "Excel Forms",
+  "Auto and flash fill",
+  "Text to column",
+  "Handling Text Data",
+  "Vlookup "
+ ],
+ "maskedCellCount": 4,
+ "sheets": [
+  {
+   "id": "SHEET-1",
+   "index": 0,
+   "name": "Transpose",
+   "ref": "B3:P27",
+   "empty": false,
+   "cells": [
+    {
+     "a": "C3",
+     "t": "s",
+     "v": "Roll No"
+    },
+    {
+     "a": "D3",
+     "t": "s",
+     "v": "Student Name"
+    },
+    {
+     "a": "E3",
+     "t": "s",
+     "v": "Father Name"
+    },
+    {
+     "a": "F3",
+     "t": "s",
+     "v": "Total Fee"
+    },
+    {
+     "a": "G3",
+     "t": "s",
+     "v": "Deposit Amount"
+    },
+    {
+     "a": "H3",
+     "t": "s",
+     "v": "Balance"
+    },
+    {
+     "a": "I3",
+     "t": "s",
+     "v": "Aadhar Number"
+    },
+    {
+     "a": "C4",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "D4",
+     "t": "s",
+     "v": "om"
+    },
+    {
+     "a": "E4",
+     "t": "s",
+     "v": "ramesh"
+    },
+    {
+     "a": "F4",
+     "t": "n",
+     "v": 10000
+    },
+    {
+     "a": "G4",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "H4",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "I4",
+     "t": "s",
+     "v": "XXXX-XXXX-XXXX",
+     "masked": true
+    },
+    {
+     "a": "K4",
+     "t": "s",
+     "v": "<---- Original Data"
+    },
+    {
+     "a": "C5",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "D5",
+     "t": "s",
+     "v": "raj"
+    },
+    {
+     "a": "E5",
+     "t": "s",
+     "v": "raju"
+    },
+    {
+     "a": "F5",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "G5",
+     "t": "n",
+     "v": 4000
+    },
+    {
+     "a": "H5",
+     "t": "n",
+     "v": 1000
+    },
+    {
+     "a": "C6",
+     "t": "n",
+     "v": 3
+    },
+    {
+     "a": "D6",
+     "t": "s",
+     "v": "retesh"
+    },
+    {
+     "a": "E6",
+     "t": "s",
+     "v": "rajesh"
+    },
+    {
+     "a": "F6",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "G6",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "H6",
+     "t": "n",
+     "v": 6000,
+     "f": "F6-G6"
+    },
+    {
+     "a": "C7",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "D7",
+     "t": "s",
+     "v": "ram kumar"
+    },
+    {
+     "a": "E7",
+     "t": "s",
+     "v": "ram"
+    },
+    {
+     "a": "F7",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "G7",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "H7",
+     "t": "n",
+     "v": 6000,
+     "f": "F7-G7"
+    },
+    {
+     "a": "B11",
+     "t": "s",
+     "v": "1.Transpose the Data"
+    },
+    {
+     "a": "B12",
+     "t": "s",
+     "v": " Click Any cell and press ctrl+A it will select complete table"
+    },
+    {
+     "a": "L12",
+     "t": "s",
+     "v": "Roll No"
+    },
+    {
+     "a": "M12",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "N12",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "O12",
+     "t": "n",
+     "v": 3
+    },
+    {
+     "a": "P12",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "B13",
+     "t": "s",
+     "v": "Press ctrl+c"
+    },
+    {
+     "a": "L13",
+     "t": "s",
+     "v": "Student Name"
+    },
+    {
+     "a": "M13",
+     "t": "s",
+     "v": "om"
+    },
+    {
+     "a": "N13",
+     "t": "s",
+     "v": "raj"
+    },
+    {
+     "a": "O13",
+     "t": "s",
+     "v": "retesh"
+    },
+    {
+     "a": "P13",
+     "t": "s",
+     "v": "ram kumar"
+    },
+    {
+     "a": "B14",
+     "t": "s",
+     "v": "then press ctrl+v"
+    },
+    {
+     "a": "L14",
+     "t": "s",
+     "v": "Father Name"
+    },
+    {
+     "a": "M14",
+     "t": "s",
+     "v": "ramesh"
+    },
+    {
+     "a": "N14",
+     "t": "s",
+     "v": "raju"
+    },
+    {
+     "a": "O14",
+     "t": "s",
+     "v": "rajesh"
+    },
+    {
+     "a": "P14",
+     "t": "s",
+     "v": "ram"
+    },
+    {
+     "a": "B15",
+     "t": "s",
+     "v": "do left click and then paste speacial -> transpose"
+    },
+    {
+     "a": "L15",
+     "t": "s",
+     "v": "Total Fee"
+    },
+    {
+     "a": "M15",
+     "t": "n",
+     "v": 10000
+    },
+    {
+     "a": "N15",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "O15",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "P15",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "L16",
+     "t": "s",
+     "v": "Deposit Amount"
+    },
+    {
+     "a": "M16",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "N16",
+     "t": "n",
+     "v": 4000
+    },
+    {
+     "a": "O16",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "P16",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "L17",
+     "t": "s",
+     "v": "Balance"
+    },
+    {
+     "a": "M17",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "N17",
+     "t": "n",
+     "v": 1000
+    },
+    {
+     "a": "O17",
+     "t": "n",
+     "v": 6000,
+     "f": "O15-O16"
+    },
+    {
+     "a": "P17",
+     "t": "n",
+     "v": 6000,
+     "f": "P15-P16"
+    },
+    {
+     "a": "B18",
+     "t": "s",
+     "v": "Roll No"
+    },
+    {
+     "a": "C18",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "D18",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "E18",
+     "t": "n",
+     "v": 3
+    },
+    {
+     "a": "F18",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "L18",
+     "t": "s",
+     "v": "Aadhar Number"
+    },
+    {
+     "a": "M18",
+     "t": "s",
+     "v": "XXXX-XXXX-XXXX",
+     "masked": true
+    },
+    {
+     "a": "B19",
+     "t": "s",
+     "v": "Student Name"
+    },
+    {
+     "a": "C19",
+     "t": "s",
+     "v": "om"
+    },
+    {
+     "a": "D19",
+     "t": "s",
+     "v": "raj"
+    },
+    {
+     "a": "E19",
+     "t": "s",
+     "v": "retesh"
+    },
+    {
+     "a": "F19",
+     "t": "s",
+     "v": "ram kumar"
+    },
+    {
+     "a": "B20",
+     "t": "s",
+     "v": "Father Name"
+    },
+    {
+     "a": "C20",
+     "t": "s",
+     "v": "ramesh"
+    },
+    {
+     "a": "D20",
+     "t": "s",
+     "v": "raju"
+    },
+    {
+     "a": "E20",
+     "t": "s",
+     "v": "rajesh"
+    },
+    {
+     "a": "F20",
+     "t": "s",
+     "v": "ram"
+    },
+    {
+     "a": "B21",
+     "t": "s",
+     "v": "Total Fee"
+    },
+    {
+     "a": "C21",
+     "t": "n",
+     "v": 10000
+    },
+    {
+     "a": "D21",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "E21",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "F21",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "L21",
+     "t": "s",
+     "v": "Roll No"
+    },
+    {
+     "a": "M21",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "N21",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "O21",
+     "t": "n",
+     "v": 3
+    },
+    {
+     "a": "P21",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "B22",
+     "t": "s",
+     "v": "Deposit Amount"
+    },
+    {
+     "a": "C22",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "D22",
+     "t": "n",
+     "v": 4000
+    },
+    {
+     "a": "E22",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "F22",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "L22",
+     "t": "s",
+     "v": "Student Name"
+    },
+    {
+     "a": "M22",
+     "t": "s",
+     "v": "om"
+    },
+    {
+     "a": "N22",
+     "t": "s",
+     "v": "raj"
+    },
+    {
+     "a": "O22",
+     "t": "s",
+     "v": "retesh"
+    },
+    {
+     "a": "P22",
+     "t": "s",
+     "v": "ram kumar"
+    },
+    {
+     "a": "B23",
+     "t": "s",
+     "v": "Balance"
+    },
+    {
+     "a": "C23",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "D23",
+     "t": "n",
+     "v": 1000
+    },
+    {
+     "a": "E23",
+     "t": "n",
+     "v": 6000,
+     "f": "E21-E22"
+    },
+    {
+     "a": "F23",
+     "t": "n",
+     "v": 6000,
+     "f": "F21-F22"
+    },
+    {
+     "a": "L23",
+     "t": "s",
+     "v": "Father Name"
+    },
+    {
+     "a": "M23",
+     "t": "s",
+     "v": "ramesh"
+    },
+    {
+     "a": "N23",
+     "t": "s",
+     "v": "raju"
+    },
+    {
+     "a": "O23",
+     "t": "s",
+     "v": "rajesh"
+    },
+    {
+     "a": "P23",
+     "t": "s",
+     "v": "ram"
+    },
+    {
+     "a": "B24",
+     "t": "s",
+     "v": "Aadhar Number"
+    },
+    {
+     "a": "C24",
+     "t": "s",
+     "v": "XXXX-XXXX-XXXX",
+     "masked": true
+    },
+    {
+     "a": "L24",
+     "t": "s",
+     "v": "Total Fee"
+    },
+    {
+     "a": "M24",
+     "t": "n",
+     "v": 10000
+    },
+    {
+     "a": "N24",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "O24",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "P24",
+     "t": "n",
+     "v": 8000
+    },
+    {
+     "a": "L25",
+     "t": "s",
+     "v": "Deposit Amount"
+    },
+    {
+     "a": "M25",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "N25",
+     "t": "n",
+     "v": 4000
+    },
+    {
+     "a": "O25",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "P25",
+     "t": "n",
+     "v": 2000
+    },
+    {
+     "a": "L26",
+     "t": "s",
+     "v": "Balance"
+    },
+    {
+     "a": "M26",
+     "t": "n",
+     "v": 5000
+    },
+    {
+     "a": "N26",
+     "t": "n",
+     "v": 1000
+    },
+    {
+     "a": "O26",
+     "t": "n",
+     "v": 6000,
+     "f": "O24-O25"
+    },
+    {
+     "a": "P26",
+     "t": "n",
+     "v": 6000,
+     "f": "P24-P25"
+    },
+    {
+     "a": "L27",
+     "t": "s",
+     "v": "Aadhar Number"
+    },
+    {
+     "a": "M27",
+     "t": "s",
+     "v": "XXXX-XXXX-XXXX",
+     "masked": true
+    }
+   ]
+  },
+  {
+   "id": "SHEET-2",
+   "index": 1,
+   "name": "Sheet1",
+   "ref": null,
+   "empty": true,
+   "cells": []
+  },
+  {
+   "id": "SHEET-3",
+   "index": 2,
+   "name": "Excel Forms",
+   "ref": "C4:H8",
+   "empty": false,
+   "cells": [
+    {
+     "a": "C4",
+     "t": "s",
+     "v": "Roll No"
+    },
+    {
+     "a": "D4",
+     "t": "s",
+     "v": "Student Name"
+    },
+    {
+     "a": "E4",
+     "t": "s",
+     "v": "Father Name"
+    },
+    {
+     "a": "F4",
+     "t": "s",
+     "v": "Total Fee"
+    },
+    {
+     "a": "G4",
+     "t": "s",
+     "v": "Deposit Amount"
+    },
+    {
+     "a": "H4",
+     "t": "s",
+     "v": "Balance"
+    },
+    {
+     "a": "C5",
+     "t": "n",
+     "v": 12
+    },
+    {
+     "a": "D5",
+     "t": "s",
+     "v": "ramesh"
+    },
+    {
+     "a": "E5",
+     "t": "s",
+     "v": "suresh"
+    },
+    {
+     "a": "F5",
+     "t": "n",
+     "v": 1000
+    },
+    {
+     "a": "G5",
+     "t": "n",
+     "v": 100
+    },
+    {
+     "a": "H5",
+     "t": "n",
+     "v": 900
+    },
+    {
+     "a": "C6",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "C7",
+     "t": "n",
+     "v": 14
+    }
+   ]
+  },
+  {
+   "id": "SHEET-4",
+   "index": 3,
+   "name": "Auto and flash fill",
+   "ref": "B2:R23",
+   "empty": false,
+   "cells": [
+    {
+     "a": "G2",
+     "t": "s",
+     "v": "1. Splitting Full Names"
+    },
+    {
+     "a": "K2",
+     "t": "s",
+     "v": "2. Combining First and Last Names"
+    },
+    {
+     "a": "Q2",
+     "t": "s",
+     "v": "Extracting Domain from Email Addresses"
+    },
+    {
+     "a": "C3",
+     "t": "s",
+     "v": "Date"
+    },
+    {
+     "a": "B4",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "C4",
+     "t": "n",
+     "v": 44969
+    },
+    {
+     "a": "G4",
+     "t": "s",
+     "v": "Full Name"
+    },
+    {
+     "a": "H4",
+     "t": "s",
+     "v": "First Name"
+    },
+    {
+     "a": "I4",
+     "t": "s",
+     "v": "Last Name"
+    },
+    {
+     "a": "K4",
+     "t": "s",
+     "v": "First Name"
+    },
+    {
+     "a": "L4",
+     "t": "s",
+     "v": "Last Name"
+    },
+    {
+     "a": "M4",
+     "t": "s",
+     "v": "Full Name"
+    },
+    {
+     "a": "Q4",
+     "t": "s",
+     "v": "Email Address"
+    },
+    {
+     "a": "R4",
+     "t": "s",
+     "v": "Domain"
+    },
+    {
+     "a": "B5",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "C5",
+     "t": "n",
+     "v": 44970
+    },
+    {
+     "a": "G5",
+     "t": "s",
+     "v": "John Smith"
+    },
+    {
+     "a": "H5",
+     "t": "s",
+     "v": "John "
+    },
+    {
+     "a": "I5",
+     "t": "s",
+     "v": "Smith"
+    },
+    {
+     "a": "K5",
+     "t": "s",
+     "v": "Alice"
+    },
+    {
+     "a": "L5",
+     "t": "s",
+     "v": "Johnson"
+    },
+    {
+     "a": "M5",
+     "t": "s",
+     "v": "Alice Johnson"
+    },
+    {
+     "a": "Q5",
+     "t": "s",
+     "v": "john@example.com"
+    },
+    {
+     "a": "R5",
+     "t": "s",
+     "v": "example.com"
+    },
+    {
+     "a": "B6",
+     "t": "n",
+     "v": 3
+    },
+    {
+     "a": "C6",
+     "t": "n",
+     "v": 44971
+    },
+    {
+     "a": "G6",
+     "t": "s",
+     "v": "Sarah Connor"
+    },
+    {
+     "a": "H6",
+     "t": "s",
+     "v": "Sarah"
+    },
+    {
+     "a": "K6",
+     "t": "s",
+     "v": "Bob"
+    },
+    {
+     "a": "L6",
+     "t": "s",
+     "v": "Smith"
+    },
+    {
+     "a": "Q6",
+     "t": "s",
+     "v": "sarah@company.org"
+    },
+    {
+     "a": "B7",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "C7",
+     "t": "n",
+     "v": 44972
+    },
+    {
+     "a": "G7",
+     "t": "s",
+     "v": "Michael Jordan"
+    },
+    {
+     "a": "H7",
+     "t": "s",
+     "v": "Michael"
+    },
+    {
+     "a": "K7",
+     "t": "s",
+     "v": "Charlie"
+    },
+    {
+     "a": "L7",
+     "t": "s",
+     "v": "Davis"
+    },
+    {
+     "a": "Q7",
+     "t": "s",
+     "v": "michael@service.net"
+    },
+    {
+     "a": "B8",
+     "t": "n",
+     "v": 5
+    },
+    {
+     "a": "C8",
+     "t": "n",
+     "v": 44973
+    },
+    {
+     "a": "G8",
+     "t": "s",
+     "v": "Emily Blunt"
+    },
+    {
+     "a": "H8",
+     "t": "s",
+     "v": "Emily"
+    },
+    {
+     "a": "K8",
+     "t": "s",
+     "v": "Diana"
+    },
+    {
+     "a": "L8",
+     "t": "s",
+     "v": "Watson"
+    },
+    {
+     "a": "Q8",
+     "t": "s",
+     "v": "emily@techfirm.com"
+    },
+    {
+     "a": "B9",
+     "t": "n",
+     "v": 6
+    },
+    {
+     "a": "C9",
+     "t": "n",
+     "v": 44974
+    },
+    {
+     "a": "G9",
+     "t": "s",
+     "v": "Chris Hemsworth"
+    },
+    {
+     "a": "H9",
+     "t": "s",
+     "v": "Chris"
+    },
+    {
+     "a": "K9",
+     "t": "s",
+     "v": "Evan"
+    },
+    {
+     "a": "L9",
+     "t": "s",
+     "v": "Baker"
+    },
+    {
+     "a": "Q9",
+     "t": "s",
+     "v": "chris@university.edu"
+    },
+    {
+     "a": "B10",
+     "t": "n",
+     "v": 7
+    },
+    {
+     "a": "C10",
+     "t": "n",
+     "v": 44975
+    },
+    {
+     "a": "N10",
+     "t": "s",
+     "v": " "
+    },
+    {
+     "a": "B11",
+     "t": "n",
+     "v": 8
+    },
+    {
+     "a": "C11",
+     "t": "n",
+     "v": 44976
+    },
+    {
+     "a": "G11",
+     "t": "s",
+     "v": "Extracting Year from Dates"
+    },
+    {
+     "a": "B12",
+     "t": "n",
+     "v": 9
+    },
+    {
+     "a": "C12",
+     "t": "n",
+     "v": 44977
+    },
+    {
+     "a": "B13",
+     "t": "n",
+     "v": 10
+    },
+    {
+     "a": "C13",
+     "t": "n",
+     "v": 44978
+    },
+    {
+     "a": "G13",
+     "t": "s",
+     "v": "Date"
+    },
+    {
+     "a": "H13",
+     "t": "s",
+     "v": "Year"
+    },
+    {
+     "a": "I13",
+     "t": "s",
+     "v": "Month"
+    },
+    {
+     "a": "B14",
+     "t": "n",
+     "v": 11
+    },
+    {
+     "a": "G14",
+     "t": "n",
+     "v": 45047
+    },
+    {
+     "a": "H14",
+     "t": "n",
+     "v": 2023
+    },
+    {
+     "a": "I14",
+     "t": "n",
+     "v": 5
+    },
+    {
+     "a": "B15",
+     "t": "n",
+     "v": 12
+    },
+    {
+     "a": "G15",
+     "t": "n",
+     "v": 44420
+    },
+    {
+     "a": "I15",
+     "t": "n",
+     "v": 8
+    },
+    {
+     "a": "B16",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "G16",
+     "t": "n",
+     "v": 44150
+    },
+    {
+     "a": "I16",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "B17",
+     "t": "n",
+     "v": 14
+    },
+    {
+     "a": "G17",
+     "t": "n",
+     "v": 43524
+    },
+    {
+     "a": "I17",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "B18",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "G18",
+     "t": "n",
+     "v": 44772
+    },
+    {
+     "a": "I18",
+     "t": "n",
+     "v": 7
+    },
+    {
+     "a": "B19",
+     "t": "n",
+     "v": 16
+    },
+    {
+     "a": "B20",
+     "t": "n",
+     "v": 17
+    },
+    {
+     "a": "B21",
+     "t": "n",
+     "v": 18
+    },
+    {
+     "a": "B22",
+     "t": "n",
+     "v": 19
+    },
+    {
+     "a": "B23",
+     "t": "n",
+     "v": 20
+    }
+   ]
+  },
+  {
+   "id": "SHEET-5",
+   "index": 4,
+   "name": "Text to column",
+   "ref": "B2:F12",
+   "empty": false,
+   "cells": [
+    {
+     "a": "B2",
+     "t": "s",
+     "v": "Full Data"
+    },
+    {
+     "a": "D2",
+     "t": "s",
+     "v": "First Name"
+    },
+    {
+     "a": "E2",
+     "t": "s",
+     "v": "Last Name"
+    },
+    {
+     "a": "F2",
+     "t": "s",
+     "v": "City"
+    },
+    {
+     "a": "B3",
+     "t": "s",
+     "v": "John, Smith, New York"
+    },
+    {
+     "a": "D3",
+     "t": "s",
+     "v": "John"
+    },
+    {
+     "a": "E3",
+     "t": "s",
+     "v": " Smith"
+    },
+    {
+     "a": "F3",
+     "t": "s",
+     "v": " New York"
+    },
+    {
+     "a": "B4",
+     "t": "s",
+     "v": "Alice, Johnson, Los Angeles"
+    },
+    {
+     "a": "D4",
+     "t": "s",
+     "v": "John"
+    },
+    {
+     "a": "E4",
+     "t": "s",
+     "v": " Smith"
+    },
+    {
+     "a": "F4",
+     "t": "s",
+     "v": " New York"
+    },
+    {
+     "a": "B5",
+     "t": "s",
+     "v": "Bob, Brown, Chicago"
+    },
+    {
+     "a": "B6",
+     "t": "s",
+     "v": "Emma, Davis, Houston"
+    },
+    {
+     "a": "B7",
+     "t": "s",
+     "v": "David, Wilson, Miami"
+    },
+    {
+     "a": "B8",
+     "t": "s",
+     "v": "Sophia, Miller, Dallas"
+    },
+    {
+     "a": "B9",
+     "t": "s",
+     "v": "Michael, Taylor, San Francisco"
+    },
+    {
+     "a": "B10",
+     "t": "s",
+     "v": "Olivia, Anderson, Seattle"
+    },
+    {
+     "a": "B11",
+     "t": "s",
+     "v": "James, Thompson, Boston"
+    },
+    {
+     "a": "B12",
+     "t": "s",
+     "v": "Mia, Martinez, Phoenix"
+    }
+   ]
+  },
+  {
+   "id": "SHEET-6",
+   "index": 5,
+   "name": "Handling Text Data",
+   "ref": "B2:BB13",
+   "empty": false,
+   "cells": [
+    {
+     "a": "W2",
+     "t": "s",
+     "v": "Search"
+    },
+    {
+     "a": "X2",
+     "t": "s",
+     "v": "find"
+    },
+    {
+     "a": "Y2",
+     "t": "s",
+     "v": "substitute"
+    },
+    {
+     "a": "Z2",
+     "t": "s",
+     "v": "filterxml"
+    },
+    {
+     "a": "AA2",
+     "t": "s",
+     "v": "filter"
+    },
+    {
+     "a": "AB2",
+     "t": "s",
+     "v": "tocol"
+    },
+    {
+     "a": "AC2",
+     "t": "s",
+     "v": "torow"
+    },
+    {
+     "a": "AD2",
+     "t": "s",
+     "v": "transpose"
+    },
+    {
+     "a": "AE2",
+     "t": "s",
+     "v": "proper"
+    },
+    {
+     "a": "AF2",
+     "t": "s",
+     "v": "upper"
+    },
+    {
+     "a": "AG2",
+     "t": "s",
+     "v": "lower "
+    },
+    {
+     "a": "B3",
+     "t": "s",
+     "v": "Name"
+    },
+    {
+     "a": "C3",
+     "t": "s",
+     "v": "Email"
+    },
+    {
+     "a": "D3",
+     "t": "s",
+     "v": "Product Code"
+    },
+    {
+     "a": "E3",
+     "t": "s",
+     "v": "Transaction ID"
+    },
+    {
+     "a": "F3",
+     "t": "s",
+     "v": "City"
+    },
+    {
+     "a": "G3",
+     "t": "s",
+     "v": "Country"
+    },
+    {
+     "a": "H3",
+     "t": "s",
+     "v": "Date"
+    },
+    {
+     "a": "I3",
+     "t": "s",
+     "v": "Amount"
+    },
+    {
+     "a": "J3",
+     "t": "s",
+     "v": "Comments"
+    },
+    {
+     "a": "M3",
+     "t": "s",
+     "v": "LEFT Function:"
+    },
+    {
+     "a": "N3",
+     "t": "s",
+     "v": "Mid Function "
+    },
+    {
+     "a": "P3",
+     "t": "s",
+     "v": "RIGHT Function:"
+    },
+    {
+     "a": "R3",
+     "t": "s",
+     "v": "Textafter Function:"
+    },
+    {
+     "a": "S3",
+     "t": "s",
+     "v": "Text split"
+    },
+    {
+     "a": "T3",
+     "t": "s",
+     "v": "Text after "
+    },
+    {
+     "a": "U3",
+     "t": "s",
+     "v": "trim"
+    },
+    {
+     "a": "V3",
+     "t": "s",
+     "v": "textbefore"
+    },
+    {
+     "a": "W3",
+     "t": "n",
+     "v": 5,
+     "f": "SEARCH(\"@\",R6)"
+    },
+    {
+     "a": "X3",
+     "t": "n",
+     "v": 5,
+     "f": "FIND(\"@\",R6)"
+    },
+    {
+     "a": "AM3",
+     "t": "s",
+     "v": "LEN Function:"
+    },
+    {
+     "a": "AP3",
+     "t": "s",
+     "v": "CONCATENATE:"
+    },
+    {
+     "a": "AU3",
+     "t": "s",
+     "v": "TEXT"
+    },
+    {
+     "a": "B4",
+     "t": "s",
+     "v": "John Smith"
+    },
+    {
+     "a": "C4",
+     "t": "s",
+     "v": "john@example.com"
+    },
+    {
+     "a": "D4",
+     "t": "s",
+     "v": "A123B"
+    },
+    {
+     "a": "E4",
+     "t": "s",
+     "v": "TXN1001"
+    },
+    {
+     "a": "F4",
+     "t": "s",
+     "v": "New York"
+    },
+    {
+     "a": "G4",
+     "t": "s",
+     "v": "USA"
+    },
+    {
+     "a": "H4",
+     "t": "s",
+     "v": "01/15/2023"
+    },
+    {
+     "a": "I4",
+     "t": "n",
+     "v": 120.5
+    },
+    {
+     "a": "J4",
+     "t": "s",
+     "v": "First purchase"
+    },
+    {
+     "a": "M4",
+     "t": "s",
+     "v": "Extract the first three letters from the Product Code."
+    },
+    {
+     "a": "P4",
+     "t": "s",
+     "v": "Extract the last two characters from the Transaction ID."
+    },
+    {
+     "a": "R4",
+     "t": "s",
+     "v": "Extract the domain part from the Email addresses (after @)."
+    },
+    {
+     "a": "AM4",
+     "t": "s",
+     "v": "Find the length of each Name"
+    },
+    {
+     "a": "AP4",
+     "t": "s",
+     "v": "Combine Name and City to form a full string like \"John Smith - New York\"."
+    },
+    {
+     "a": "AU4",
+     "t": "s",
+     "v": "Find the month name from given date"
+    },
+    {
+     "a": "B5",
+     "t": "s",
+     "v": "Jane Doe"
+    },
+    {
+     "a": "C5",
+     "t": "s",
+     "v": "jane_doe@example.com"
+    },
+    {
+     "a": "D5",
+     "t": "s",
+     "v": "C987X"
+    },
+    {
+     "a": "E5",
+     "t": "s",
+     "v": "TXN1002"
+    },
+    {
+     "a": "F5",
+     "t": "s",
+     "v": "London"
+    },
+    {
+     "a": "G5",
+     "t": "s",
+     "v": "UK"
+    },
+    {
+     "a": "H5",
+     "t": "n",
+     "v": 45048
+    },
+    {
+     "a": "I5",
+     "t": "n",
+     "v": 235.75
+    },
+    {
+     "a": "J5",
+     "t": "s",
+     "v": "Customer complaint"
+    },
+    {
+     "a": "M5",
+     "t": "s",
+     "v": "Product Code"
+    },
+    {
+     "a": "P5",
+     "t": "s",
+     "v": "Transaction ID"
+    },
+    {
+     "a": "R5",
+     "t": "s",
+     "v": "Email"
+    },
+    {
+     "a": "AM5",
+     "t": "s",
+     "v": "Name"
+    },
+    {
+     "a": "AP5",
+     "t": "s",
+     "v": "Name"
+    },
+    {
+     "a": "AQ5",
+     "t": "s",
+     "v": "City"
+    },
+    {
+     "a": "AU5",
+     "t": "s",
+     "v": "Date"
+    },
+    {
+     "a": "BA5",
+     "t": "s",
+     "v": "JoHn Smith"
+    },
+    {
+     "a": "BB5",
+     "t": "s",
+     "v": "John Smith",
+     "f": "PROPER(BA5)"
+    },
+    {
+     "a": "B6",
+     "t": "s",
+     "v": "Raj Patel"
+    },
+    {
+     "a": "C6",
+     "t": "s",
+     "v": "raj_patel@india.com"
+    },
+    {
+     "a": "D6",
+     "t": "s",
+     "v": "Z456K"
+    },
+    {
+     "a": "E6",
+     "t": "s",
+     "v": "TXN1003"
+    },
+    {
+     "a": "F6",
+     "t": "s",
+     "v": "Mumbai"
+    },
+    {
+     "a": "G6",
+     "t": "s",
+     "v": "India"
+    },
+    {
+     "a": "H6",
+     "t": "n",
+     "v": 45263
+    },
+    {
+     "a": "I6",
+     "t": "n",
+     "v": 300
+    },
+    {
+     "a": "J6",
+     "t": "s",
+     "v": "Loyal customer"
+    },
+    {
+     "a": "M6",
+     "t": "s",
+     "v": "A123B"
+    },
+    {
+     "a": "O6",
+     "t": "s",
+     "v": "A12",
+     "f": "LEFT(M6,3)"
+    },
+    {
+     "a": "P6",
+     "t": "s",
+     "v": "TXN1001"
+    },
+    {
+     "a": "Q6",
+     "t": "s",
+     "v": "01",
+     "f": "RIGHT(P6,2)"
+    },
+    {
+     "a": "R6",
+     "t": "s",
+     "v": "john@example.com"
+    },
+    {
+     "a": "S6",
+     "t": "s",
+     "v": "example.com",
+     "f": "TEXTAFTER(R6,\"@\")"
+    },
+    {
+     "a": "AM6",
+     "t": "s",
+     "v": "John Smith"
+    },
+    {
+     "a": "AN6",
+     "t": "n",
+     "v": 10,
+     "f": "LEN(AM6)"
+    },
+    {
+     "a": "AP6",
+     "t": "s",
+     "v": "John Smith"
+    },
+    {
+     "a": "AQ6",
+     "t": "s",
+     "v": "New York"
+    },
+    {
+     "a": "AR6",
+     "t": "s",
+     "v": "John Smith-New York",
+     "f": "CONCATENATE(AP6,\"-\",AQ6)"
+    },
+    {
+     "a": "AU6",
+     "t": "n",
+     "v": 45048
+    },
+    {
+     "a": "AV6",
+     "t": "s",
+     "v": "May",
+     "f": "TEXT(AU6,\"MMMM\")"
+    },
+    {
+     "a": "BA6",
+     "t": "s",
+     "v": "JAne Doe"
+    },
+    {
+     "a": "BB6",
+     "t": "s",
+     "v": "Jane Doe",
+     "f": "PROPER(BA6)"
+    },
+    {
+     "a": "B7",
+     "t": "s",
+     "v": "Emily Wong"
+    },
+    {
+     "a": "C7",
+     "t": "s",
+     "v": "emily@wong.com"
+    },
+    {
+     "a": "D7",
+     "t": "s",
+     "v": "Y678M"
+    },
+    {
+     "a": "E7",
+     "t": "s",
+     "v": "TXN1004"
+    },
+    {
+     "a": "F7",
+     "t": "s",
+     "v": "Sydney"
+    },
+    {
+     "a": "G7",
+     "t": "s",
+     "v": "Australia"
+    },
+    {
+     "a": "H7",
+     "t": "s",
+     "v": "04/20/2023"
+    },
+    {
+     "a": "I7",
+     "t": "n",
+     "v": 410.99
+    },
+    {
+     "a": "J7",
+     "t": "s",
+     "v": "Feedback received"
+    },
+    {
+     "a": "M7",
+     "t": "s",
+     "v": "C987X"
+    },
+    {
+     "a": "P7",
+     "t": "s",
+     "v": "TXN1002"
+    },
+    {
+     "a": "R7",
+     "t": "s",
+     "v": "jane_doe@example.com"
+    },
+    {
+     "a": "S7",
+     "t": "s",
+     "v": "jane_doe",
+     "f": "TEXTSPLIT(R7,\"@\")"
+    },
+    {
+     "a": "T7",
+     "t": "s",
+     "v": "example.com"
+    },
+    {
+     "a": "AM7",
+     "t": "s",
+     "v": "Jane Doe"
+    },
+    {
+     "a": "AP7",
+     "t": "s",
+     "v": "Jane Doe"
+    },
+    {
+     "a": "AQ7",
+     "t": "s",
+     "v": "London"
+    },
+    {
+     "a": "AU7",
+     "t": "n",
+     "v": 45263
+    },
+    {
+     "a": "BA7",
+     "t": "s",
+     "v": "Raj PaTel"
+    },
+    {
+     "a": "BB7",
+     "t": "s",
+     "v": "Raj Patel",
+     "f": "PROPER(BA7)"
+    },
+    {
+     "a": "B8",
+     "t": "s",
+     "v": "Alex Liu"
+    },
+    {
+     "a": "C8",
+     "t": "s",
+     "v": "alex@example.com"
+    },
+    {
+     "a": "D8",
+     "t": "s",
+     "v": "B543Q"
+    },
+    {
+     "a": "E8",
+     "t": "s",
+     "v": "TXN1005"
+    },
+    {
+     "a": "F8",
+     "t": "s",
+     "v": "Toronto"
+    },
+    {
+     "a": "G8",
+     "t": "s",
+     "v": "Canada"
+    },
+    {
+     "a": "H8",
+     "t": "n",
+     "v": 45235
+    },
+    {
+     "a": "I8",
+     "t": "n",
+     "v": 190.2
+    },
+    {
+     "a": "J8",
+     "t": "s",
+     "v": "Second purchase"
+    },
+    {
+     "a": "M8",
+     "t": "s",
+     "v": "Z456K"
+    },
+    {
+     "a": "P8",
+     "t": "s",
+     "v": "TXN1003"
+    },
+    {
+     "a": "R8",
+     "t": "s",
+     "v": "raj_patel@india.com"
+    },
+    {
+     "a": "AM8",
+     "t": "s",
+     "v": "Raj Patel"
+    },
+    {
+     "a": "AP8",
+     "t": "s",
+     "v": "Raj Patel"
+    },
+    {
+     "a": "AQ8",
+     "t": "s",
+     "v": "Mumbai"
+    },
+    {
+     "a": "AU8",
+     "t": "n",
+     "v": 45235
+    },
+    {
+     "a": "BA8",
+     "t": "s",
+     "v": "Emily Wong"
+    },
+    {
+     "a": "BB8",
+     "t": "s",
+     "v": "Emily Wong",
+     "f": "PROPER(BA8)"
+    },
+    {
+     "a": "B9",
+     "t": "s",
+     "v": "Maria Garcia"
+    },
+    {
+     "a": "C9",
+     "t": "s",
+     "v": "maria@garcia.com"
+    },
+    {
+     "a": "D9",
+     "t": "s",
+     "v": "D234L"
+    },
+    {
+     "a": "E9",
+     "t": "s",
+     "v": "TXN1006"
+    },
+    {
+     "a": "F9",
+     "t": "s",
+     "v": "Barcelona"
+    },
+    {
+     "a": "G9",
+     "t": "s",
+     "v": "Spain"
+    },
+    {
+     "a": "H9",
+     "t": "s",
+     "v": "06/25/2023"
+    },
+    {
+     "a": "I9",
+     "t": "n",
+     "v": 210.8
+    },
+    {
+     "a": "J9",
+     "t": "s",
+     "v": "VIP customer"
+    },
+    {
+     "a": "M9",
+     "t": "s",
+     "v": "Y678M"
+    },
+    {
+     "a": "P9",
+     "t": "s",
+     "v": "TXN1004"
+    },
+    {
+     "a": "R9",
+     "t": "s",
+     "v": "emily@wong.com"
+    },
+    {
+     "a": "AM9",
+     "t": "s",
+     "v": "Emily Wong"
+    },
+    {
+     "a": "AP9",
+     "t": "s",
+     "v": "Emily Wong"
+    },
+    {
+     "a": "AQ9",
+     "t": "s",
+     "v": "Sydney"
+    },
+    {
+     "a": "AU9",
+     "t": "n",
+     "v": 44993
+    },
+    {
+     "a": "BA9",
+     "t": "s",
+     "v": "Alex Liu"
+    },
+    {
+     "a": "BB9",
+     "t": "s",
+     "v": "Alex Liu",
+     "f": "PROPER(BA9)"
+    },
+    {
+     "a": "B10",
+     "t": "s",
+     "v": "Chris Kim"
+    },
+    {
+     "a": "C10",
+     "t": "s",
+     "v": "chris.kim@korea.com"
+    },
+    {
+     "a": "D10",
+     "t": "s",
+     "v": "T786N"
+    },
+    {
+     "a": "E10",
+     "t": "s",
+     "v": "TXN1007"
+    },
+    {
+     "a": "F10",
+     "t": "s",
+     "v": "Seoul"
+    },
+    {
+     "a": "G10",
+     "t": "s",
+     "v": "South Korea"
+    },
+    {
+     "a": "H10",
+     "t": "s",
+     "v": "07/15/2023"
+    },
+    {
+     "a": "I10",
+     "t": "n",
+     "v": 145
+    },
+    {
+     "a": "J10",
+     "t": "s",
+     "v": "Promotion applied"
+    },
+    {
+     "a": "M10",
+     "t": "s",
+     "v": "B543Q"
+    },
+    {
+     "a": "P10",
+     "t": "s",
+     "v": "TXN1005"
+    },
+    {
+     "a": "R10",
+     "t": "s",
+     "v": "alex@example.com"
+    },
+    {
+     "a": "AM10",
+     "t": "s",
+     "v": "Alex Liu"
+    },
+    {
+     "a": "AP10",
+     "t": "s",
+     "v": "Alex Liu"
+    },
+    {
+     "a": "AQ10",
+     "t": "s",
+     "v": "Toronto"
+    },
+    {
+     "a": "BA10",
+     "t": "s",
+     "v": "Maria Garcia"
+    },
+    {
+     "a": "BB10",
+     "t": "s",
+     "v": "Maria Garcia",
+     "f": "PROPER(BA10)"
+    },
+    {
+     "a": "B11",
+     "t": "s",
+     "v": "Anita Desai"
+    },
+    {
+     "a": "C11",
+     "t": "s",
+     "v": "anita.desai@india.com"
+    },
+    {
+     "a": "D11",
+     "t": "s",
+     "v": "R543P"
+    },
+    {
+     "a": "E11",
+     "t": "s",
+     "v": "TXN1008"
+    },
+    {
+     "a": "F11",
+     "t": "s",
+     "v": "Delhi"
+    },
+    {
+     "a": "G11",
+     "t": "s",
+     "v": "India"
+    },
+    {
+     "a": "H11",
+     "t": "n",
+     "v": 44993
+    },
+    {
+     "a": "I11",
+     "t": "n",
+     "v": 275.45
+    },
+    {
+     "a": "J11",
+     "t": "s",
+     "v": "Referred customer"
+    },
+    {
+     "a": "M11",
+     "t": "s",
+     "v": "D234L"
+    },
+    {
+     "a": "P11",
+     "t": "s",
+     "v": "TXN1006"
+    },
+    {
+     "a": "R11",
+     "t": "s",
+     "v": "maria@garcia.com"
+    },
+    {
+     "a": "AM11",
+     "t": "s",
+     "v": "Maria Garcia"
+    },
+    {
+     "a": "AP11",
+     "t": "s",
+     "v": "Maria Garcia"
+    },
+    {
+     "a": "AQ11",
+     "t": "s",
+     "v": "Barcelona"
+    },
+    {
+     "a": "BA11",
+     "t": "s",
+     "v": "Chris Kim"
+    },
+    {
+     "a": "BB11",
+     "t": "s",
+     "v": "Chris Kim",
+     "f": "PROPER(BA11)"
+    },
+    {
+     "a": "M12",
+     "t": "s",
+     "v": "T786N"
+    },
+    {
+     "a": "P12",
+     "t": "s",
+     "v": "TXN1007"
+    },
+    {
+     "a": "R12",
+     "t": "s",
+     "v": "chris.kim@korea.com"
+    },
+    {
+     "a": "AM12",
+     "t": "s",
+     "v": "Chris Kim"
+    },
+    {
+     "a": "AP12",
+     "t": "s",
+     "v": "Chris Kim"
+    },
+    {
+     "a": "AQ12",
+     "t": "s",
+     "v": "Seoul"
+    },
+    {
+     "a": "BA12",
+     "t": "s",
+     "v": "Anita Desai"
+    },
+    {
+     "a": "BB12",
+     "t": "s",
+     "v": "Anita Desai",
+     "f": "PROPER(BA12)"
+    },
+    {
+     "a": "M13",
+     "t": "s",
+     "v": "R543P"
+    },
+    {
+     "a": "P13",
+     "t": "s",
+     "v": "TXN1008"
+    },
+    {
+     "a": "R13",
+     "t": "s",
+     "v": "anita.desai@india.com"
+    },
+    {
+     "a": "AM13",
+     "t": "s",
+     "v": "Anita Desai"
+    },
+    {
+     "a": "AP13",
+     "t": "s",
+     "v": "Anita Desai"
+    },
+    {
+     "a": "AQ13",
+     "t": "s",
+     "v": "Delhi"
+    }
+   ]
+  },
+  {
+   "id": "SHEET-7",
+   "index": 6,
+   "name": "Vlookup ",
+   "ref": "B2:AC62",
+   "empty": false,
+   "cells": [
+    {
+     "a": "B2",
+     "t": "s",
+     "v": "ProductID"
+    },
+    {
+     "a": "C2",
+     "t": "s",
+     "v": "ProductName"
+    },
+    {
+     "a": "D2",
+     "t": "s",
+     "v": "Category"
+    },
+    {
+     "a": "E2",
+     "t": "s",
+     "v": "UnitPrice"
+    },
+    {
+     "a": "F2",
+     "t": "s",
+     "v": "Supplier"
+    },
+    {
+     "a": "J2",
+     "t": "s",
+     "v": "ProductID"
+    },
+    {
+     "a": "K2",
+     "t": "s",
+     "v": "Product Name (VLOOKUP)"
+    },
+    {
+     "a": "L2",
+     "t": "s",
+     "v": "Category (VLOOKUP)"
+    },
+    {
+     "a": "M2",
+     "t": "s",
+     "v": "UnitPrice (VLOOKUP)"
+    },
+    {
+     "a": "N2",
+     "t": "s",
+     "v": "Quantity"
+    },
+    {
+     "a": "O2",
+     "t": "s",
+     "v": "Line Amount"
+    },
+    {
+     "a": "S2",
+     "t": "s",
+     "v": "ProductID"
+    },
+    {
+     "a": "T2",
+     "t": "s",
+     "v": "Product Name (XLOOKUP)"
+    },
+    {
+     "a": "U2",
+     "t": "s",
+     "v": "Category (XLOOKUP)"
+    },
+    {
+     "a": "V2",
+     "t": "s",
+     "v": "UnitPrice (XLOOKUP)"
+    },
+    {
+     "a": "W2",
+     "t": "s",
+     "v": "Quantity"
+    },
+    {
+     "a": "Y2",
+     "t": "s",
+     "v": "ProductID"
+    },
+    {
+     "a": "Z2",
+     "t": "s",
+     "v": "Product Name (INDEX/MATCH)"
+    },
+    {
+     "a": "AA2",
+     "t": "s",
+     "v": "Category (INDEX/MATCH)"
+    },
+    {
+     "a": "AB2",
+     "t": "s",
+     "v": "UnitPrice (INDEX/MATCH)"
+    },
+    {
+     "a": "AC2",
+     "t": "s",
+     "v": "Quantity"
+    },
+    {
+     "a": "B3",
+     "t": "s",
+     "v": "P001"
+    },
+    {
+     "a": "C3",
+     "t": "s",
+     "v": "Deluxe Headphones"
+    },
+    {
+     "a": "D3",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E3",
+     "t": "n",
+     "v": 3720.67
+    },
+    {
+     "a": "F3",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "J3",
+     "t": "s",
+     "v": "P052"
+    },
+    {
+     "a": "N3",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "O3",
+     "t": "n",
+     "v": 0,
+     "f": "M3*N3"
+    },
+    {
+     "a": "S3",
+     "t": "s",
+     "v": "P011"
+    },
+    {
+     "a": "W3",
+     "t": "n",
+     "v": 18
+    },
+    {
+     "a": "Y3",
+     "t": "s",
+     "v": "P011"
+    },
+    {
+     "a": "AC3",
+     "t": "n",
+     "v": 18
+    },
+    {
+     "a": "B4",
+     "t": "s",
+     "v": "P002"
+    },
+    {
+     "a": "C4",
+     "t": "s",
+     "v": "Classic Snack Pack"
+    },
+    {
+     "a": "D4",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E4",
+     "t": "n",
+     "v": 557.35
+    },
+    {
+     "a": "F4",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "J4",
+     "t": "s",
+     "v": "P027"
+    },
+    {
+     "a": "N4",
+     "t": "n",
+     "v": 9
+    },
+    {
+     "a": "O4",
+     "t": "n",
+     "v": 0,
+     "f": "M4*N4"
+    },
+    {
+     "a": "S4",
+     "t": "s",
+     "v": "P041"
+    },
+    {
+     "a": "W4",
+     "t": "n",
+     "v": 17
+    },
+    {
+     "a": "Y4",
+     "t": "s",
+     "v": "P041"
+    },
+    {
+     "a": "AC4",
+     "t": "n",
+     "v": 17
+    },
+    {
+     "a": "B5",
+     "t": "s",
+     "v": "P003"
+    },
+    {
+     "a": "C5",
+     "t": "s",
+     "v": "Premium T-Shirt"
+    },
+    {
+     "a": "D5",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E5",
+     "t": "n",
+     "v": 197.5
+    },
+    {
+     "a": "F5",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "J5",
+     "t": "s",
+     "v": "P056"
+    },
+    {
+     "a": "N5",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "O5",
+     "t": "n",
+     "v": 0,
+     "f": "M5*N5"
+    },
+    {
+     "a": "S5",
+     "t": "s",
+     "v": "P059"
+    },
+    {
+     "a": "W5",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "Y5",
+     "t": "s",
+     "v": "P059"
+    },
+    {
+     "a": "AC5",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "B6",
+     "t": "s",
+     "v": "P004"
+    },
+    {
+     "a": "C6",
+     "t": "s",
+     "v": "Turbo Bed Frame"
+    },
+    {
+     "a": "D6",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E6",
+     "t": "n",
+     "v": 181.35
+    },
+    {
+     "a": "F6",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "J6",
+     "t": "s",
+     "v": "P037"
+    },
+    {
+     "a": "N6",
+     "t": "n",
+     "v": 18
+    },
+    {
+     "a": "S6",
+     "t": "s",
+     "v": "P039"
+    },
+    {
+     "a": "W6",
+     "t": "n",
+     "v": 9
+    },
+    {
+     "a": "Y6",
+     "t": "s",
+     "v": "P039"
+    },
+    {
+     "a": "AC6",
+     "t": "n",
+     "v": 9
+    },
+    {
+     "a": "B7",
+     "t": "s",
+     "v": "P005"
+    },
+    {
+     "a": "C7",
+     "t": "s",
+     "v": "Premium Pen Set"
+    },
+    {
+     "a": "D7",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E7",
+     "t": "n",
+     "v": 2273.58
+    },
+    {
+     "a": "F7",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "J7",
+     "t": "s",
+     "v": "P019"
+    },
+    {
+     "a": "N7",
+     "t": "n",
+     "v": 6
+    },
+    {
+     "a": "S7",
+     "t": "s",
+     "v": "P035"
+    },
+    {
+     "a": "W7",
+     "t": "n",
+     "v": 12
+    },
+    {
+     "a": "Y7",
+     "t": "s",
+     "v": "P035"
+    },
+    {
+     "a": "AC7",
+     "t": "n",
+     "v": 12
+    },
+    {
+     "a": "B8",
+     "t": "s",
+     "v": "P006"
+    },
+    {
+     "a": "C8",
+     "t": "s",
+     "v": "Classic Badminton Racket"
+    },
+    {
+     "a": "D8",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E8",
+     "t": "n",
+     "v": 2141.94
+    },
+    {
+     "a": "F8",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "J8",
+     "t": "s",
+     "v": "P042"
+    },
+    {
+     "a": "N8",
+     "t": "n",
+     "v": 19
+    },
+    {
+     "a": "S8",
+     "t": "s",
+     "v": "P028"
+    },
+    {
+     "a": "W8",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "Y8",
+     "t": "s",
+     "v": "P028"
+    },
+    {
+     "a": "AC8",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "B9",
+     "t": "s",
+     "v": "P007"
+    },
+    {
+     "a": "C9",
+     "t": "s",
+     "v": "Pro Puzzle Set"
+    },
+    {
+     "a": "D9",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E9",
+     "t": "n",
+     "v": 555.94
+    },
+    {
+     "a": "F9",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "J9",
+     "t": "s",
+     "v": "P008"
+    },
+    {
+     "a": "N9",
+     "t": "n",
+     "v": 11
+    },
+    {
+     "a": "S9",
+     "t": "s",
+     "v": "P059"
+    },
+    {
+     "a": "W9",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "Y9",
+     "t": "s",
+     "v": "P059"
+    },
+    {
+     "a": "AC9",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "B10",
+     "t": "s",
+     "v": "P008"
+    },
+    {
+     "a": "C10",
+     "t": "s",
+     "v": "Smart Keyboard"
+    },
+    {
+     "a": "D10",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E10",
+     "t": "n",
+     "v": 3038.44
+    },
+    {
+     "a": "F10",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "J10",
+     "t": "s",
+     "v": "P049"
+    },
+    {
+     "a": "N10",
+     "t": "n",
+     "v": 19
+    },
+    {
+     "a": "S10",
+     "t": "s",
+     "v": "P033"
+    },
+    {
+     "a": "W10",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "Y10",
+     "t": "s",
+     "v": "P033"
+    },
+    {
+     "a": "AC10",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "B11",
+     "t": "s",
+     "v": "P009"
+    },
+    {
+     "a": "C11",
+     "t": "s",
+     "v": "Turbo Rice Pack"
+    },
+    {
+     "a": "D11",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E11",
+     "t": "n",
+     "v": 4866.92
+    },
+    {
+     "a": "F11",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "J11",
+     "t": "s",
+     "v": "P023"
+    },
+    {
+     "a": "N11",
+     "t": "n",
+     "v": 14
+    },
+    {
+     "a": "S11",
+     "t": "s",
+     "v": "P051"
+    },
+    {
+     "a": "W11",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "Y11",
+     "t": "s",
+     "v": "P051"
+    },
+    {
+     "a": "AC11",
+     "t": "n",
+     "v": 1
+    },
+    {
+     "a": "B12",
+     "t": "s",
+     "v": "P010"
+    },
+    {
+     "a": "C12",
+     "t": "s",
+     "v": "Turbo Jeans"
+    },
+    {
+     "a": "D12",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E12",
+     "t": "n",
+     "v": 4155.55
+    },
+    {
+     "a": "F12",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "J12",
+     "t": "s",
+     "v": "P007"
+    },
+    {
+     "a": "N12",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "S12",
+     "t": "s",
+     "v": "P004"
+    },
+    {
+     "a": "W12",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "Y12",
+     "t": "s",
+     "v": "P004"
+    },
+    {
+     "a": "AC12",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "B13",
+     "t": "s",
+     "v": "P011"
+    },
+    {
+     "a": "C13",
+     "t": "s",
+     "v": "Pro Cabinet"
+    },
+    {
+     "a": "D13",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E13",
+     "t": "n",
+     "v": 394.3
+    },
+    {
+     "a": "F13",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "J13",
+     "t": "s",
+     "v": "P057"
+    },
+    {
+     "a": "N13",
+     "t": "n",
+     "v": 11
+    },
+    {
+     "a": "S13",
+     "t": "s",
+     "v": "P027"
+    },
+    {
+     "a": "W13",
+     "t": "n",
+     "v": 10
+    },
+    {
+     "a": "Y13",
+     "t": "s",
+     "v": "P027"
+    },
+    {
+     "a": "AC13",
+     "t": "n",
+     "v": 10
+    },
+    {
+     "a": "B14",
+     "t": "s",
+     "v": "P012"
+    },
+    {
+     "a": "C14",
+     "t": "s",
+     "v": "Deluxe Pen Set"
+    },
+    {
+     "a": "D14",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E14",
+     "t": "n",
+     "v": 4339.09
+    },
+    {
+     "a": "F14",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "J14",
+     "t": "s",
+     "v": "P051"
+    },
+    {
+     "a": "N14",
+     "t": "n",
+     "v": 16
+    },
+    {
+     "a": "S14",
+     "t": "s",
+     "v": "P021"
+    },
+    {
+     "a": "W14",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "Y14",
+     "t": "s",
+     "v": "P021"
+    },
+    {
+     "a": "AC14",
+     "t": "n",
+     "v": 2
+    },
+    {
+     "a": "B15",
+     "t": "s",
+     "v": "P013"
+    },
+    {
+     "a": "C15",
+     "t": "s",
+     "v": "Basic Badminton Racket"
+    },
+    {
+     "a": "D15",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E15",
+     "t": "n",
+     "v": 4178.85
+    },
+    {
+     "a": "F15",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "J15",
+     "t": "s",
+     "v": "P047"
+    },
+    {
+     "a": "N15",
+     "t": "n",
+     "v": 6
+    },
+    {
+     "a": "S15",
+     "t": "s",
+     "v": "P045"
+    },
+    {
+     "a": "W15",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "Y15",
+     "t": "s",
+     "v": "P045"
+    },
+    {
+     "a": "AC15",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "B16",
+     "t": "s",
+     "v": "P014"
+    },
+    {
+     "a": "C16",
+     "t": "s",
+     "v": "Smart RC Car"
+    },
+    {
+     "a": "D16",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E16",
+     "t": "n",
+     "v": 3367.37
+    },
+    {
+     "a": "F16",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "J16",
+     "t": "s",
+     "v": "P027"
+    },
+    {
+     "a": "N16",
+     "t": "n",
+     "v": 8
+    },
+    {
+     "a": "S16",
+     "t": "s",
+     "v": "P033"
+    },
+    {
+     "a": "W16",
+     "t": "n",
+     "v": 10
+    },
+    {
+     "a": "Y16",
+     "t": "s",
+     "v": "P033"
+    },
+    {
+     "a": "AC16",
+     "t": "n",
+     "v": 10
+    },
+    {
+     "a": "B17",
+     "t": "s",
+     "v": "P015"
+    },
+    {
+     "a": "C17",
+     "t": "s",
+     "v": "Classic Router"
+    },
+    {
+     "a": "D17",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E17",
+     "t": "n",
+     "v": 858.84
+    },
+    {
+     "a": "F17",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "J17",
+     "t": "s",
+     "v": "P034"
+    },
+    {
+     "a": "N17",
+     "t": "n",
+     "v": 13
+    },
+    {
+     "a": "S17",
+     "t": "s",
+     "v": "P021"
+    },
+    {
+     "a": "W17",
+     "t": "n",
+     "v": 6
+    },
+    {
+     "a": "Y17",
+     "t": "s",
+     "v": "P021"
+    },
+    {
+     "a": "AC17",
+     "t": "n",
+     "v": 6
+    },
+    {
+     "a": "B18",
+     "t": "s",
+     "v": "P016"
+    },
+    {
+     "a": "C18",
+     "t": "s",
+     "v": "Turbo Cooking Oil"
+    },
+    {
+     "a": "D18",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E18",
+     "t": "n",
+     "v": 3438.84
+    },
+    {
+     "a": "F18",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "J18",
+     "t": "s",
+     "v": "P002"
+    },
+    {
+     "a": "N18",
+     "t": "n",
+     "v": 15
+    },
+    {
+     "a": "B19",
+     "t": "s",
+     "v": "P017"
+    },
+    {
+     "a": "C19",
+     "t": "s",
+     "v": "Compact Scarf"
+    },
+    {
+     "a": "D19",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E19",
+     "t": "n",
+     "v": 1611.49
+    },
+    {
+     "a": "F19",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "J19",
+     "t": "s",
+     "v": "P049"
+    },
+    {
+     "a": "N19",
+     "t": "n",
+     "v": 4
+    },
+    {
+     "a": "B20",
+     "t": "s",
+     "v": "P018"
+    },
+    {
+     "a": "C20",
+     "t": "s",
+     "v": "Pro Bed Frame"
+    },
+    {
+     "a": "D20",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E20",
+     "t": "n",
+     "v": 4388.02
+    },
+    {
+     "a": "F20",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "J20",
+     "t": "s",
+     "v": "P008"
+    },
+    {
+     "a": "N20",
+     "t": "n",
+     "v": 16
+    },
+    {
+     "a": "B21",
+     "t": "s",
+     "v": "P019"
+    },
+    {
+     "a": "C21",
+     "t": "s",
+     "v": "Basic Sticky Notes"
+    },
+    {
+     "a": "D21",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E21",
+     "t": "n",
+     "v": 4429.18
+    },
+    {
+     "a": "F21",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B22",
+     "t": "s",
+     "v": "P020"
+    },
+    {
+     "a": "C22",
+     "t": "s",
+     "v": "Eco Cricket Bat"
+    },
+    {
+     "a": "D22",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E22",
+     "t": "n",
+     "v": 1270.81
+    },
+    {
+     "a": "F22",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B23",
+     "t": "s",
+     "v": "P021"
+    },
+    {
+     "a": "C23",
+     "t": "s",
+     "v": "Premium Board Game"
+    },
+    {
+     "a": "D23",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E23",
+     "t": "n",
+     "v": 2027.03
+    },
+    {
+     "a": "F23",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B24",
+     "t": "s",
+     "v": "P022"
+    },
+    {
+     "a": "C24",
+     "t": "s",
+     "v": "Turbo Webcam"
+    },
+    {
+     "a": "D24",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E24",
+     "t": "n",
+     "v": 500
+    },
+    {
+     "a": "F24",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B25",
+     "t": "s",
+     "v": "P023"
+    },
+    {
+     "a": "C25",
+     "t": "s",
+     "v": "Classic Snack Pack"
+    },
+    {
+     "a": "D25",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E25",
+     "t": "n",
+     "v": 841.91
+    },
+    {
+     "a": "F25",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B26",
+     "t": "s",
+     "v": "P024"
+    },
+    {
+     "a": "C26",
+     "t": "s",
+     "v": "Deluxe Sweater"
+    },
+    {
+     "a": "D26",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E26",
+     "t": "n",
+     "v": 1939.02
+    },
+    {
+     "a": "F26",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B27",
+     "t": "s",
+     "v": "P025"
+    },
+    {
+     "a": "C27",
+     "t": "s",
+     "v": "Eco Bed Frame"
+    },
+    {
+     "a": "D27",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E27",
+     "t": "n",
+     "v": 4310.86
+    },
+    {
+     "a": "F27",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B28",
+     "t": "s",
+     "v": "P026"
+    },
+    {
+     "a": "C28",
+     "t": "s",
+     "v": "Turbo Marker Pack"
+    },
+    {
+     "a": "D28",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E28",
+     "t": "n",
+     "v": 3854.56
+    },
+    {
+     "a": "F28",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B29",
+     "t": "s",
+     "v": "P027"
+    },
+    {
+     "a": "C29",
+     "t": "s",
+     "v": "Eco Dumbbell Set"
+    },
+    {
+     "a": "D29",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E29",
+     "t": "n",
+     "v": 832.88
+    },
+    {
+     "a": "F29",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "B30",
+     "t": "s",
+     "v": "P028"
+    },
+    {
+     "a": "C30",
+     "t": "s",
+     "v": "Turbo RC Car"
+    },
+    {
+     "a": "D30",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E30",
+     "t": "n",
+     "v": 2563.02
+    },
+    {
+     "a": "F30",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "B31",
+     "t": "s",
+     "v": "P029"
+    },
+    {
+     "a": "C31",
+     "t": "s",
+     "v": "Turbo Router"
+    },
+    {
+     "a": "D31",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E31",
+     "t": "n",
+     "v": 806.55
+    },
+    {
+     "a": "F31",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B32",
+     "t": "s",
+     "v": "P030"
+    },
+    {
+     "a": "C32",
+     "t": "s",
+     "v": "Turbo Rice Pack"
+    },
+    {
+     "a": "D32",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E32",
+     "t": "n",
+     "v": 3014.78
+    },
+    {
+     "a": "F32",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B33",
+     "t": "s",
+     "v": "P031"
+    },
+    {
+     "a": "C33",
+     "t": "s",
+     "v": "Deluxe Jeans"
+    },
+    {
+     "a": "D33",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E33",
+     "t": "n",
+     "v": 4399.67
+    },
+    {
+     "a": "F33",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B34",
+     "t": "s",
+     "v": "P032"
+    },
+    {
+     "a": "C34",
+     "t": "s",
+     "v": "Compact Bookshelf"
+    },
+    {
+     "a": "D34",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E34",
+     "t": "n",
+     "v": 4396.15
+    },
+    {
+     "a": "F34",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B35",
+     "t": "s",
+     "v": "P033"
+    },
+    {
+     "a": "C35",
+     "t": "s",
+     "v": "Basic Notebook"
+    },
+    {
+     "a": "D35",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E35",
+     "t": "n",
+     "v": 4891.02
+    },
+    {
+     "a": "F35",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B36",
+     "t": "s",
+     "v": "P034"
+    },
+    {
+     "a": "C36",
+     "t": "s",
+     "v": "Basic Skipping Rope"
+    },
+    {
+     "a": "D36",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E36",
+     "t": "n",
+     "v": 867.38
+    },
+    {
+     "a": "F36",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B37",
+     "t": "s",
+     "v": "P035"
+    },
+    {
+     "a": "C37",
+     "t": "s",
+     "v": "Turbo RC Car"
+    },
+    {
+     "a": "D37",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E37",
+     "t": "n",
+     "v": 3579.1
+    },
+    {
+     "a": "F37",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "B38",
+     "t": "s",
+     "v": "P036"
+    },
+    {
+     "a": "C38",
+     "t": "s",
+     "v": "Basic Webcam"
+    },
+    {
+     "a": "D38",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E38",
+     "t": "n",
+     "v": 648.97
+    },
+    {
+     "a": "F38",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B39",
+     "t": "s",
+     "v": "P037"
+    },
+    {
+     "a": "C39",
+     "t": "s",
+     "v": "Smart Rice Pack"
+    },
+    {
+     "a": "D39",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E39",
+     "t": "n",
+     "v": 2962.13
+    },
+    {
+     "a": "F39",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B40",
+     "t": "s",
+     "v": "P038"
+    },
+    {
+     "a": "C40",
+     "t": "s",
+     "v": "Pro T-Shirt"
+    },
+    {
+     "a": "D40",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E40",
+     "t": "n",
+     "v": 401.42
+    },
+    {
+     "a": "F40",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B41",
+     "t": "s",
+     "v": "P039"
+    },
+    {
+     "a": "C41",
+     "t": "s",
+     "v": "Deluxe Office Chair"
+    },
+    {
+     "a": "D41",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E41",
+     "t": "n",
+     "v": 4305.2
+    },
+    {
+     "a": "F41",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B42",
+     "t": "s",
+     "v": "P040"
+    },
+    {
+     "a": "C42",
+     "t": "s",
+     "v": "Pro Marker Pack"
+    },
+    {
+     "a": "D42",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E42",
+     "t": "n",
+     "v": 3361.44
+    },
+    {
+     "a": "F42",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B43",
+     "t": "s",
+     "v": "P041"
+    },
+    {
+     "a": "C43",
+     "t": "s",
+     "v": "Classic Badminton Racket"
+    },
+    {
+     "a": "D43",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E43",
+     "t": "n",
+     "v": 4680.8
+    },
+    {
+     "a": "F43",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B44",
+     "t": "s",
+     "v": "P042"
+    },
+    {
+     "a": "C44",
+     "t": "s",
+     "v": "Basic Action Figure"
+    },
+    {
+     "a": "D44",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E44",
+     "t": "n",
+     "v": 992.53
+    },
+    {
+     "a": "F44",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "B45",
+     "t": "s",
+     "v": "P043"
+    },
+    {
+     "a": "C45",
+     "t": "s",
+     "v": "Smart Mouse"
+    },
+    {
+     "a": "D45",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E45",
+     "t": "n",
+     "v": 2084.96
+    },
+    {
+     "a": "F45",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B46",
+     "t": "s",
+     "v": "P044"
+    },
+    {
+     "a": "C46",
+     "t": "s",
+     "v": "Compact Coffee Jar"
+    },
+    {
+     "a": "D46",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E46",
+     "t": "n",
+     "v": 3654.66
+    },
+    {
+     "a": "F46",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B47",
+     "t": "s",
+     "v": "P045"
+    },
+    {
+     "a": "C47",
+     "t": "s",
+     "v": "Pro Jacket"
+    },
+    {
+     "a": "D47",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E47",
+     "t": "n",
+     "v": 2704.61
+    },
+    {
+     "a": "F47",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "B48",
+     "t": "s",
+     "v": "P046"
+    },
+    {
+     "a": "C48",
+     "t": "s",
+     "v": "Classic Study Table"
+    },
+    {
+     "a": "D48",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E48",
+     "t": "n",
+     "v": 2340.01
+    },
+    {
+     "a": "F48",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "B49",
+     "t": "s",
+     "v": "P047"
+    },
+    {
+     "a": "C49",
+     "t": "s",
+     "v": "Turbo Notebook"
+    },
+    {
+     "a": "D49",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E49",
+     "t": "n",
+     "v": 300.41
+    },
+    {
+     "a": "F49",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B50",
+     "t": "s",
+     "v": "P048"
+    },
+    {
+     "a": "C50",
+     "t": "s",
+     "v": "Pro Cricket Bat"
+    },
+    {
+     "a": "D50",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E50",
+     "t": "n",
+     "v": 2061.75
+    },
+    {
+     "a": "F50",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B51",
+     "t": "s",
+     "v": "P049"
+    },
+    {
+     "a": "C51",
+     "t": "s",
+     "v": "Premium Building Blocks"
+    },
+    {
+     "a": "D51",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E51",
+     "t": "n",
+     "v": 864.95
+    },
+    {
+     "a": "F51",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "B52",
+     "t": "s",
+     "v": "P050"
+    },
+    {
+     "a": "C52",
+     "t": "s",
+     "v": "Eco Webcam"
+    },
+    {
+     "a": "D52",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E52",
+     "t": "n",
+     "v": 1461.98
+    },
+    {
+     "a": "F52",
+     "t": "s",
+     "v": "BlueSky Distributors"
+    },
+    {
+     "a": "B53",
+     "t": "s",
+     "v": "P051"
+    },
+    {
+     "a": "C53",
+     "t": "s",
+     "v": "Pro Tea Box"
+    },
+    {
+     "a": "D53",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E53",
+     "t": "n",
+     "v": 1127.62
+    },
+    {
+     "a": "F53",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B54",
+     "t": "s",
+     "v": "P052"
+    },
+    {
+     "a": "C54",
+     "t": "s",
+     "v": "Turbo T-Shirt"
+    },
+    {
+     "a": "D54",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E54",
+     "t": "n",
+     "v": 3752.48
+    },
+    {
+     "a": "F54",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B55",
+     "t": "s",
+     "v": "P053"
+    },
+    {
+     "a": "C55",
+     "t": "s",
+     "v": "Ultra Sofa"
+    },
+    {
+     "a": "D55",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E55",
+     "t": "n",
+     "v": 2539.11
+    },
+    {
+     "a": "F55",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B56",
+     "t": "s",
+     "v": "P054"
+    },
+    {
+     "a": "C56",
+     "t": "s",
+     "v": "Turbo Notebook"
+    },
+    {
+     "a": "D56",
+     "t": "s",
+     "v": "Stationery"
+    },
+    {
+     "a": "E56",
+     "t": "n",
+     "v": 4264.15
+    },
+    {
+     "a": "F56",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B57",
+     "t": "s",
+     "v": "P055"
+    },
+    {
+     "a": "C57",
+     "t": "s",
+     "v": "Deluxe Badminton Racket"
+    },
+    {
+     "a": "D57",
+     "t": "s",
+     "v": "Sports"
+    },
+    {
+     "a": "E57",
+     "t": "n",
+     "v": 4316.01
+    },
+    {
+     "a": "F57",
+     "t": "s",
+     "v": "Nova Traders"
+    },
+    {
+     "a": "B58",
+     "t": "s",
+     "v": "P056"
+    },
+    {
+     "a": "C58",
+     "t": "s",
+     "v": "Ultra RC Car"
+    },
+    {
+     "a": "D58",
+     "t": "s",
+     "v": "Toys"
+    },
+    {
+     "a": "E58",
+     "t": "n",
+     "v": 2915.65
+    },
+    {
+     "a": "F58",
+     "t": "s",
+     "v": "Summit Supply Co"
+    },
+    {
+     "a": "B59",
+     "t": "s",
+     "v": "P057"
+    },
+    {
+     "a": "C59",
+     "t": "s",
+     "v": "Deluxe Mouse"
+    },
+    {
+     "a": "D59",
+     "t": "s",
+     "v": "Electronics"
+    },
+    {
+     "a": "E59",
+     "t": "n",
+     "v": 3304
+    },
+    {
+     "a": "F59",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "B60",
+     "t": "s",
+     "v": "P058"
+    },
+    {
+     "a": "C60",
+     "t": "s",
+     "v": "Pro Snack Pack"
+    },
+    {
+     "a": "D60",
+     "t": "s",
+     "v": "Grocery"
+    },
+    {
+     "a": "E60",
+     "t": "n",
+     "v": 3595.15
+    },
+    {
+     "a": "F60",
+     "t": "s",
+     "v": "Metro Wholesale"
+    },
+    {
+     "a": "B61",
+     "t": "s",
+     "v": "P059"
+    },
+    {
+     "a": "C61",
+     "t": "s",
+     "v": "Premium Jacket"
+    },
+    {
+     "a": "D61",
+     "t": "s",
+     "v": "Clothing"
+    },
+    {
+     "a": "E61",
+     "t": "n",
+     "v": 3374.87
+    },
+    {
+     "a": "F61",
+     "t": "s",
+     "v": "Prime Vendors"
+    },
+    {
+     "a": "B62",
+     "t": "s",
+     "v": "P060"
+    },
+    {
+     "a": "C62",
+     "t": "s",
+     "v": "Smart Office Chair"
+    },
+    {
+     "a": "D62",
+     "t": "s",
+     "v": "Furniture"
+    },
+    {
+     "a": "E62",
+     "t": "n",
+     "v": 96.11
+    },
+    {
+     "a": "F62",
+     "t": "s",
+     "v": "Nova Traders"
+    }
+   ]
+  }
+ ]
+}

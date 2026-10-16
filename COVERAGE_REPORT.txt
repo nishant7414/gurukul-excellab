@@ -1,0 +1,137 @@
+EXCELGYM PRACTICE COVERAGE REPORT (deep: datasets generated and every reference solution run)
+
+1. Datasets
+===========
+89 datasets: 77 newly generated, 6 original workbook sheets, 6 original challenge tables (kept as they were). 12,286 rows in all; largest DS-SAL-TXN (1,500 rows).
+By tier: Easy 32, Medium 46, Hard 11
+Category                                       datasets     Easy   Medium     Hard   topics
+Education                                            11        4        5        2      8/8
+Sales and E-commerce                                 12        4        7        1    10/10
+Human Resources                                       9        2        6        1      8/8
+Finance and Accounting                               13        9        3        1      8/8
+Inventory and Supply Chain                            9        2        6        1      9/9
+Customer Service and Marketing                        8        1        4        3      8/8
+Operations and Other                                 10        1        9        0    10/10
+Data Cleaning                                        11        3        6        2    13/13
+Original workbook                                     6        6        0        0      n/a
+Every topic in the brief is covered by at least one dataset.
+
+2. Challenges
+=============
+116 challenges: 110 additional, 6 original (CH-1..CH-6, unchanged). Multi-table: 22. Using a simulated tool: 25.
+By tier: Easy 33, Medium 58, Hard 25. Generated datasets used by at least one challenge: 72; generated datasets not used by any challenge: 11 (DS-SAL-HISTORY, DS-INV-EXPIRY, DS-INV-MULTIWH, DS-SUP-CSAT, DS-MKT-TRAFFIC, DS-MKT-SEGMENTS, DS-MKT-CHURN, DS-OPS-SHIP, DS-OPS-TASKS, DS-OPS-SHIFTS, DS-OPS-QC).
+
+3. Concepts (target counts the additional challenges only)
+==========================================================
+Concept                                          target   actual     Easy   Medium     Hard     orig   status
+RF Cell references                                    5        5        4        1        0        1 Complete
+SM Summary functions                                  5        5        4        1        0        0 Complete
+LG Logic: IF, IFS, AND, OR                            8        8        2        4        2        1 Complete
+DT Dates                                              8        8        1        5        2        0 Complete
+SF Sorting and filtering                              8        8        3        4        1        0 Complete
+TX Text functions                                     8        8        2        4        2        0 Complete
+FIN Finance calculations                             10       10        0        8        2        0 Complete
+CS Multi-table case studies                          10       10        0        5        5        0 Complete
+LK Lookups: VLOOKUP, XLOOKUP, INDEX/MATCH            12       12        4        6        2        1 Complete
+CA Conditional aggregation                           12       12        3        6        3        1 Complete
+DC Data cleaning                                     12       12        2        8        2        1 Complete
+DA Dynamic arrays                                    12       12        4        4        4        1 Complete
+PT PivotTables                                       12        0        0        0        0        0  Missing
+PQ Power Query                                       12        0        0        0        0        0  Missing
+DB Dashboards and charts                             12        0        0        0        0        0  Missing
+DV Data validation                                    5        0        0        0        0        0  Missing
+CF Conditional formatting                             5        0        0        0        0        0  Missing
+  SF: Sorting and filtering are simulated with dialogs, not Excel's drop-down arrows.
+  FIN: No PMT/IPMT/NPV functions in the engine; schedules are built from arithmetic.
+  DA: Needs Excel 2021 / Microsoft 365 for the real thing; no LET, LAMBDA, VSTACK, XMATCH in the engine.
+  PT: ExcelGym cannot build or evaluate PivotTables. Planned as guided steps only; no challenge is claimed.
+  PQ: ExcelGym does not run Power Query. Planned as guided steps only; no challenge is claimed.
+  DB: ExcelGym has no chart or dashboard engine, so these cannot be verified.
+  DV: Data validation rules are not implemented in the worksheet.
+  CF: Conditional formatting is not implemented in the worksheet.
+
+4. Roadmap modules
+==================
+M01 Workbook basics and data entry           lessons  2  challenges   0  Lessons only
+M02 Cell references                          lessons  1  challenges   6  Lessons and practice
+M03 Summary functions                        lessons  1  challenges   5  Lessons and practice
+M04 Logic and decisions                      lessons  1  challenges   9  Lessons and practice
+M05 Conditional totals                       lessons  1  challenges  13  Lessons and practice
+M06 Handling text data                       lessons  7  challenges   8  Lessons and practice
+M07 Dates                                    lessons  1  challenges   8  Lessons and practice
+M08 Lookups                                  lessons  5  challenges  13  Lessons and practice
+M09 Sorting and filtering                    lessons  1  challenges   8  Lessons and practice
+M10 Dynamic arrays                           lessons  1  challenges  13  Lessons and practice
+M11 AutoFill and Flash Fill                  lessons  3  challenges   0  Lessons only
+M12 Transpose                                lessons  2  challenges   0  Lessons only
+M13 Text to Columns                          lessons  2  challenges   0  Lessons only
+M14 Data-cleaning workflows                  lessons  0  challenges  13  Practice only
+M15 Data validation                          lessons  0  challenges   0  Planned (nothing built)
+M16 Conditional formatting                   lessons  0  challenges   0  Planned (nothing built)
+M17 Charts                                   lessons  0  challenges   0  Planned (nothing built)
+M18 PivotTables (guided steps)               lessons  0  challenges   0  Planned (nothing built)
+M19 Power Query (guided steps)               lessons  0  challenges   0  Planned (nothing built)
+M20 Named ranges, tables and what-if         lessons  0  challenges   0  Planned (nothing built)
+M21 Finance calculations                     lessons  0  challenges  10  Practice only
+M22 Multi-table case studies                 lessons  0  challenges  10  Practice only
+
+5. Warnings
+===========
+Broken references: none
+Tier-rule violations: none
+Consecutive challenges on the same dataset: none
+Possible duplicates: none
+Datasets used by four or more challenges: 12
+  - DS-SAL-PRODUCTS (10 challenges)
+  - DS-HR-DIRECTORY (4 challenges)
+  - DS-EDU-MARKS (6 challenges)
+  - DS-SAL-ORDERS (6 challenges)
+  - DS-INV-STOCK (4 challenges)
+  - DS-HR-PAYROLL (4 challenges)
+  - DS-HR-EMP (7 challenges)
+  - DS-SAL-CUSTOMERS (5 challenges)
+  - DS-SAL-TXN (4 challenges)
+  - DS-SUP-TICKETS (4 challenges)
+  - DS-MKT-LEADS (4 challenges)
+  - DS-FIN-INVOICES (4 challenges)
+
+6. Deep validation
+==================
+Dataset errors: none
+Dataset warnings: none
+Reference solutions that fail (or untouched sheet passes): none
+Unverifiable challenges: none
+Simulated-flag mismatches: none
+
+7. Original material preserved
+==============================
+6 of 6 classroom sheets registered as read-only datasets
+6 of 6 original challenges kept (CH-1, CH-2, CH-3, CH-4, CH-5, CH-6)
+OK
+
+8. Evaluator limitations
+========================
+- Sorting and filtering are simulated with ExcelGym dialogs, not Excel's drop-down arrows. The filter tool is not cumulative: only one filter condition can be active at a time.
+- Dynamic-array challenges run on ExcelGym's own engine. Real Excel needs 2021 or Microsoft 365 for them. LET, LAMBDA, XMATCH, VSTACK, HSTACK, CHOOSECOLS and MAP are not evaluated.
+- 17 real Excel functions (for example PMT, IPMT, NPV, RANK, DATEDIF, SUBTOTAL and AGGREGATE) are not evaluated; finance challenges build schedules and ratios from arithmetic instead.
+- PivotTables, Power Query, charts and dashboards, data validation and conditional formatting cannot be built or evaluated here. They are reported as Missing, not as challenges.
+- Answers are checked by value and by formula text on the dataset plus two modified copies (to reject typed-in answers). A formula that hard-codes values in a way that survives those copies, or that gives the same numbers through an unexpected route, can still pass.
+- Where a challenge requires a particular function (for example SUMIFS), the checker looks for that name in the formula text; it does not judge style or efficiency.
+- Progress, hints and saved work live in this browser (localStorage). Nothing is synced between devices, and clearing site data removes it.
+- All data is synthetic and seeded, so it is repeatable. Rows are generated when a dataset is opened; the six original challenge tables and the instructor's workbook sheets are kept as they were.
+- The 26 px row height used for windowing very large sheets has not been confirmed in a real browser unless the phase table below says so.
+
+9. Phase status
+===============
+[Complete] Dataset library (ids, categories, tiers, schema, related, source)
+    89 datasets in 9 categories; 0 brief topics uncovered
+[Complete] Original workbook and original challenges preserved
+    6 of 6 classroom sheets registered as read-only datasets; 6 of 6 original challenges kept (CH-1, CH-2, CH-3, CH-4, CH-5, CH-6)
+[Complete] Challenges for every supported concept at its minimum count
+    12 of 12 supported concepts at target
+[Missing] Concepts ExcelGym cannot evaluate (PivotTables, Power Query, charts, validation, conditional formatting)
+    PT, PQ, DB, DV, CF: no challenges, by design (reported, not faked)
+[Complete] Multi-table case studies
+    10 of 10
+[Complete] Automated validation of datasets and challenges
+    89 datasets and 110 challenges checked in 22.5s: 0 dataset errors, 0 failing solutions, 0 unverifiable
