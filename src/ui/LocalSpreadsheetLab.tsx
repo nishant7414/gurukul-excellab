@@ -1,9 +1,16 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Download } from "lucide-react";
 import { downloadWorkbook, type ExportOptions } from "../engine/export";
 import type { WorkbookData } from "../engine/types";
 import type { CellFeedback, ToolId } from "../learning/types";
-import { GOOGLE_SHEETS_HOME } from "../sheets/messages";
+import {
+  GOOGLE_INVALID_URL_PREFIX,
+  GOOGLE_NOT_CONNECTED_LESSON,
+  GOOGLE_OPENED_OK,
+  GOOGLE_POPUP_BLOCKED,
+} from "../sheets/messages";
+import type { GoogleOpenLink } from "../sheets/googleOpen";
 import { usePersistStatus } from "../state/store";
 import { Spreadsheet } from "./Spreadsheet";
 
@@ -17,7 +24,7 @@ export interface LocalSpreadsheetLabProps {
   feedback?: CellFeedback[];
   emphasise?: ToolId[];
   height?: number;
-  googleOpenUrl?: string | null;
+  googleLink?: GoogleOpenLink;
   allowSheetOps?: boolean;
   exportOptions?: ExportOptions;
 }
@@ -59,6 +66,8 @@ function persistHint(status: string, message?: string) {
   return "";
 }
 
+type LabNote = { tone: "ok" | "warn" | "bad"; text: string; showImportActions?: boolean };
+
 export function LocalSpreadsheetLab({
   workbook,
   onChange,
@@ -69,12 +78,20 @@ export function LocalSpreadsheetLab({
   feedback,
   emphasise,
   height = 640,
-  googleOpenUrl,
+  googleLink = { state: "unconfigured" },
   allowSheetOps = true,
   exportOptions,
 }: LocalSpreadsheetLabProps) {
   const persist = usePersistStatus();
   const saveNote = persistHint(persist.status, persist.message);
+  const [labNote, setLabNote] = useState<LabNote | null>(null);
+  const googleReady = googleLink.state === "ready";
+
+  useEffect(() => {
+    if (!labNote || labNote.tone === "ok") return;
+    const t = window.setTimeout(() => setLabNote(null), 12000);
+    return () => window.clearTimeout(t);
+  }, [labNote]);
 
   const downloadExcel = () => {
     downloadWorkbook(workbook, {
@@ -85,14 +102,37 @@ export function LocalSpreadsheetLab({
   };
 
   const openGoogle = () => {
-    const dest = googleOpenUrl ?? GOOGLE_SHEETS_HOME;
-    window.open(dest, "_blank", "noopener,noreferrer");
+    if (googleLink.state === "ready") {
+      const tab = window.open(googleLink.openUrl, "_blank", "noopener,noreferrer");
+      if (!tab) setLabNote({ tone: "warn", text: GOOGLE_POPUP_BLOCKED });
+      else {
+        setLabNote({ tone: "ok", text: GOOGLE_OPENED_OK });
+        window.setTimeout(() => setLabNote(null), 4000);
+      }
+      return;
+    }
+    if (googleLink.state === "invalid") {
+      setLabNote({
+        tone: "bad",
+        text: `${GOOGLE_INVALID_URL_PREFIX} ${googleLink.error}`,
+        showImportActions: true,
+      });
+      return;
+    }
+    setLabNote({ tone: "warn", text: GOOGLE_NOT_CONNECTED_LESSON, showImportActions: true });
   };
 
   return (
     <section className="local-lab local-lab-compact glass card" aria-label="Practice workbook">
       <div className="local-lab-toolbar row between">
-        <span className="small faint" role="status" aria-live="polite">{saveNote}</span>
+        <span className="small faint lab-status-line" role="status" aria-live="polite">
+          {labNote ? (
+            <span className={labNote.tone === "ok" ? "pill ok" : labNote.tone === "bad" ? "pill bad" : "pill warn"}>{labNote.text}</span>
+          ) : (
+            saveNote
+          )}
+          {googleReady && !labNote && <span className="pill ok lab-gs-ready">Google workbook ready</span>}
+        </span>
         <div className="local-lab-export-toolbar" role="toolbar" aria-label="Export and external spreadsheet">
           <button type="button" className="btn btn-lab-google btn-sm" aria-label="Open in Google Sheets" onClick={openGoogle}>
             <GoogleSheetsMark /> Open in Google Sheets
@@ -102,6 +142,15 @@ export function LocalSpreadsheetLab({
           </button>
         </div>
       </div>
+
+      {labNote?.showImportActions && (
+        <div className="row google-lab-actions" role="region" aria-label="Import this lesson into Google Sheets">
+          <button type="button" className="btn btn-sm primary" onClick={downloadExcel}>
+            <Download size={15} aria-hidden="true" /> Download for Excel
+          </button>
+          <Link to="/settings" className="btn btn-sm ghost">Connect in Settings</Link>
+        </div>
+      )}
 
       <SpreadsheetErrorBoundary>
         <div className="local-lab-sheet">

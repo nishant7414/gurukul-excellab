@@ -6,7 +6,7 @@ export const HELP_GOOGLE_WORKBOOKS =
   "Practical challenges use a local practice workbook in your browser. An optional Google Sheets link can be added in Settings for each exercise. Opening Google Sheets does not upload or sync your local edits. Check Answer always uses the workbook on this page.";
 
 export const HELP_MISSING_GOOGLE =
-  "When no Google workbook is assigned, Open in Google Sheets opens sheets.google.com so you can start a new file or import a download. The challenge dataset remains on this page.";
+  "When no Google workbook is assigned, use Download for Excel and import the file into Google Sheets (File → Import). Assign a share link in Settings when you have a lesson-specific Google template.";
 
 export const HELP_SECTIONS: { id: string; title: string; paragraphs: string[] }[] = [
   {

@@ -10,7 +10,7 @@ import { Lightbulb, RotateCcw, Eye, CheckCircle2 } from "lucide-react";
 import { GoogleSheetsEmbed } from "./GoogleSheetsEmbed";
 import { LocalSpreadsheetLab } from "./LocalSpreadsheetLab";
 import { bindExercise } from "../sheets/registry";
-import { inspectSheetsUrl } from "../sheets/urls";
+import { resolveGoogleOpenLink } from "../sheets/googleOpen";
 
 const KIND_LABEL = { guided: "Guided", independent: "Independent", mastery: "Mastery" } as const;
 
@@ -65,14 +65,10 @@ export function ExerciseRunner({
   const sheetOverrides = useStore((s) => s.settings.googleSheets);
   const binding = useMemo(() => (isQuiz ? null : bindExercise(ex, sheetOverrides)), [ex, isQuiz, sheetOverrides]);
   const practiceRec = useStore((s) => (isQuiz ? undefined : s.practiceWorkbooks[practiceKey(practiceOwner(s), ex.id)]));
-  const googleOpenUrl = useMemo(() => {
-    if (isQuiz) return null;
-    const practice = practiceRec?.url ? inspectSheetsUrl(practiceRec.url) : null;
-    if (practice?.ok) return practice.openUrl;
-    const assigned = binding?.google?.spreadsheetUrl ? inspectSheetsUrl(binding.google.spreadsheetUrl) : null;
-    if (assigned?.ok) return assigned.openUrl;
-    return null;
-  }, [binding, isQuiz, practiceRec]);
+  const googleLink = useMemo(
+    () => (isQuiz ? { state: "unconfigured" as const } : resolveGoogleOpenLink(ex.id, practiceRec?.url, sheetOverrides)),
+    [ex.id, isQuiz, practiceRec?.url, sheetOverrides],
+  );
 
   const check = () => {
     let res = isQuiz ? mcqResult(ex, answers) : checkExercise(ex, wb);
@@ -102,8 +98,10 @@ export function ExerciseRunner({
         <div className="row practice-meta">
           <span className="pill pill-quiet">{KIND_LABEL[ex.kind]}</span>
           {ex.simulationNote && <span className="pill sim">Simulation</span>}
-          {binding?.status === "configured" && <span className="pill ok">Google workbook linked</span>}
-          {binding?.status === "invalid" && <span className="pill bad">Google link needs fixing</span>}
+          {googleLink.state === "ready" && (
+            <span className="pill ok">{googleLink.source === "practice" ? "Your Google copy" : "Google workbook linked"}</span>
+          )}
+          {googleLink.state === "invalid" && <span className="pill bad">Google link needs fixing</span>}
           {passed && <span className={`pill ${progress?.assisted ? "warn" : "ok"}`}><CheckCircle2 size={12} aria-hidden="true" /> {progress?.assisted ? "Passed with solution" : "Complete"}</span>}
         </div>
         <h2 className="practice-title">{ex.title}</h2>
@@ -200,7 +198,7 @@ export function ExerciseRunner({
               emphasise={ex.tools}
               allowSheetOps
               height={640}
-              googleOpenUrl={googleOpenUrl}
+              googleLink={googleLink}
               exportOptions={{
                 title: ex.title,
                 exerciseId: ex.id,

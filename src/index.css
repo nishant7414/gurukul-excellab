@@ -251,6 +251,9 @@ table.grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; 
 .local-lab { min-width: 0; }
 .local-lab-compact { padding: 12px 14px; }
 .local-lab-toolbar { margin-bottom: 8px; gap: 8px; align-items: center; flex-wrap: wrap; }
+.lab-status-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 1.4em; }
+.lab-gs-ready { font-size: 0.78rem; }
+.google-lab-actions { gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .local-lab-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 8px; }
 .local-lab-export-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
 .local-lab-export-toolbar .gs-mark { flex: none; display: block; }

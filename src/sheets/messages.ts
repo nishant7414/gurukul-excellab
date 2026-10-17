@@ -3,8 +3,15 @@ export { GOOGLE_CANNOT_CHECK, LOCAL_CHECK_SOURCE } from "../learning/messages";
 export const MISSING_WORKBOOK =
   "No Google Sheets workbook is assigned to this challenge. Check Answer uses the local Gurukul ExcelLab sheet and dataset. Add a share or Publish-to-web link in Settings if you want a Google preview.";
 
-/** Generic destination when a challenge has no configured Google workbook URL. */
+/** Legacy constant — do not use as a student fallback when opening lessons. */
 export const GOOGLE_SHEETS_HOME = "https://sheets.google.com/";
+
+/** Shown when Open in Google Sheets is clicked but this exercise has no assigned workbook. */
+export const GOOGLE_NOT_CONNECTED_LESSON =
+  "Google Sheets isn't connected for this lesson yet. Download the Excel workbook, then in Google Sheets use File → Import to open this lesson's data.";
+
+export const GOOGLE_OPENED_OK = "Opening this lesson's Google workbook in a new tab.";
+export const GOOGLE_POPUP_BLOCKED = "Allow pop-ups in your browser to open Google Sheets.";
 
 export const GOOGLE_NOT_CONFIGURED_TITLE = "No Google Sheets workbook for this challenge";
 
