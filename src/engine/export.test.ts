@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyWorkbook, compute } from "./workbook";
-import { exportWorkbook } from "./export";
+import { exportWorkbook, isXlsxZip, workbookFileName } from "./export";
 import { importWorkbook } from "./import";
 
 describe("exportWorkbook", () => {
@@ -38,5 +38,39 @@ describe("exportWorkbook", () => {
     wb.sheets[0].cells = { A1: "1" };
     const { report } = exportWorkbook(wb, "xlsx");
     expect(report.warnings.some((w) => /PivotTables/i.test(w))).toBe(true);
+  });
+
+  it("writes a genuine xlsx ZIP with a challenge filename and notes sheet", async () => {
+    const wb = emptyWorkbook(["Sales"]);
+    wb.sheets[0].cells = { A1: "10", A2: "=A1*2" };
+    wb.sheets[0].formats.A1 = { nf: "number" };
+    const { blob, fileName, report } = exportWorkbook(wb, {
+      kind: "xlsx",
+      title: "North region totals",
+      exerciseId: "EX-VL-1-1",
+      objective: "Total the units.",
+      instructions: ["Enter SUM in B2."],
+      includeInstructionsSheet: true,
+    });
+    expect(fileName).toBe(workbookFileName({ title: "North region totals", exerciseId: "EX-VL-1-1" }));
+    expect(fileName).toMatch(/gurukul-excellab-ex-vl-1-1-north-region-totals\.xlsx/);
+    const buf = await blob.arrayBuffer();
+    expect(isXlsxZip(buf)).toBe(true);
+    expect(report.sheets).toBe(2);
+    const res = importWorkbook(buf, fileName, buf.byteLength);
+    expect(res.ok).toBe(true);
+    if (!res.ok) return;
+    expect(res.workbook.sheets.map((s) => s.name)).toEqual(["Sales", "Challenge notes"]);
+    expect(res.workbook.sheets[0].cells.A2).toBe("=A1*2");
+    expect(compute(res.workbook).value("Sales", "A2")).toBe(20);
+    expect(res.workbook.sheets[1].cells.A1).toMatch(/North region totals/);
+  });
+
+  it("does not treat a CSV download as an xlsx workbook", async () => {
+    const wb = emptyWorkbook(["S"]);
+    wb.sheets[0].cells = { A1: "1" };
+    const { blob, fileName } = exportWorkbook(wb, "csv");
+    expect(fileName).toMatch(/\.csv$/);
+    expect(isXlsxZip(await blob.arrayBuffer())).toBe(false);
   });
 });

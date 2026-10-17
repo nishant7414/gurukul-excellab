@@ -16,8 +16,9 @@ export function gradeQuestions(qs: McqQuestion[], answers: Record<string, number
       message: ok ? "Correct." : a === undefined ? "Not answered." : "Not quite.", hint: q.explanation, tag: ok ? undefined : (q.tag ?? "knowledge"),
     });
   }
-  const passed = correct === qs.length;
-  return { passed, correct, total: qs.length, feedback, tags: [...tags], summary: passed ? `All ${qs.length} questions correct.` : `${correct} of ${qs.length} questions correct.` };
+  const passed = correct === qs.length && qs.length > 0;
+  const scorePercent = qs.length ? Math.round((100 * correct) / qs.length) : 0;
+  return { passed, correct, total: qs.length, scorePercent, feedback, tags: [...tags], summary: passed ? `All ${qs.length} questions correct.` : `${correct} of ${qs.length} questions correct.` };
 }
 
 export const isQuestionExercise = (e: Exercise) => !!e.questions && e.questions.length > 0;

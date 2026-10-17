@@ -4,6 +4,7 @@ import { verifyDemoLogin } from "../auth/accounts";
 import { APP_NAME, INSTITUTION, TAGLINE } from "../brand";
 import { GunvattaGurukulLogo } from "../ui/GunvattaGurukulLogo";
 import { actions } from "../state/store";
+import { FRONTEND_AUTH_NOTICE } from "../learning/messages";
 
 const CHECK_MS = 280;
 
@@ -115,6 +116,7 @@ export default function Login() {
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </form>
+        <p className="small faint login-note">{FRONTEND_AUTH_NOTICE}</p>
         </div>
         </div>
       </div>

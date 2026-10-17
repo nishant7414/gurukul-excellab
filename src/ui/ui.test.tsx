@@ -61,7 +61,7 @@ describe("ExerciseRunner: first end-to-end VLOOKUP workflow", () => {
     unmount();
     render(<ExerciseRunner exercise={ex} topic="VLOOKUP" />);
     expect(text("K20")).not.toBe("");
-    expect(document.body.textContent).toContain("Passed");
+    expect(document.body.textContent).toContain("Complete");
   });
 
   it("protects provided cells and explains why", async () => {

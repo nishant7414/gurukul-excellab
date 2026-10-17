@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CopyPlus, ExternalLink, Maximize2 } from "lucide-react";
 import { inspectEmbedUrl, inspectSheetsUrl } from "../sheets/urls";
 import type { SheetsMode } from "../sheets/catalog";
-import { actions, useStore } from "../state/store";
+import { actions, practiceKey, practiceOwner, useStore } from "../state/store";
 
 export const EDITING_NOTICE =
   "Google Sheets editing is not available in the embedded view. Open your practice workbook in Google Sheets to use the full spreadsheet editor. Your lesson and progress remain in Gurukul ExcelLab.";
@@ -18,6 +18,8 @@ export interface GoogleSheetsEmbedProps {
   sourceNote?: string;
   workbookName?: string;
   exerciseId?: string;
+  /** Less chrome when nested under optional lesson preview. */
+  compact?: boolean;
 }
 
 function openSheets(url: string) {
@@ -35,12 +37,14 @@ export function GoogleSheetsEmbed({
   sourceNote,
   workbookName,
   exerciseId,
+  compact = false,
 }: GoogleSheetsEmbedProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
   const [paste, setPaste] = useState("");
   const [pasteErr, setPasteErr] = useState<string | null>(null);
-  const practice = useStore((s) => (exerciseId ? s.practiceWorkbooks[`${(s.auth.email ?? s.userId).toLowerCase()}::${exerciseId}`] : undefined));
+  const [loadedSrc, setLoadedSrc] = useState("");
+  const [frameNote, setFrameNote] = useState<string | null>(null);
+  const practice = useStore((s) => (exerciseId ? s.practiceWorkbooks[practiceKey(practiceOwner(s), exerciseId)] : undefined));
 
   const open = inspectSheetsUrl(spreadsheetUrl);
   const embed = inspectEmbedUrl(embedUrl, spreadsheetUrl);
@@ -49,10 +53,16 @@ export function GoogleSheetsEmbed({
   const copyHref = open.ok ? open.copyUrl : undefined;
   const practiceHref = practice ? inspectSheetsUrl(practice.url) : null;
   const showIframe = mode === "embedded-view" && embed.ok;
+  const embedSrc = embed.ok ? embed.embedUrl : "";
+  const loading = showIframe && loadedSrc !== embedSrc;
 
   useEffect(() => {
-    setLoading(true);
-  }, [embed.ok ? embed.embedUrl : ""]);
+    if (!showIframe || !embedSrc) return;
+    const t = window.setTimeout(() => {
+      setLoadedSrc((cur) => cur || embedSrc);
+    }, 12000);
+    return () => window.clearTimeout(t);
+  }, [showIframe, embedSrc]);
 
   const fullscreen = () => {
     const el = wrapRef.current;
@@ -76,23 +86,27 @@ export function GoogleSheetsEmbed({
   };
 
   return (
-    <section className="gs-embed glass-flat" aria-label={title}>
-      <header className="gs-head">
-        <div>
-          <div className="row" style={{ marginBottom: 4 }}>
-            <span className="pill">{showIframe ? "Published preview" : "Google Sheets"}</span>
-            <span className="pill">Read-only on this page</span>
-            {workbookName && <span className="pill">{workbookName}</span>}
+    <section className={`gs-embed glass-flat${compact ? " gs-embed-compact" : ""}`} aria-label={title}>
+      {!compact && (
+        <header className="gs-head">
+          <div>
+            <div className="row" style={{ marginBottom: 4 }}>
+              <span className="pill">{showIframe ? "Published preview" : "Google Sheets"}</span>
+              <span className="pill">Read-only on this page</span>
+              {workbookName && <span className="pill">{workbookName}</span>}
+            </div>
+            <h3>{title}</h3>
+            {description && <p className="muted small">{description}</p>}
+            {sourceNote && <p className="small faint">{sourceNote}</p>}
           </div>
-          <h3>{title}</h3>
-          {description && <p className="muted small">{description}</p>}
-          {sourceNote && <p className="small faint">{sourceNote}</p>}
-        </div>
-      </header>
+        </header>
+      )}
 
-      <div className="callout warn" role="status">
-        <p>{EDITING_NOTICE}</p>
-      </div>
+      {!compact && (
+        <div className="callout warn" role="status">
+          <p>{EDITING_NOTICE}</p>
+        </div>
+      )}
 
       <div className="row" style={{ margin: "10px 0" }}>
         {practiceHref?.ok && (
@@ -128,7 +142,7 @@ export function GoogleSheetsEmbed({
             {practice && <button className="btn ghost" type="button" onClick={() => actions.clearPracticeWorkbook(exerciseId)}>Forget saved workbook</button>}
           </div>
           {pasteErr && <p className="small" role="alert">{pasteErr}</p>}
-          {practice && <p className="small faint">Saved for this GG ID on this browser only. This is not a Google-secured link and is not shared with a server.</p>}
+          {practice && !compact && <p className="small faint">Saved on this device for your GG ID only.</p>}
         </form>
       )}
 
@@ -137,12 +151,16 @@ export function GoogleSheetsEmbed({
           {loading && <div className="gs-loading" role="status">Loading the published Google Sheets preview…</div>}
           <iframe
             title={`${title} (read-only Google Sheets preview)`}
-            src={embed.ok ? embed.embedUrl : undefined}
+            src={embedSrc}
             loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
             allow="fullscreen"
             sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"
-            onLoad={() => setLoading(false)}
+            onLoad={() => { setLoadedSrc(embedSrc); setFrameNote(null); }}
+            onError={() => {
+              setLoadedSrc(embedSrc);
+              setFrameNote("The published preview did not load. Use Open in Google Sheets. Lesson instructions stay available on this page.");
+            }}
           />
         </div>
       ) : (
@@ -155,9 +173,13 @@ export function GoogleSheetsEmbed({
         </div>
       )}
 
-      <p className="small faint">
-        Google publishes embeds without the formula bar or menus. The full editor only runs on docs.google.com. If the preview asks you to sign in, the file is not published for embedding. This website cannot see inside the iframe.
-      </p>
+      {frameNote && <p className="small" role="status">{frameNote}</p>}
+      {!compact && (
+        <details className="small faint">
+          <summary>About Google previews</summary>
+          <p>Published embeds are read-only and may not show the formula bar. Use Open in Google Sheets for the full editor. Gurukul ExcelLab cannot read cells inside the preview.</p>
+        </details>
+      )}
     </section>
   );
 }

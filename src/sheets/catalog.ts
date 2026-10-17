@@ -30,15 +30,20 @@ export const GOOGLE_SHEET_DEFAULTS: Record<string, GoogleSheetAssignment> = {
 
 export interface ResolvedSheet {
   assignment: GoogleSheetAssignment;
-  source: "settings" | "catalog" | "sample";
+  source: "settings" | "catalog";
   open: SheetsUrlOk | { ok: false; error: string };
   embed: SheetsUrlOk | { ok: false; error: string };
   fallback: SheetsUrlOk | { ok: false; error: string } | null;
 }
 
-export function resolveGoogleSheet(exerciseId: string, overrides?: Record<string, GoogleSheetAssignment>): ResolvedSheet {
-  const assignment = overrides?.[exerciseId] ?? GOOGLE_SHEET_DEFAULTS[exerciseId] ?? GOOGLE_SAMPLE_SHEET;
-  const source: ResolvedSheet["source"] = overrides?.[exerciseId] ? "settings" : GOOGLE_SHEET_DEFAULTS[exerciseId] ? "catalog" : "sample";
+/**
+ * Resolve a configured Google workbook for an exercise.
+ * Returns null when nothing is assigned — never substitutes Google's Class Data sample.
+ */
+export function resolveGoogleSheet(exerciseId: string, overrides?: Record<string, GoogleSheetAssignment>): ResolvedSheet | null {
+  const assignment = overrides?.[exerciseId] ?? GOOGLE_SHEET_DEFAULTS[exerciseId];
+  if (!assignment) return null;
+  const source: ResolvedSheet["source"] = overrides?.[exerciseId] ? "settings" : "catalog";
   const open = inspectSheetsUrl(assignment.spreadsheetUrl);
   const embed = inspectEmbedUrl(assignment.embedUrl, assignment.spreadsheetUrl);
   const fallback = assignment.fallbackUrl ? inspectSheetsUrl(assignment.fallbackUrl) : null;

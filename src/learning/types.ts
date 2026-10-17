@@ -85,6 +85,9 @@ export interface ValuesCheck {
   expected: Scalar[][];
   /** do not fail when an expected blank cell is blank-ish */
   trim?: boolean;
+  ignoreCase?: boolean;
+  tolerance?: number;
+  normalizeWhitespace?: boolean;
   /** Allow the value to be typed or produced by a formula/operation (operations never need a formula) */
   note?: string;
 }
@@ -184,6 +187,8 @@ export interface Exercise {
   criteria?: string[];
   /** typical errors, shown with the solution (practice challenges) */
   mistakes?: string[];
+  /** 0–1 fraction of checks that must pass. Default 1 (every check). Frontend keys are inspectable. */
+  passThreshold?: number;
 }
 
 export type CellStatus =
@@ -213,9 +218,12 @@ export interface CheckResult {
   passed: boolean;
   correct: number;
   total: number;
+  /** 0–100 partial score. Passing still requires every required check unless passThreshold is set. */
+  scorePercent: number;
   feedback: CellFeedback[];
   summary: string;
   tags: MistakeTag[];
+  notices?: string[];
 }
 
 /* ---------- lessons ---------- */

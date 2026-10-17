@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { BarChart3, ClipboardList, Database, BookMarked, ClipboardCheck, FlaskConical, GraduationCap, LayoutDashboard, ListChecks, LogOut, Map, Menu, Notebook, PanelLeftClose, PanelLeftOpen, Search, Settings, Sigma, Trophy, X } from "lucide-react";
-import { APP_NAME, INSTITUTION, initialsFromName, TAGLINE } from "../brand";
+import { APP_NAME, INSTITUTION, initialsFromName } from "../brand";
 import { GunvattaGurukulLogo } from "./GunvattaGurukulLogo";
-import { actions, useStore, usePersistError } from "../state/store";
+import { actions, useStore, usePersistError, usePersistStatus } from "../state/store";
 import { ALL_LESSONS } from "../content/lessons";
 import { ALL_EXERCISES } from "../content/registry";
 import { ownerOf } from "../content/routes";
@@ -31,6 +31,7 @@ export function Shell() {
   const email = useStore((s) => s.auth.email);
   const unresolved = useStore((s) => s.mistakes.filter((m) => !m.resolved).length);
   const persistErr = usePersistError();
+  const persist = usePersistStatus();
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [q, setQ] = useState("");
@@ -74,13 +75,13 @@ export function Shell() {
           </NavLink>
         ))}
         <div style={{ flex: 1 }} />
-        <p className="nav-label small faint" style={{ padding: "8px 12px" }}>{TAGLINE}<br />Powered by {INSTITUTION}</p>
+        <p className="nav-label small faint sidebar-tagline" style={{ padding: "8px 12px" }}>{INSTITUTION}</p>
         <button className="btn ghost nav-collapse" onClick={() => actions.setSidebar(!collapsed)} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>{collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}<span className="nav-label">Collapse</span></button>
       </nav>
       <div className="main">
         <div className="topbar">
-          <button className="btn mobile-only" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>{open ? <X size={18} /> : <Menu size={18} />}</button>
-          <div className="search glass">
+          <button className="btn mobile-only topbar-menu" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>{open ? <X size={18} /> : <Menu size={18} />}</button>
+          <div className="search glass topbar-search">
             <div className="row" style={{ flexWrap: "nowrap" }}>
               <Search size={16} aria-hidden="true" />
               <input type="search" aria-label="Search lessons and exercises" placeholder="Search lessons, exercises, pages…" value={q} onChange={(e) => setQ(e.target.value)}
@@ -92,9 +93,12 @@ export function Shell() {
               </div>
             )}
           </div>
-          <div style={{ flex: 1 }} />
-          <Link to="/mistakes" className="glass row small" style={{ textDecoration: "none", color: "inherit" }} aria-label={`${unresolved} unresolved mistakes`}>🔔 {unresolved > 0 ? `${unresolved} to review` : "All caught up"}</Link>
-          <div className="menu-wrap account-wrap" ref={menuRef}>
+          <div className="topbar-spacer" aria-hidden="true" />
+          <Link to="/mistakes" className="glass row small topbar-mistakes" style={{ textDecoration: "none", color: "inherit" }} aria-label={`${unresolved} unresolved mistakes`}>
+            <span aria-hidden="true">🔔</span>
+            <span className="topbar-mistakes-label">{unresolved > 0 ? `${unresolved} to review` : "All caught up"}</span>
+          </Link>
+          <div className="menu-wrap account-wrap topbar-account" ref={menuRef}>
             <button
               type="button"
               className="glass row small account-btn"
@@ -104,7 +108,7 @@ export function Shell() {
               onClick={() => setMenuOpen((v) => !v)}
             >
               <span className="avatar" aria-hidden="true">{initials}</span>
-              {name}
+              <span className="account-name">{name}</span>
             </button>
             {menuOpen && (
               <div className="menu glass" role="menu" style={{ right: 0, left: "auto" }}>
@@ -115,11 +119,12 @@ export function Shell() {
             )}
           </div>
         </div>
-        {persistErr && <div className="callout bad" role="alert" style={{ marginBottom: 12 }}>{persistErr} Your progress will be lost when you close this tab. Use Settings → Export to keep a copy.</div>}
+        {persistErr && <div className="callout bad persist-note" role="alert">{persistErr} Your progress will be lost when you close this tab. Use Settings → Export to keep a copy.</div>}
+        {!persistErr && persist.status === "saving" && <p className="small faint persist-note" role="status">Saving local progress…</p>}
         <main id="main" tabIndex={-1}><Outlet /></main>
         <footer className="app-footer small faint">
           <div className="footer-mark"><GunvattaGurukulLogo size="footer" /></div>
-          <p>{APP_NAME} · {TAGLINE} · Powered by {INSTITUTION}.</p>
+          <p>{APP_NAME} · {INSTITUTION}</p>
         </footer>
       </div>
       <style>{`.mobile-only{display:none}@media (max-width:960px){.mobile-only{display:inline-flex}}`}</style>

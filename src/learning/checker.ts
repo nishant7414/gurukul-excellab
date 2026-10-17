@@ -5,6 +5,7 @@ import { addr, cellsIn, inRange, parseAddr, parseRange } from "../engine/refs";
 import { XlError, isErr, type Scalar, type WorkbookData } from "../engine/types";
 import type { CellFeedback, Check, CheckResult, Exercise, FormulaCheck, InputReader, MistakeTag } from "./types";
 import { cloneWb, getSheet } from "../engine/ops";
+import { compareScalar, scoreFromCounts } from "./validators";
 
 /** Reads *input* data (constants, or computed values for formula inputs) from a workbook. */
 export function makeReader(wb: WorkbookData, known?: Computed): InputReader {
@@ -17,17 +18,8 @@ export function makeReader(wb: WorkbookData, known?: Computed): InputReader {
 
 const show = (v: Scalar) => (v === null ? "(blank)" : typeof v === "string" ? `"${v}"` : displayValue(v));
 
-function same(actual: Scalar, expected: Scalar, tol?: number, ignoreCase?: boolean): boolean {
-  if (isErr(expected)) return isErr(actual) && actual.code === expected.code;
-  if (isErr(actual)) return false;
-  if (expected === null || expected === "") return actual === null || actual === "";
-  if (typeof expected === "number") {
-    if (typeof actual !== "number") return false;
-    const t = tol ?? 1e-9 * Math.max(1, Math.abs(expected));
-    return Math.abs(actual - expected) <= t;
-  }
-  if (typeof expected === "string" && typeof actual === "string") return ignoreCase ? actual.toLowerCase() === expected.toLowerCase() : actual === expected;
-  return actual === expected;
+function same(actual: Scalar, expected: Scalar, tol?: number, ignoreCase?: boolean, extra?: { trim?: boolean; normalizeWhitespace?: boolean }): boolean {
+  return compareScalar(actual, expected, { tolerance: tol, ignoreCase, trim: extra?.trim, normalizeWhitespace: extra?.normalizeWhitespace }).ok;
 }
 
 interface Diagnosis {
@@ -196,8 +188,7 @@ function runChecks(ex: Exercise, wb: WorkbookData): CellFeedback[] {
           const exp = c.expected[r - range.r1]?.[col - range.c1] ?? null;
           let act = comp.value(c.sheet, a);
           const base = { sheet: c.sheet, addr: a, expected: show(exp), checkLabel: c.label };
-          if (c.trim && typeof act === "string") act = act.trim();
-          if (same(act, exp)) fbs.push({ ...base, status: "correct", actual: show(act), message: "Correct." });
+          if (same(act, exp, c.tolerance, c.ignoreCase, { trim: c.trim, normalizeWhitespace: c.normalizeWhitespace })) fbs.push({ ...base, status: "correct", actual: show(act), message: "Correct." });
           else if (act === null) fbs.push({ ...base, status: "missing", actual: "(blank)", message: "This cell is empty but should contain a value.", hint: "Check that you applied the operation to the whole range and chose the right destination.", tag: "operation-result" });
           else {
             const d = typeof act === "string" && typeof exp === "string" && act.trim() === exp.trim() ? { tag: "extra-spaces" as MistakeTag, message: "Matches except for leading/trailing spaces.", hint: "Clean the spaces (TRIM) or choose the delimiter more carefully." } : { tag: "operation-result" as MistakeTag, message: "This value is not what the operation should produce here.", hint: "Check the source range, the destination and the delimiter/options you chose." };
@@ -279,15 +270,25 @@ function lockedChanges(ex: Exercise, wb: WorkbookData): CellFeedback[] {
   return out;
 }
 
+export function workbookUnchanged(ex: Exercise, wb: WorkbookData): boolean {
+  const start = ex.workbook();
+  const cur = getSheet(wb, ex.activeSheet);
+  const init = getSheet(start, ex.activeSheet);
+  if (!cur || !init) return true;
+  return JSON.stringify(cur.cells) === JSON.stringify(init.cells);
+}
+
 export function checkExercise(ex: Exercise, wb: WorkbookData): CheckResult {
   const fb = [...runChecks(ex, wb), ...lockedChanges(ex, wb)];
   const correct = fb.filter((f) => f.status === "correct").length;
   const total = fb.filter((f) => f.status !== "locked-changed").length;
-  const passed = fb.length > 0 && fb.every((f) => f.status === "correct");
+  const score = scoreFromCounts(correct, total, ex.passThreshold ?? 1);
+  const lockedOk = !fb.some((f) => f.status === "locked-changed");
+  const passed = score.passed && lockedOk && fb.length > 0;
   const bad = fb.filter((f) => f.status !== "correct");
   const tags = [...new Set(bad.map((f) => f.tag).filter(Boolean))] as MistakeTag[];
   const summary = passed ? "All checks passed." : `${correct} of ${total} checked cells are correct${bad.some((b) => b.status === "locked-changed") ? "; protected cells were changed" : ""}.`;
-  return { passed, correct, total, feedback: fb, summary, tags };
+  return { passed, correct, total, scorePercent: score.percent, feedback: fb, summary, tags };
 }
 
 /** Apply a Solution (reference answer) to a fresh copy of the exercise workbook. */

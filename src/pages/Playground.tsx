@@ -12,6 +12,7 @@ import { actions } from "../state/store";
 import { grid } from "../data/source";
 import { GoogleSheetsEmbed } from "../ui/GoogleSheetsEmbed";
 import { GOOGLE_SAMPLE_SHEET } from "../sheets/catalog";
+import { SAMPLE_PLAYGROUND_NOTE } from "../sheets/messages";
 
 function sample(): WorkbookData {
   const wb = emptyWorkbook(["Orders", "Scratch"]);
@@ -70,10 +71,11 @@ export default function Playground() {
 
       <GoogleSheetsEmbed
         title={GOOGLE_SAMPLE_SHEET.title}
-        description="Published Google Sheets preview only. The playground grid below is Gurukul ExcelLab's own sheet."
+        description={SAMPLE_PLAYGROUND_NOTE}
         spreadsheetUrl={GOOGLE_SAMPLE_SHEET.spreadsheetUrl}
         embedUrl={GOOGLE_SAMPLE_SHEET.embedUrl}
         height={520}
+        sourceNote="Published preview only. The playground grid below is Gurukul ExcelLab's own sheet and is not this sample workbook."
       />
 
       <section className="glass card" aria-labelledby="eval-h">
@@ -96,8 +98,8 @@ export default function Playground() {
         <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} allowSheetOps height={420} />
         <div className="row" style={{ marginTop: 8 }}>
           <button className="btn" onClick={() => { if (window.confirm("Replace the sheet with the sample data? Your changes in the playground will be lost.")) { setWb(sample()); setSheet("Orders"); setOut(null); setExportNote(null); } }}>Reset to sample data</button>
-          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, "xlsx"); downloadWorkbook(wb, "xlsx"); setExportNote(report); }}><Download size={15} /> Download .xlsx</button>
-          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, "csv"); downloadWorkbook(wb, "csv"); setExportNote(report); }}><Download size={15} /> Download CSV</button>
+          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, { kind: "xlsx", title: "Formula Playground" }); downloadWorkbook(wb, { kind: "xlsx", title: "Formula Playground" }); setExportNote(report); }}><Download size={15} /> Download for Excel</button>
+          <button className="btn" onClick={() => { const { report } = exportWorkbook(wb, { kind: "csv", title: "Formula Playground" }); downloadWorkbook(wb, { kind: "csv", title: "Formula Playground" }); setExportNote(report); }}><Download size={15} /> Download CSV</button>
         </div>
         {exportNote && (
           <div className="callout warn small" role="status" style={{ marginTop: 8 }}>

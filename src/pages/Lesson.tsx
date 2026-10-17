@@ -3,11 +3,10 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { LESSON_BY_ID } from "../content/lessons";
 import { EXERCISE_BY_ID } from "../content/registry";
 import { ExerciseRunner } from "../ui/ExerciseRunner";
-import { getState, useStore } from "../state/store";
+import { useStore } from "../state/store";
 import { PRACTICE_CONCEPTS } from "../practice/concepts";
 import { CATALOG } from "../practice/catalog";
 
-const lessonStarted = (id: string) => (LESSON_BY_ID.get(id)?.exerciseIds ?? []).some((e) => (getState().exercises[e]?.attempts ?? 0) > 0);
 import { CONCEPTS } from "../data/audit";
 
 export default function LessonPage() {
@@ -16,7 +15,7 @@ export default function LessonPage() {
   const [params] = useSearchParams();
   const [idx, setIdx] = useState(() => Math.max(0, (LESSON_BY_ID.get(id)?.exerciseIds ?? []).indexOf(params.get("ex") ?? "")));
   const progress = useStore((s) => s.exercises);
-  const [startOpen] = useState(() => !lessonStarted(id));
+  const [startOpen] = useState(false);
   if (!lesson) return <div className="page"><h1>Lesson not found</h1><p>No lesson has the id <code>{id}</code>. <Link to="/classroom">Back to My Classroom</Link></p></div>;
   const exs = lesson.exerciseIds.map((e) => EXERCISE_BY_ID.get(e)!).filter(Boolean);
   const ex = exs[Math.min(idx, exs.length - 1)];
@@ -26,11 +25,16 @@ export default function LessonPage() {
   const label = { guided: "Guided", independent: "Independent", mastery: "Mastery" } as const;
 
   return (
-    <div className="page stack">
-      <header>
-        <div className="crumbs"><Link to="/classroom">My Classroom</Link> › {lesson.sourceSheet ? `Source sheet: ${lesson.sourceSheet.trim()}` : lesson.level}</div>
+    <div className="page page-wide stack">
+      <header className="lesson-page-header">
+        <nav className="crumbs" aria-label="Breadcrumb"><Link to="/classroom">Learning</Link> / {lesson.sourceSheet?.trim() || lesson.level}</nav>
         <h1>{lesson.title}</h1>
-        <div className="row"><span className="pill">{lesson.difficulty}</span><span className="pill">~{lesson.minutes} min</span><span className={`pill ${lesson.track === "classroom" ? "src" : "gen"}`}>{lesson.track === "classroom" ? "From the source workbook" : "Additional curriculum (generated)"}</span></div>
+        <p className="muted">{lesson.content.simple}</p>
+        <div className="row lesson-meta">
+          <span className="pill pill-quiet">{lesson.difficulty}</span>
+          <span className="pill pill-quiet">~{lesson.minutes} min</span>
+          {lesson.track === "classroom" && <span className="pill pill-quiet">Source workbook</span>}
+        </div>
       </header>
 
       <details className="glass card" open={startOpen}>
@@ -61,7 +65,14 @@ export default function LessonPage() {
           </button>
         ))}
       </div>
-      {ex && <ExerciseRunner key={ex.id} exercise={ex} topic={lesson.title} onNext={idx < exs.length - 1 ? () => setIdx(idx + 1) : undefined} />}
+      {ex && (
+        <ExerciseRunner
+          key={ex.id}
+          exercise={ex}
+          topic={lesson.title}
+          onNext={idx < exs.length - 1 ? () => setIdx(idx + 1) : undefined}
+        />
+      )}
     </div>
   );
 }

@@ -4,6 +4,38 @@ import type { WorkbookDelta } from "./delta";
 import type { CheckResult, Exercise, MistakeTag } from "../learning/types";
 import { TAG_LABEL } from "../learning/types";
 import type { GoogleSheetAssignment } from "../sheets/catalog";
+import {
+  applyExportToRoot,
+  buildExport,
+  emptyProfile,
+  emptyRoot,
+  isNewerRoot,
+  loadRoot,
+  parsePersistedRoot,
+  parseProgressExport,
+  profileOwnerFromAuth,
+  saveRoot,
+  SCHEMA,
+  STORAGE_KEY,
+  type PersistedRoot,
+  type ProfileData,
+  type ProgressExport,
+} from "./persist";
+
+function profileHasWork(p: ProfileData): boolean {
+  return p.attempts.length > 0
+    || Object.values(p.exercises).some((e) => (e.attempts ?? 0) > 0 || e.passed)
+    || Object.keys(p.practiceWorkbooks).length > 0;
+}
+
+function rekeyPractice(recs: Record<string, PracticeWorkbook>, owner: string): Record<string, PracticeWorkbook> {
+  const out: Record<string, PracticeWorkbook> = {};
+  for (const rec of Object.values(recs)) {
+    out[practiceKey(owner, rec.exerciseId)] = { ...rec, owner };
+  }
+  return out;
+}
+import { broadcastState, startStateSync } from "./sync";
 
 export interface PracticeWorkbook {
   exerciseId: string;
@@ -12,14 +44,12 @@ export interface PracticeWorkbook {
   at: string;
 }
 
-export function practiceOwner(s: { auth: DemoAuth; userId: string }): string {
-  return (s.auth.email ?? s.userId).toLowerCase();
+export function practiceOwner(s: { auth: DemoAuth; userId: string; owner?: string }): string {
+  return (s.auth.email ?? s.owner ?? s.userId).toLowerCase();
 }
 export function practiceKey(owner: string, exerciseId: string): string {
   return `${owner}::${exerciseId}`;
 }
-
-const KEY = "excelgym.state.v1";
 
 export interface ExerciseProgress {
   attempts: number;
@@ -37,7 +67,6 @@ export interface ExerciseProgress {
   /** ISO time of the most recent submission */
   lastAt?: string;
   answers?: Record<string, number>;
-  /** attempts counted since the last pass */
   lastResultSummary?: string;
 }
 export interface AttemptRec {
@@ -79,18 +108,24 @@ export interface ImportRecord {
   sheets: number;
   status: string;
 }
-/** Frontend-only demo identity. Never store a password here. This is not secure authentication. */
+/** Frontend-only GG ID gate. Never store a password here. This is not secure authentication. */
 export interface DemoAuth {
   signedIn: boolean;
   email: string | null;
 }
 
+export type PersistStatus = "idle" | "loading" | "saving" | "saved" | "error";
+
 export interface AppState {
-  version: 1;
+  version: 2;
+  schema: 2;
+  updatedAt: string;
+  writeSeq: number;
+  owner: string;
   userId: string;
   displayName: string;
   createdAt: string;
-  /** Demo UI gate only. Persisted as signedIn + email; anyone can edit localStorage. Not real auth. */
+  /** GG ID gate only. Persisted as signedIn + email; anyone can edit localStorage. Not real auth. */
   auth: DemoAuth;
   exercises: Record<string, ExerciseProgress>;
   attempts: AttemptRec[];
@@ -98,7 +133,7 @@ export interface AppState {
   quizzes: QuizResult[];
   activity: Record<string, { attempts: number; passes: number }>;
   imports: ImportRecord[];
-  /** Per-student Google Sheets practice URLs saved in this browser. Not server-side and not Google-secured. */
+  /** Per-profile Google Sheets practice URLs saved in this browser. Not server-side and not Google-secured. */
   practiceWorkbooks: Record<string, PracticeWorkbook>;
   settings: {
     theme: "light" | "dark" | "system";
@@ -106,61 +141,107 @@ export interface AppState {
     onboarded: boolean;
     googleSheets: Record<string, GoogleSheetAssignment>;
   };
+  persistStatus: PersistStatus;
+  persistMessage?: string;
 }
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36));
 export const todayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-function fresh(): AppState {
+function snapshotProfile(s: AppState): ProfileData {
   return {
-    version: 1, userId: "local-" + uid(), displayName: "Learner", createdAt: new Date().toISOString(),
-    auth: { signedIn: false, email: null },
-    exercises: {}, attempts: [], mistakes: [], quizzes: [], activity: {}, imports: [],
-    practiceWorkbooks: {},
-    settings: { theme: "system", sidebarCollapsed: false, onboarded: false, googleSheets: {} },
+    owner: s.owner,
+    userId: s.userId,
+    displayName: s.displayName,
+    createdAt: s.createdAt,
+    exercises: s.exercises,
+    attempts: s.attempts,
+    mistakes: s.mistakes,
+    quizzes: s.quizzes,
+    activity: s.activity,
+    imports: s.imports,
+    practiceWorkbooks: s.practiceWorkbooks,
+    onboarded: s.settings.onboarded,
   };
 }
 
-let state: AppState = load();
+function flatten(root: PersistedRoot, persistStatus: PersistStatus = "idle", persistMessage?: string): AppState {
+  const owner = root.activeOwner;
+  const p = root.profiles[owner] ?? emptyProfile(owner);
+  return {
+    version: 2,
+    schema: SCHEMA,
+    updatedAt: root.updatedAt,
+    writeSeq: root.writeSeq,
+    owner,
+    userId: p.userId,
+    displayName: p.displayName,
+    createdAt: p.createdAt,
+    auth: root.auth,
+    exercises: p.exercises,
+    attempts: p.attempts,
+    mistakes: p.mistakes,
+    quizzes: p.quizzes,
+    activity: p.activity,
+    imports: p.imports,
+    practiceWorkbooks: p.practiceWorkbooks,
+    settings: {
+      theme: root.settings.theme,
+      sidebarCollapsed: root.settings.sidebarCollapsed,
+      onboarded: p.onboarded,
+      googleSheets: root.settings.googleSheets,
+    },
+    persistStatus,
+    persistMessage,
+  };
+}
+
+let root: PersistedRoot = loadRoot();
+let state: AppState = flatten(root);
 export let persistError = null as string | null;
 const listeners = new Set<() => void>();
 
-function load(): AppState {
-  try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return fresh();
-    const parsed = JSON.parse(raw) as AppState;
-    if (parsed.version !== 1) return fresh();
-    const rawAuth = parsed.auth && typeof parsed.auth === "object" ? parsed.auth as Partial<DemoAuth> & { password?: unknown } : {};
-    return {
-      ...fresh(),
-      ...parsed,
-      settings: { ...fresh().settings, ...parsed.settings, googleSheets: { ...fresh().settings.googleSheets, ...(parsed.settings?.googleSheets ?? {}) } },
-      practiceWorkbooks: parsed.practiceWorkbooks && typeof parsed.practiceWorkbooks === "object" ? parsed.practiceWorkbooks : {},
-      auth: {
-        signedIn: !!rawAuth.signedIn,
-        email: typeof rawAuth.email === "string" ? rawAuth.email : null,
-      },
-    };
-  } catch {
-    return fresh();
-  }
-}
-function emit() {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(state));
-    persistError = null;
-  } catch (e) {
-    persistError = `Progress could not be saved in this browser (${e instanceof Error ? e.message : "storage error"}).`;
-  }
+function notify() {
   listeners.forEach((l) => l());
 }
+
+function persist(nextRoot: PersistedRoot, status: PersistStatus = "saved") {
+  root = nextRoot;
+  try {
+    saveRoot(root);
+    persistError = null;
+    state = flatten(root, status);
+    if (typeof window !== "undefined") broadcastState(JSON.stringify(root));
+  } catch (e) {
+    persistError = `Progress could not be saved in this browser (${e instanceof Error ? e.message : "storage error"}).`;
+    state = flatten(root, "error", persistError);
+  }
+  notify();
+}
+
 function update(f: (s: AppState) => AppState) {
-  state = f(state);
-  emit();
+  const next = f(state);
+  const nextRoot: PersistedRoot = {
+    version: 2,
+    schema: SCHEMA,
+    updatedAt: new Date().toISOString(),
+    writeSeq: root.writeSeq + 1,
+    activeOwner: next.owner,
+    auth: next.auth,
+    profiles: { ...root.profiles, [next.owner]: snapshotProfile(next) },
+    settings: {
+      theme: next.settings.theme,
+      sidebarCollapsed: next.settings.sidebarCollapsed,
+      googleSheets: next.settings.googleSheets,
+    },
+  };
+  persist(nextRoot);
 }
 
 export const getState = () => state;
+export function getRoot(): PersistedRoot {
+  return root;
+}
 export function useStore<T>(sel: (s: AppState) => T): T {
   return useSyncExternalStore(
     (cb) => (listeners.add(cb), () => listeners.delete(cb)),
@@ -175,6 +256,32 @@ export function usePersistError() {
   );
 }
 void errSnapshot;
+
+export function usePersistStatus() {
+  const status = useStore((s) => s.persistStatus);
+  const message = useStore((s) => s.persistMessage);
+  const updatedAt = useStore((s) => s.updatedAt);
+  return { status, message, updatedAt };
+}
+
+function applyRemoteRaw(raw: string): boolean {
+  try {
+    const incoming = parsePersistedRoot(JSON.parse(raw));
+    if (!incoming) return false;
+    if (!isNewerRoot(incoming, root)) return false;
+    root = incoming;
+    persistError = null;
+    state = flatten(root, "saved");
+    notify();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+if (typeof window !== "undefined") {
+  startStateSync({ storageKey: STORAGE_KEY, applyRaw: applyRemoteRaw });
+}
 
 const blankProgress = (): ExerciseProgress => ({ attempts: 0, passed: false, assisted: false, hintsUsed: 0, solutionViewed: false, bestCorrect: 0, lastTotal: 0 });
 const prog = (s: AppState, id: string) => s.exercises[id] ?? blankProgress();
@@ -220,7 +327,7 @@ export const actions = {
         for (const tag of result.tags.length ? result.tags : (["other"] as MistakeTag[])) {
           const fb = result.feedback.find((f) => f.tag === tag && f.status !== "correct");
           const idx = mistakes.findIndex((m) => m.exerciseId === ex.id && m.tag === tag && !m.resolved);
-          const attempted = fb ? `${fb.sheet === "" ? "" : ""}${fb.addr}: ${fb.formula ?? fb.actual ?? ""}${fb.formula && fb.actual ? " → " + fb.actual : ""}` : "";
+          const attempted = fb ? `${fb.addr}: ${fb.formula ?? fb.actual ?? ""}${fb.formula && fb.actual ? " → " + fb.actual : ""}` : "";
           const rec: MistakeRec = idx >= 0 ? { ...mistakes[idx], at: now, attempts: mistakes[idx].attempts + 1, attempted: attempted || mistakes[idx].attempted } : {
             id: uid(), exerciseId: ex.id, lessonId: ex.lessonId, topic, tag, at: now, attempted, expected: fb?.expected ?? "", explanation: fb ? `${fb.message}${fb.hint ? " " + fb.hint : ""}` : TAG_LABEL[tag], attempts: 1, resolved: false,
           };
@@ -228,7 +335,6 @@ export const actions = {
           else mistakes.unshift(rec);
         }
       } else {
-        // a successful retry resolves earlier mistakes for this exercise (and only then)
         mistakes = mistakes.map((m) => (m.exerciseId === ex.id && !m.resolved ? { ...m, resolved: true, resolvedAt: now } : m));
       }
       const day = todayKey();
@@ -283,16 +389,37 @@ export const actions = {
   setName(name: string) {
     update((s) => ({ ...s, displayName: name.trim() || "Learner" }));
   },
-  /** Record a successful demo sign-in. Never pass or persist a password. */
+  /** Record a successful GG ID sign-in. Never pass or persist a password. Switches to that profile's local data. */
   signIn(email: string, displayName: string) {
-    update((s) => ({
-      ...s,
-      auth: { signedIn: true, email },
-      displayName,
-      settings: { ...s.settings, onboarded: true },
-    }));
+    const owner = email.toLowerCase();
+    const current = snapshotProfile(state);
+    const existing = root.profiles[owner];
+    const destEmpty = !existing || !profileHasWork(existing);
+    const adoptGuest = !state.auth.signedIn && destEmpty && profileHasWork(current) && current.owner !== owner;
+    const kept: PersistedRoot = {
+      ...root,
+      profiles: { ...root.profiles, [state.owner]: current },
+      updatedAt: new Date().toISOString(),
+      writeSeq: root.writeSeq + 1,
+    };
+    if (adoptGuest) {
+      kept.profiles[owner] = {
+        ...current,
+        owner,
+        displayName: displayName || current.displayName,
+        practiceWorkbooks: rekeyPractice(current.practiceWorkbooks, owner),
+      };
+      delete kept.profiles[current.owner];
+    } else if (existing) {
+      kept.profiles[owner] = { ...existing, displayName: displayName || existing.displayName };
+    } else {
+      kept.profiles[owner] = emptyProfile(owner, { userId: `local-${uid()}`, displayName, createdAt: new Date().toISOString() });
+    }
+    kept.activeOwner = owner;
+    kept.auth = { signedIn: true, email };
+    persist(kept);
   },
-  /** Clear the demo gate only. Learning progress is left untouched. */
+  /** Clear the GG ID gate only. The current profile stays loaded so the same person can sign back in; a different GG ID loads a different profile. */
   signOut() {
     update((s) => ({ ...s, auth: { signedIn: false, email: null } }));
   },
@@ -300,11 +427,32 @@ export const actions = {
     update((s) => ({ ...s, settings: { ...s.settings, onboarded: true } }));
   },
   resetAll() {
-    state = fresh();
-    emit();
+    const next = emptyRoot();
+    next.writeSeq = root.writeSeq + 1;
+    persist(next);
+  },
+  resetCurrentProfile() {
+    const owner = state.owner;
+    const blank = emptyProfile(owner, { userId: state.userId, displayName: state.displayName, createdAt: state.createdAt });
+    persist({
+      ...root,
+      updatedAt: new Date().toISOString(),
+      writeSeq: root.writeSeq + 1,
+      profiles: { ...root.profiles, [owner]: blank },
+      auth: state.auth,
+      activeOwner: owner,
+    });
   },
   exportJson() {
-    const { auth, ...rest } = state;
-    return JSON.stringify({ ...rest, auth: { signedIn: auth.signedIn, email: auth.email } }, null, 2);
+    return JSON.stringify(buildExport(root, state.owner), null, 2);
+  },
+  parseImport(raw: string) {
+    return parseProgressExport(raw);
+  },
+  importProgress(data: ProgressExport, replaceGoogleSheets = true) {
+    persist(applyExportToRoot(root, data, replaceGoogleSheets));
   },
 };
+
+export { STORAGE_KEY, SCHEMA, profileOwnerFromAuth };
+export type { ProgressExport };

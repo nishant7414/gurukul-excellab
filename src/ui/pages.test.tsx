@@ -6,13 +6,14 @@ import { MemoryRouter, matchPath } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { AppRoutes, ROUTE_PATTERNS } from "../App";
 import { NAV } from "./Shell";
-import { actions, getState } from "../state/store";
+import { actions, getState, STORAGE_KEY } from "../state/store";
 import { EXERCISE_BY_ID } from "../content/registry";
 import { LESSON_BY_ID } from "../content/lessons";
 import { CATALOG, CATALOG_BY_ID } from "../practice/catalog";
 import { DATASETS } from "../datasets/registry";
 import { QUIZZES } from "../content/quizzes";
 import { applySolution, checkExercise } from "../learning/checker";
+import { FRONTEND_AUTH_NOTICE } from "../learning/messages";
 
 beforeAll(() => {
   Element.prototype.scrollIntoView = () => {};
@@ -109,6 +110,7 @@ describe("demo login", () => {
     expect(screen.getByRole("button", { name: /^sign in$/i })).toBeTruthy();
     expect(document.body.textContent).not.toContain("Demo sign-in only");
     expect(document.body.textContent).not.toMatch(/demo/i);
+    expect(document.body.textContent).toContain(FRONTEND_AUTH_NOTICE);
   });
 
   it("rejects empty fields and unknown credentials, then opens the dashboard for the demo account", async () => {
@@ -131,7 +133,7 @@ describe("demo login", () => {
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Welcome back, Nishant Kumar!");
     expect(screen.getByRole("button", { name: /account menu for Nishant Kumar/i }).textContent).toMatch(/NK/);
     expect(JSON.stringify(getState())).not.toMatch(/QCI@123/);
-    expect(localStorage.getItem("excelgym.state.v1") ?? "").not.toMatch(/QCI@123/);
+    expect(localStorage.getItem(STORAGE_KEY) ?? "").not.toMatch(/QCI@123/);
   });
 
   it("sign-out returns to login and leaves learning progress in place", async () => {
@@ -236,7 +238,7 @@ describe("Settings", () => {
     at("/settings");
     const btn = screen.getByRole("button", { name: /delete all progress/i }) as HTMLButtonElement;
     expect(btn.disabled).toBe(true);
-    await user.type(screen.getByLabelText(/type reset/i), "RESET");
+    await user.type(screen.getByLabelText("Type RESET to confirm"), "RESET");
     expect(btn.disabled).toBe(false);
     await user.click(btn);
     expect(getState().attempts.length).toBe(0);

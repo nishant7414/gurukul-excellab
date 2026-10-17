@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { inspectEmbedUrl, inspectSheetsUrl } from "./urls";
-import { GOOGLE_SAMPLE_SHEET, resolveGoogleSheet } from "./catalog";
+import { resolveGoogleSheet } from "./catalog";
 
 describe("inspectSheetsUrl", () => {
   it("accepts a share/edit URL and builds a preview embed", () => {
@@ -40,18 +40,16 @@ describe("inspectSheetsUrl", () => {
 });
 
 describe("resolveGoogleSheet", () => {
-  it("uses the official sample when nothing is configured", () => {
+  it("does not attach Google's Class Data sample to an unconfigured exercise", () => {
     const r = resolveGoogleSheet("EX-MISSING");
-    expect(r.source).toBe("sample");
-    expect(r.assignment.spreadsheetUrl).toBe(GOOGLE_SAMPLE_SHEET.spreadsheetUrl);
-    expect(r.embed.ok).toBe(true);
+    expect(r).toBeNull();
   });
 
   it("prefers a Settings override", () => {
     const r = resolveGoogleSheet("EX-VL-1-1", {
       "EX-VL-1-1": { title: "Mine", spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit" },
     });
-    expect(r.source).toBe("settings");
-    expect(r.assignment.title).toBe("Mine");
+    expect(r?.source).toBe("settings");
+    expect(r?.assignment.title).toBe("Mine");
   });
 });

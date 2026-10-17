@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { initialsFromName } from "../brand";
 import { displayNameFromEmail } from "./displayName";
 import { verifyDemoLogin } from "./accounts";
-import { actions, getState } from "../state/store";
+import { actions, getState, STORAGE_KEY } from "../state/store";
 import { EXERCISE_BY_ID } from "../content/registry";
 import { applySolution, checkExercise } from "../learning/checker";
 
@@ -62,21 +62,34 @@ describe("verifyDemoLogin", () => {
 describe("demo auth store", () => {
   beforeEach(() => { localStorage.clear(); actions.resetAll(); });
 
-  it("keeps learning progress across sign-in and sign-out and never stores a password", () => {
+  it("keeps the same GG ID's progress across sign-out and never stores a password", () => {
     const ex = EXERCISE_BY_ID.get("EX-A2-1")!;
+    actions.signIn("ggstudent@example.com", "GG Student");
     actions.submit(ex, checkExercise(ex, applySolution(ex)), applySolution(ex), "t");
     const attempts = getState().attempts.length;
     expect(attempts).toBeGreaterThan(0);
-    actions.signIn("ggstudent@example.com", "GG Student");
-    expect(getState().attempts.length).toBe(attempts);
     expect(getState().displayName).toBe("GG Student");
-    const signedInRaw = localStorage.getItem("excelgym.state.v1") ?? "";
+    const signedInRaw = localStorage.getItem(STORAGE_KEY) ?? "";
     expect(signedInRaw).toContain("ggstudent@example.com");
     expect(signedInRaw).not.toMatch(/QCI@123/);
     expect(signedInRaw).not.toMatch(/"password"/);
     actions.signOut();
     expect(getState().auth.signedIn).toBe(false);
     expect(getState().attempts.length).toBe(attempts);
-    expect(localStorage.getItem("excelgym.state.v1") ?? "").not.toMatch(/QCI@123/);
+    expect(localStorage.getItem(STORAGE_KEY) ?? "").not.toMatch(/QCI@123/);
+  });
+
+  it("keeps two GG IDs on the same browser from sharing progress", () => {
+    const ex = EXERCISE_BY_ID.get("EX-A2-1")!;
+    actions.signIn("alpha@example.com", "Alpha");
+    actions.submit(ex, checkExercise(ex, applySolution(ex)), applySolution(ex), "t");
+    expect(getState().exercises[ex.id]?.passed).toBe(true);
+    actions.signIn("beta@example.com", "Beta");
+    expect(getState().auth.email).toBe("beta@example.com");
+    expect(getState().exercises[ex.id]?.passed).toBeFalsy();
+    expect(getState().attempts.length).toBe(0);
+    actions.signIn("alpha@example.com", "Alpha");
+    expect(getState().exercises[ex.id]?.passed).toBe(true);
+    expect(getState().attempts.length).toBeGreaterThan(0);
   });
 });

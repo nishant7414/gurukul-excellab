@@ -75,7 +75,7 @@ export function Challenges() {
     <div className="page stack">
       <header>
         <h1>Challenges</h1>
-        <p className="muted">Job-style tasks on realistic, <strong>synthetic</strong> practice data (no real people or identifiers). Each challenge names its dataset, and larger tables open in the same spreadsheet used everywhere else. {CATALOG.length} challenges · {done} completed. Your progress is saved in this browser only.</p>
+        <p className="muted">Job-style tasks on realistic, <strong>synthetic</strong> practice data. {CATALOG.length} challenges · {done} completed.</p>
       </header>
 
       <section className="glass card stack" aria-label="Filters">
@@ -168,7 +168,12 @@ export function ChallengeRun() {
         )}
       </section>
 
-      <ExerciseRunner key={ex.id} exercise={ex} topic={`Challenge: ${e.title}`} />
+      <ExerciseRunner
+        key={ex.id}
+        exercise={ex}
+        topic={`Challenge: ${e.title}`}
+        breadcrumb={<><Link to="/challenges">Challenges</Link> / <span>{e.title}</span></>}
+      />
       {next && next.id !== e.id && <p><Link className="btn" to={`/challenges/${next.id}`}>Next in {e.conceptTitle}: {next.title}</Link></p>}
     </div>
   );
@@ -209,7 +214,12 @@ export function QuizRun() {
   return (
     <div className="page stack">
       <header><div className="crumbs"><Link to="/quizzes">Quizzes</Link> › {z.title}</div><h1>{z.title}</h1></header>
-      <ExerciseRunner key={ex.id} exercise={ex} topic={`Quiz: ${z.title}`} />
+      <ExerciseRunner
+        key={ex.id}
+        exercise={ex}
+        topic={`Quiz: ${z.title}`}
+        breadcrumb={<><Link to="/quizzes">Quizzes</Link> / <span>{z.title}</span></>}
+      />
     </div>
   );
 }
