@@ -77,11 +77,11 @@ export default function Settings() {
 
       <section className="glass card" aria-labelledby="gs-h">
         <h2 id="gs-h">Google Sheets workbooks</h2>
-        <p className="muted small">Assign a real Google Sheets document to a lesson or challenge. URLs are stored in this browser only. No Google API key or password is used.</p>
+        <p className="muted small">Assign a real Google Sheets document to a lesson or challenge. URLs stay in this browser. Gurukul ExcelLab has no Google API key and cannot embed the full editor.</p>
         <ol className="steps small">
-          <li>In Google Sheets, open the workbook. Use <strong>File → Share → Publish to web</strong> and choose the sheet, or <strong>Share</strong> with “Anyone with the link can view”.</li>
-          <li>Paste the share link or the Publish-to-web link below. A published preview is read-only.</li>
-          <li>For student editing, share a separate copy-template and tell students to use <strong>File → Make a copy</strong>. Do not give every student edit access to the original.</li>
+          <li>Open the template in Google Sheets. Use <strong>File → Share → Publish to web → Embed</strong> for a read-only preview, or <strong>Share</strong> with “Anyone with the link can view”.</li>
+          <li>Paste the share link below. Students open the real editor with <strong>Open in Google Sheets</strong> or <strong>Make my own copy</strong> (Google’s official <code>/copy</code> page).</li>
+          <li>Do not give every student edit access to the original. Each student should keep a personal copy.</li>
         </ol>
         <p className="small faint">Until you assign a workbook, exercises show Google&apos;s public sample: {GOOGLE_SAMPLE_SHEET.spreadsheetUrl}</p>
         <div className="stack" style={{ gap: 10 }}>
@@ -92,8 +92,8 @@ export default function Settings() {
           </label>
           <label>Display title <input type="text" value={sheetTitle} onChange={(e) => setSheetTitle(e.target.value)} placeholder="Optional" /></label>
           <label>Spreadsheet URL <input type="url" value={sheetUrl} onChange={(e) => setSheetUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/edit?usp=sharing" /></label>
-          <label>Embed URL (optional) <input type="url" value={embedUrl} onChange={(e) => setEmbedUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/preview" /></label>
-          <label>Editable / copy-template URL (optional) <input type="url" value={fallbackUrl} onChange={(e) => setFallbackUrl(e.target.value)} placeholder="Open-in-Sheets destination if different" /></label>
+          <label>Published embed URL (optional) <input type="url" value={embedUrl} onChange={(e) => setEmbedUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/e/…/pubhtml or /preview" /></label>
+          <label>Copy-template / editable URL (optional) <input type="url" value={fallbackUrl} onChange={(e) => setFallbackUrl(e.target.value)} /></label>
           <div className="row">
             <button className="btn primary" type="button" onClick={saveSheet}>Save workbook URL</button>
             <button className="btn ghost" type="button" onClick={() => { actions.setGoogleSheet(sheetId, null); setSheetUrl(""); setEmbedUrl(""); setFallbackUrl(""); setSheetTitle(""); }}>Clear this exercise</button>

@@ -70,7 +70,7 @@ export default function Playground() {
 
       <GoogleSheetsEmbed
         title={GOOGLE_SAMPLE_SHEET.title}
-        description="A genuine Google Sheets document. The playground grid below is Gurukul ExcelLab's own practice sheet and is not Google."
+        description="Published Google Sheets preview only. The playground grid below is Gurukul ExcelLab's own sheet."
         spreadsheetUrl={GOOGLE_SAMPLE_SHEET.spreadsheetUrl}
         embedUrl={GOOGLE_SAMPLE_SHEET.embedUrl}
         height={520}

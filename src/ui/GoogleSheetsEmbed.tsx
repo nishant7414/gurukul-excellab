@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { ExternalLink, Maximize2 } from "lucide-react";
+import { CopyPlus, ExternalLink, Maximize2 } from "lucide-react";
 import { inspectEmbedUrl, inspectSheetsUrl } from "../sheets/urls";
 import type { SheetsMode } from "../sheets/catalog";
+import { actions, useStore } from "../state/store";
+
+export const EDITING_NOTICE =
+  "Google Sheets editing is not available in the embedded view. Open your practice workbook in Google Sheets to use the full spreadsheet editor. Your lesson and progress remain in Gurukul ExcelLab.";
 
 export interface GoogleSheetsEmbedProps {
   title?: string;
@@ -12,6 +16,8 @@ export interface GoogleSheetsEmbedProps {
   mode?: SheetsMode;
   height?: number;
   sourceNote?: string;
+  workbookName?: string;
+  exerciseId?: string;
 }
 
 function openSheets(url: string) {
@@ -27,13 +33,21 @@ export function GoogleSheetsEmbed({
   mode = "embedded-view",
   height = 640,
   sourceNote,
+  workbookName,
+  exerciseId,
 }: GoogleSheetsEmbedProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
+  const [paste, setPaste] = useState("");
+  const [pasteErr, setPasteErr] = useState<string | null>(null);
+  const practice = useStore((s) => (exerciseId ? s.practiceWorkbooks[`${(s.auth.email ?? s.userId).toLowerCase()}::${exerciseId}`] : undefined));
+
   const open = inspectSheetsUrl(spreadsheetUrl);
   const embed = inspectEmbedUrl(embedUrl, spreadsheetUrl);
   const fallback = fallbackUrl ? inspectSheetsUrl(fallbackUrl) : null;
   const openHref = open.ok ? open.openUrl : fallback?.ok ? fallback.openUrl : null;
+  const copyHref = open.ok ? open.copyUrl : undefined;
+  const practiceHref = practice ? inspectSheetsUrl(practice.url) : null;
   const showIframe = mode === "embedded-view" && embed.ok;
 
   useEffect(() => {
@@ -45,7 +59,20 @@ export function GoogleSheetsEmbed({
     if (!el) return;
     if (document.fullscreenElement) void document.exitFullscreen();
     else if (el.requestFullscreen) void el.requestFullscreen();
-    else if (openHref) openSheets(openHref);
+  };
+
+  const savePractice = () => {
+    if (!exerciseId) return;
+    const checked = inspectSheetsUrl(paste);
+    if (!checked.ok) { setPasteErr(checked.error); return; }
+    if (!checked.spreadsheetId) { setPasteErr("Paste the URL of your own copy, not a published preview."); return; }
+    if (open.ok && checked.spreadsheetId && checked.spreadsheetId === open.spreadsheetId) {
+      setPasteErr("That is still the shared template. After Google creates your copy, paste the new URL from the address bar.");
+      return;
+    }
+    actions.setPracticeWorkbook(exerciseId, checked.openUrl);
+    setPaste("");
+    setPasteErr(null);
   };
 
   return (
@@ -53,43 +80,63 @@ export function GoogleSheetsEmbed({
       <header className="gs-head">
         <div>
           <div className="row" style={{ marginBottom: 4 }}>
-            <span className="pill">{mode === "embedded-view" ? "Embedded view" : "Open in Google Sheets"}</span>
-            {mode === "embedded-view" && <span className="pill">Read-only preview</span>}
+            <span className="pill">{showIframe ? "Published preview" : "Google Sheets"}</span>
+            <span className="pill">Read-only on this page</span>
+            {workbookName && <span className="pill">{workbookName}</span>}
           </div>
           <h3>{title}</h3>
           {description && <p className="muted small">{description}</p>}
           {sourceNote && <p className="small faint">{sourceNote}</p>}
         </div>
-        <div className="row">
-          {openHref && (
-            <button type="button" className="btn primary" onClick={() => openSheets(openHref)}>
-              <ExternalLink size={15} aria-hidden="true" /> Open in Google Sheets
-            </button>
-          )}
-          {showIframe && (
-            <button type="button" className="btn" onClick={fullscreen}>
-              <Maximize2 size={15} aria-hidden="true" /> Open Full Screen
-            </button>
-          )}
-        </div>
       </header>
 
-      {mode === "embedded-view" && (
-        <p className="small faint">
-          A published or shared preview is generally read-only. This page cannot edit Google cells, save student work in Google, or bypass sharing permissions.
-        </p>
-      )}
-      {mode === "open-in-sheets" && (
-        <p className="small">
-          Editing happens in Google Sheets. Sign in if Google asks. For graded work, make your own copy so the original template is not changed by every student.
-        </p>
+      <div className="callout warn" role="status">
+        <p>{EDITING_NOTICE}</p>
+      </div>
+
+      <div className="row" style={{ margin: "10px 0" }}>
+        {practiceHref?.ok && (
+          <button type="button" className="btn primary" onClick={() => openSheets(practiceHref.openUrl)}>
+            <ExternalLink size={15} aria-hidden="true" /> Open my practice workbook
+          </button>
+        )}
+        {openHref && (
+          <button type="button" className={practiceHref?.ok ? "btn" : "btn primary"} onClick={() => openSheets(openHref)}>
+            <ExternalLink size={15} aria-hidden="true" /> Open in Google Sheets
+          </button>
+        )}
+        {copyHref && (
+          <button type="button" className="btn" onClick={() => openSheets(copyHref)}>
+            <CopyPlus size={15} aria-hidden="true" /> Make my own copy
+          </button>
+        )}
+        {showIframe && (
+          <button type="button" className="btn ghost" onClick={fullscreen}>
+            <Maximize2 size={15} aria-hidden="true" /> Open Full Screen
+          </button>
+        )}
+      </div>
+
+      {exerciseId && (
+        <form className="stack" style={{ gap: 8, marginBottom: 10 }} onSubmit={(e) => { e.preventDefault(); savePractice(); }}>
+          <label>
+            After you make a copy, paste your workbook URL so Gurukul ExcelLab can reopen it.
+            <input type="url" value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/edit" aria-label="My practice workbook URL" />
+          </label>
+          <div className="row">
+            <button className="btn" type="submit">Save my practice workbook</button>
+            {practice && <button className="btn ghost" type="button" onClick={() => actions.clearPracticeWorkbook(exerciseId)}>Forget saved workbook</button>}
+          </div>
+          {pasteErr && <p className="small" role="alert">{pasteErr}</p>}
+          {practice && <p className="small faint">Saved for this GG ID on this browser only. This is not a Google-secured link and is not shared with a server.</p>}
+        </form>
       )}
 
       {showIframe ? (
         <div ref={wrapRef} className="gs-frame" style={{ minHeight: height }}>
-          {loading && <div className="gs-loading" role="status">Loading Google Sheets…</div>}
+          {loading && <div className="gs-loading" role="status">Loading the published Google Sheets preview…</div>}
           <iframe
-            title={title}
+            title={`${title} (read-only Google Sheets preview)`}
             src={embed.ok ? embed.embedUrl : undefined}
             loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
@@ -99,18 +146,17 @@ export function GoogleSheetsEmbed({
           />
         </div>
       ) : (
-        <div className="callout warn" role="status">
+        <div className="callout" role="status">
           {!spreadsheetUrl && !embedUrl
             ? "No Google Sheets URL is configured for this exercise. Add a share or Publish-to-web link in Settings."
             : embed.ok
-              ? "This exercise is set to open in Google Sheets rather than embed a preview."
+              ? "This exercise is set to open in Google Sheets rather than show a published preview."
               : embed.error}
-          {openHref && <div style={{ marginTop: 8 }}><button type="button" className="btn primary" onClick={() => openSheets(openHref)}>Open in Google Sheets</button></div>}
         </div>
       )}
 
       <p className="small faint">
-        If Google shows a sign-in or access request, the document is not published for embedding. Use Open in Google Sheets. This website cannot see inside the iframe, so a blank frame is not always a broken link.
+        Google publishes embeds without the formula bar or menus. The full editor only runs on docs.google.com. If the preview asks you to sign in, the file is not published for embedding. This website cannot see inside the iframe.
       </p>
     </section>
   );

@@ -11,6 +11,8 @@ export type SheetsUrlOk = {
   gid?: string;
   openUrl: string;
   embedUrl: string;
+  /** Official Google “Make a copy” page. Undefined for publish-only /d/e/ links. */
+  copyUrl?: string;
 };
 
 export type SheetsUrlResult = SheetsUrlOk | { ok: false; error: string };
@@ -73,7 +75,15 @@ export function inspectSheetsUrl(raw: string | undefined | null): SheetsUrlResul
   if (gid) embed.searchParams.set("gid", gid);
 
   const kind: SheetsUrlKind = action === "preview" ? "preview" : action === "htmlembed" || action === "embed" ? "embed" : action === "pubhtml" ? "published" : "edit";
-  return { ok: true, kind, spreadsheetId, gid: gid ?? undefined, openUrl: open.toString(), embedUrl: embed.toString() };
+  return {
+    ok: true,
+    kind,
+    spreadsheetId,
+    gid: gid ?? undefined,
+    openUrl: open.toString(),
+    embedUrl: embed.toString(),
+    copyUrl: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/copy`,
+  };
 }
 
 export function inspectEmbedUrl(raw: string | undefined | null, fallbackFrom?: string): SheetsUrlResult {

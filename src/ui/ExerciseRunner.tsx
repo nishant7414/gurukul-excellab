@@ -91,7 +91,7 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
           {ex.criteria && ex.criteria.length > 0 && (
             <details className="small"><summary>How this is checked</summary><ul style={{ paddingLeft: 18 }}>{ex.criteria.map((c, i) => <li key={i}>{c}</li>)}</ul></details>
           )}
-          <p className="small faint">{ex.datasetNote}{google ? ` · Google Sheets: ${google.assignment.title ?? "configured workbook"}` : ""}</p>
+          <p className="small faint">{ex.datasetNote}{google ? ` · Workbook: ${google.assignment.title ?? "Google Sheets"}` : ""}</p>
           {ex.simulationNote && <div className="callout warn small">{ex.simulationNote}</div>}
         </div>
 
@@ -171,22 +171,24 @@ export function ExerciseRunner({ exercise: ex, topic, onNext }: { exercise: Exer
             {google && (
               <GoogleSheetsEmbed
                 title={google.assignment.title ?? `${ex.title} — Google Sheets`}
-                description={google.assignment.description ?? "Genuine Google Sheets document for this exercise."}
+                description={google.assignment.description ?? ex.objective}
                 spreadsheetUrl={google.assignment.spreadsheetUrl}
                 embedUrl={google.assignment.embedUrl}
                 fallbackUrl={google.assignment.fallbackUrl}
                 mode={google.assignment.mode ?? "embedded-view"}
                 height={640}
+                workbookName={ex.title}
+                exerciseId={ex.id}
                 sourceNote={
                   google.source === "sample"
-                    ? "Showing Google's public sample until an administrator assigns a workbook in Settings. Check Answer still uses the Gurukul practice sheet below — not this iframe."
-                    : "Check Answer grades the Gurukul practice sheet, not the Google iframe. To edit in Google, use Open in Google Sheets and work on your own copy."
+                    ? "This preview is Google's public sample until a workbook is assigned in Settings. Formulas and saving happen in Google Sheets, not in this preview."
+                    : "The preview is read-only. Use Open in Google Sheets or Make my own copy for the real editor."
                 }
               />
             )}
             <details className="glass card" open={practiceOpen} onToggle={(e) => setPracticeOpen((e.target as HTMLDetailsElement).open)}>
               <summary><strong>Check Answer workspace</strong> — Gurukul ExcelLab sheet used for scoring</summary>
-              <p className="small faint" style={{ margin: "8px 0" }}>Yellow cells are yours to edit; grey cells are provided data. Your work saves automatically in this browser. Google Sheets cannot be marked from this page.</p>
+              <p className="small faint" style={{ margin: "8px 0" }}>Yellow cells are yours to edit; grey cells are provided data. Check Answer reads this sheet, not the Google preview.</p>
               <Spreadsheet workbook={wb} onChange={setWb} activeSheet={sheet} onActiveSheet={setSheet} editable={ex.editable} editableSheet={ex.activeSheet}
                 feedback={feedback} emphasise={ex.tools} allowSheetOps={false} height={560} />
             </details>

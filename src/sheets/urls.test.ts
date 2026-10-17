@@ -11,6 +11,7 @@ describe("inspectSheetsUrl", () => {
     expect(r.embedUrl).toContain("/preview");
     expect(r.embedUrl).toContain("gid=0");
     expect(r.openUrl).toContain("/edit");
+    expect(r.copyUrl).toBe("https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/copy");
   });
 
   it("accepts a published pubhtml URL", () => {

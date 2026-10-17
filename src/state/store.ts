@@ -5,6 +5,20 @@ import type { CheckResult, Exercise, MistakeTag } from "../learning/types";
 import { TAG_LABEL } from "../learning/types";
 import type { GoogleSheetAssignment } from "../sheets/catalog";
 
+export interface PracticeWorkbook {
+  exerciseId: string;
+  owner: string;
+  url: string;
+  at: string;
+}
+
+export function practiceOwner(s: { auth: DemoAuth; userId: string }): string {
+  return (s.auth.email ?? s.userId).toLowerCase();
+}
+export function practiceKey(owner: string, exerciseId: string): string {
+  return `${owner}::${exerciseId}`;
+}
+
 const KEY = "excelgym.state.v1";
 
 export interface ExerciseProgress {
@@ -84,11 +98,12 @@ export interface AppState {
   quizzes: QuizResult[];
   activity: Record<string, { attempts: number; passes: number }>;
   imports: ImportRecord[];
+  /** Per-student Google Sheets practice URLs saved in this browser. Not server-side and not Google-secured. */
+  practiceWorkbooks: Record<string, PracticeWorkbook>;
   settings: {
     theme: "light" | "dark" | "system";
     sidebarCollapsed: boolean;
     onboarded: boolean;
-    /** Per-exercise Google Sheets URLs saved in this browser. Not a server admin console. */
     googleSheets: Record<string, GoogleSheetAssignment>;
   };
 }
@@ -101,6 +116,7 @@ function fresh(): AppState {
     version: 1, userId: "local-" + uid(), displayName: "Learner", createdAt: new Date().toISOString(),
     auth: { signedIn: false, email: null },
     exercises: {}, attempts: [], mistakes: [], quizzes: [], activity: {}, imports: [],
+    practiceWorkbooks: {},
     settings: { theme: "system", sidebarCollapsed: false, onboarded: false, googleSheets: {} },
   };
 }
@@ -119,7 +135,8 @@ function load(): AppState {
     return {
       ...fresh(),
       ...parsed,
-      settings: { ...fresh().settings, ...parsed.settings },
+      settings: { ...fresh().settings, ...parsed.settings, googleSheets: { ...fresh().settings.googleSheets, ...(parsed.settings?.googleSheets ?? {}) } },
+      practiceWorkbooks: parsed.practiceWorkbooks && typeof parsed.practiceWorkbooks === "object" ? parsed.practiceWorkbooks : {},
       auth: {
         signedIn: !!rawAuth.signedIn,
         email: typeof rawAuth.email === "string" ? rawAuth.email : null,
@@ -239,6 +256,25 @@ export const actions = {
       if (!assignment || !assignment.spreadsheetUrl.trim()) delete next[exerciseId];
       else next[exerciseId] = assignment;
       return { ...s, settings: { ...s.settings, googleSheets: next } };
+    });
+  },
+  setPracticeWorkbook(exerciseId: string, url: string) {
+    update((s) => {
+      const owner = practiceOwner(s);
+      return {
+        ...s,
+        practiceWorkbooks: {
+          ...s.practiceWorkbooks,
+          [practiceKey(owner, exerciseId)]: { exerciseId, owner, url, at: new Date().toISOString() },
+        },
+      };
+    });
+  },
+  clearPracticeWorkbook(exerciseId: string) {
+    update((s) => {
+      const next = { ...s.practiceWorkbooks };
+      delete next[practiceKey(practiceOwner(s), exerciseId)];
+      return { ...s, practiceWorkbooks: next };
     });
   },
   setSidebar(collapsed: boolean) {
